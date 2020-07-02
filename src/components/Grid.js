@@ -25,30 +25,53 @@ import '../styles/Grid.css';
 //        change distance from Infinity to original node distance + 1
 //        set previousNode to the original node
 
+const START_NODE_ROW = 7
+const START_NODE_COL = 5
+
+const FINISH_NODE_ROW = 7
+const FINISH_NODE_COL = 45
+
+// creates the nodes that are pushed into the grid array
+const createNode = (row, col) => {
+  const node = {
+    row,
+    col,
+    isStart: row === START_NODE_ROW && col === START_NODE_COL,
+    isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
+    distance: Infinity,
+    isVisited: false,
+    isWall: false,
+    previousNode: null
+  };
+
+  return node;
+}
+
+// create the initial array of node objects
+const setInitialGrid = () => {
+  const grid = [];
+  
+  // for each row in the grid... 
+  for (let row = 0; row < 15; row++) {
+    const currentRow = [];
+
+    // for each column in the row...
+    for (let col = 0; col < 50; col++) {
+
+      // create node and push
+      currentRow.push(createNode(row, col));
+    }
+  
+    grid.push(currentRow);
+  }
+
+  return grid;
+}
 
 export default function Grid() {
   // const [nodes, setNodes] = useState([])
 
-  const initGrid = [];
-
-  for (let row = 0; row < 15; row++) {
-    const currentRow = [];
-
-    for (let col = 0; col < 50; col++) {
-      const currentNode = {
-        row,
-        col,
-        isStart: row === 7 && col === 5,
-        isFinish: row === 7 && col === 45
-      }
-
-      currentRow.push(currentNode);
-    }
-
-    initGrid.push(currentRow)
-  }
-
-  const grid = initGrid.map((row, rowIndex) => {
+  const grid = setInitialGrid().map((row, rowIndex) => {
     return row.map((node, nodeIndex) => {
       return (
         <Node
