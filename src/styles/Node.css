@@ -3,3 +3,11 @@
   height: 18px;
   border: 1px solid gray;
 }
+
+.node-start {
+  background-color: green;
+}
+
+.node-finish {
+  background-color: red;
+}

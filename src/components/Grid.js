@@ -14,8 +14,8 @@ export default function Grid() {
       const currentNode = {
         row,
         col,
-        isStart: row === 10 && col === 5,
-        isFinish: row === 10 && col === 45
+        isStart: row === 7 && col === 5,
+        isFinish: row === 7 && col === 45
       }
 
       currentRow.push(currentNode);
