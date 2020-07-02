@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Node from './Node';
+import setInitialGrid from '../helpers/gridHelpers';
 import '../styles/Grid.css';
 
 // set grid equal to getInitialGrid() which is similar to what we have below but pushes nodes using createNode()
@@ -25,48 +26,48 @@ import '../styles/Grid.css';
 //        change distance from Infinity to original node distance + 1
 //        set previousNode to the original node
 
-const START_NODE_ROW = 7
-const START_NODE_COL = 5
+// const START_NODE_ROW = 7
+// const START_NODE_COL = 5
 
-const FINISH_NODE_ROW = 7
-const FINISH_NODE_COL = 45
+// const FINISH_NODE_ROW = 7
+// const FINISH_NODE_COL = 45
 
-// creates the nodes that are pushed into the grid array
-const createNode = (row, col) => {
-  const node = {
-    row,
-    col,
-    isStart: row === START_NODE_ROW && col === START_NODE_COL,
-    isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
-    distance: Infinity,
-    isVisited: false,
-    isWall: false,
-    previousNode: null
-  };
+// // creates the nodes that are pushed into the grid array
+// const createNode = (row, col) => {
+//   const node = {
+//     row,
+//     col,
+//     isStart: row === START_NODE_ROW && col === START_NODE_COL,
+//     isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
+//     distance: Infinity,
+//     isVisited: false,
+//     isWall: false,
+//     previousNode: null
+//   };
 
-  return node;
-}
+//   return node;
+// }
 
-// create the initial array of node objects
-const setInitialGrid = () => {
-  const grid = [];
+// // create the initial array of node objects
+// const setInitialGrid = () => {
+//   const grid = [];
   
-  // for each row in the grid... 
-  for (let row = 0; row < 15; row++) {
-    const currentRow = [];
+//   // for each row in the grid... 
+//   for (let row = 0; row < 15; row++) {
+//     const currentRow = [];
 
-    // for each column in the row...
-    for (let col = 0; col < 50; col++) {
+//     // for each column in the row...
+//     for (let col = 0; col < 50; col++) {
 
-      // create node and push
-      currentRow.push(createNode(row, col));
-    }
+//       // create node and push
+//       currentRow.push(createNode(row, col));
+//     }
   
-    grid.push(currentRow);
-  }
+//     grid.push(currentRow);
+//   }
 
-  return grid;
-}
+//   return grid;
+// }
 
 export default function Grid() {
   // const [nodes, setNodes] = useState([])
