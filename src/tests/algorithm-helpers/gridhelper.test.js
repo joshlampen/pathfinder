@@ -10,25 +10,27 @@ test("Creates a grid with nodes that have col, row, isStart, isFinish, distance,
   const grid = setInitialGrid();
   const firstNode = grid[0][0];
 
-  expect(firstNode.col) === 0;
-  expect(firstNode.row) === 0;
-  expect(firstNode.isStart) === false;
-  expect(firstNode.isFinish) === false;
-  expect(firstNode.distance) === Infinity;
-  expect(firstNode.isVisited) === false;
-  expect(firstNode.isWall) === false;
-  expect(firstNode.previousNode) === null;
+  expect(firstNode.col).toBe(0);
+  expect(firstNode.row).toBe(0);
+  expect(firstNode.isStart).toBe(false);
+  expect(firstNode.isFinish).toBe(false);
+  expect(firstNode.distance).toBe(Infinity);
+  expect(firstNode.isVisited).toBe(false);
+  expect(firstNode.isWall).toBe(false);
+  expect(firstNode.previousNode).toBe(null);
 });
 
 test("Creates a grid with start and end nodes that have isStart and isFinish as true respectively", () => {
   const grid = setInitialGrid();
+  grid[1][1].isStart = true;
+  grid[10][10].isFinish = true;
 
   const startNode = grid[1][1];
   const endNode = grid[10][10];
 
-  expect(startNode.isStart) === true;
-  expect(startNode.isFinish) === false;
+  expect(startNode.isStart).toBe(true);
+  expect(startNode.isFinish).toBe(false);
 
-  expect(endNode.isStart) === false;
-  expect(endNode.isFinish) === true;
+  expect(endNode.isStart).toBe(false);
+  expect(endNode.isFinish).toBe(true);
 });
