@@ -1,25 +1,118 @@
 .Node {
   width: 18px;
   height: 18px;
-  border: 1px solid gray;
+  border: 1px solid rgba(168, 168, 168, 0.5);
 }
 
 .node-wall {
+  animation-name: wallAnimation;
+  animation-duration: 0.5s;
   background-color: black;
 }
 
 .node-visited {
-  background-color: blue;
-}
-
-.node-start {
-  background-color: green;
+  animation-name: visitedAnimation;
+  animation-duration: 1.5s;
+  background-color: #42C0FB;
+  border: 1px solid #5acbffce;
 }
 
 .node-finish {
   background-color: red;
 }
 
+.node-start {
+  background-color: green;
+}
+
 .node-shortest-path {
-  background-color: yellow;
+  animation-name: shortestPathAnimation;
+  animation-duration: 1s;
+  background-color: #FFE600;
+  border-color: #ebd301;
+}
+
+@keyframes visitedAnimation {
+  0% {
+    background-color: #002435;
+    transform: scale(0.2);
+    border-radius: 100%;
+  }
+  
+  20% {
+    background-color: #0b3e56;
+    border-radius: 67%;
+  }
+  
+  40% {
+    background-color: #165877;
+    border-radius: 33%;
+  }
+  
+  60% {
+    background-color: #277fa8;
+    border-color: #277fa8;
+    border-radius: 2px;
+    transform: scale(1.3);
+    border-radius: 0%;
+  }
+
+  80% {
+    background-color: #37a6da;
+    border-color: #37a6da;
+    border-radius: 1.5px;
+  }
+  
+  100% {
+    background-color: #42C0FB;
+    border-color: #5acbffce;
+    border-radius: 1px;
+    transform: scale(1);
+  }
+}
+
+@keyframes shortestPathAnimation {
+  0% {
+    background-color: #fae955;
+    border-color: #fae955;
+    transform: scale(1.5);
+  }
+  
+  20% {
+    background-color: #fbe840;
+    border-color: #fbe840;
+  }
+  
+  40% {
+    background-color: #fde72b;
+    border-color: #fde72b;
+    transform: scale(0.5);
+  }
+  
+  60% {
+    background-color: #fde71c;
+    border-color: #fde71c;
+  }
+  
+  80% {
+    background-color: #fee70e;
+    border-color: #fee70e;
+  }
+
+  100% {
+    background-color: #FFE600;
+    border-color: #ebd301;
+  }
+}
+
+@keyframes wallAnimation {
+  0% {
+    background-color: rgb(68, 68, 68);
+    transform: scale(0.2);
+  }
+
+  100% {
+    background-color: black;
+    transform: scale(1);
+  }
 }
