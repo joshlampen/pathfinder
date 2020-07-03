@@ -2,7 +2,7 @@ const START_NODE_COL = 5
 const START_NODE_ROW = 7
 
 const FINISH_NODE_COL = 20
-const FINISH_NODE_ROW = 14
+const FINISH_NODE_ROW = 10
 
 // creates the nodes that are pushed into the grid array
 const createNode = (col, row) => {
