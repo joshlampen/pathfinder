@@ -1,44 +1,33 @@
 import React, { useState } from 'react';
 import Node from './Node';
+import { START_NODE_COL, START_NODE_ROW, FINISH_NODE_COL, FINISH_NODE_ROW, setInitialGrid } from '../helpers/gridHelpers';
+import dijkstra from '../helpers/dijkstraHelpers';
 import '../styles/Grid.css';
 
 export default function Grid() {
   // const [nodes, setNodes] = useState([])
 
-  const initGrid = [];
+  const grid = setInitialGrid();
 
-  for (let row = 0; row < 15; row++) {
-    const currentRow = [];
+  const startNode = grid[START_NODE_ROW][START_NODE_COL];
+  const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
 
-    for (let col = 0; col < 50; col++) {
-      const currentNode = {
-        row,
-        col,
-        isStart: row === 10 && col === 5,
-        isFinish: row === 10 && col === 45
-      }
-
-      currentRow.push(currentNode);
-    }
-
-    initGrid.push(currentRow)
-  }
-
-  const grid = initGrid.map((row, rowIndex) => {
-    return row.map((node, nodeIndex) => {
-      return (
-        <Node
-          key={nodeIndex}
-          isStart={node.isStart}
-          isFinish={node.isFinish}
-        />
-      )
-    })
-  })
+  console.log(dijkstra(grid, startNode, finishNode))
 
   return (
     <div className="Grid">
-      {grid}
+      {grid.map((row, rowIndex) => {
+        return row.map((node, nodeIndex) => {
+          return (
+            <Node
+              key={nodeIndex}
+              isStart={node.isStart}
+              isFinish={node.isFinish}
+              isVisited={node.isVisited}
+            />
+          )
+        })
+      })}
     </div>
   )
 }

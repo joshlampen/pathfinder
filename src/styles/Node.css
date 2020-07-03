@@ -3,3 +3,16 @@
   height: 18px;
   border: 1px solid gray;
 }
+
+.node-visited {
+  background-color: blue;
+}
+
+.node-start {
+  background-color: green;
+}
+
+.node-finish {
+  background-color: red;
+}
+
