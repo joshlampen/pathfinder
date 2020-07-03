@@ -4,6 +4,10 @@
   border: 1px solid gray;
 }
 
+.node-wall {
+  background-color: black;
+}
+
 .node-visited {
   background-color: blue;
 }

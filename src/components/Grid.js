@@ -13,7 +13,7 @@ export default function Grid() {
     <div className="Grid">
       {grid.map((row, rowIndex) => {
         return row.map((node, nodeIndex) => {
-          const { row, col, isStart, isFinish, isVisited } = node;
+          const { row, col, isStart, isFinish, isVisited, isWall } = node;
           return (
             <Node
               key={nodeIndex}
@@ -22,6 +22,7 @@ export default function Grid() {
               isStart={isStart}
               isFinish={isFinish}
               isVisited={isVisited}
+              isWall={isWall}
             />
           )
         })
