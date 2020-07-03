@@ -88,7 +88,7 @@ const animateDijkstra = (visitedNodesInOrder, shortestPathNodes) => {
     if (i === visitedNodesInOrder.length) {
       setTimeout(() => {
         animateShortestPath(shortestPathNodes);
-      }, 15 * i);
+      }, 10 * i);
     } else {
       setTimeout(() => {
         // for each node in the array, add the 'visited' class
@@ -104,7 +104,7 @@ const animateShortestPath = shortestPathNodes => {
     setTimeout(() => {
       const node = shortestPathNodes[i];
       document.getElementById(`node-${node.row}-${node.col}`).className += ' node-shortest-path';
-    }, 15 * i);
+    }, 50 * i);
   }
 }
 
