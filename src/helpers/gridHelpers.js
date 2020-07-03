@@ -14,7 +14,10 @@ const createNode = (row, col) => {
     distance: Infinity,
     isVisited: false,
     isWall: false,
-    previousNode: null
+    previousNode: null,
+    onMouseDown: false,
+    onMouseEnter: false,
+    onMouseUp: false,
   };
 
   return node;
