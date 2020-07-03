@@ -15,3 +15,7 @@
 .node-finish {
   background-color: red;
 }
+
+.node-shortest-path {
+  background-color: yellow;
+}
