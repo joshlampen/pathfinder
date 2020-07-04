@@ -40,7 +40,7 @@ export default function Node(props) {
       id={`node-${row}-${col}`}
       className={classes}
       onMouseEnter={checkGridPressed}
-      onClick={() => toggleWall(row, col, !isWall, isStart, isFinish)}
+      onMouseDown={() => toggleWall(row, col, !isWall, isStart, isFinish)}
     >
       {mountStartIcon()}
       {mountFinishIcon()}
