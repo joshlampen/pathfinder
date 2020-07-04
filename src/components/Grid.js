@@ -8,7 +8,8 @@ export default function Grid() {
   const [state, setState] = useState({
     grid: setInitialGrid(),
     mousePressed: false,
-    inProgress: false
+    inProgress: false,
+    isStartPickup: false,
   })
 
   const mouseDown = (row, col) => {
@@ -20,7 +21,7 @@ export default function Grid() {
   }
 
   function toggleWall(row, col, isWall, isStart, isFinish) {
-    if (!isStart && !isFinish && !state.inProgress) {
+    if (!isStart && !isFinish && !state.inProgress && !state.isStartPickup) {
       const newNode = {
         ...state.grid[row][col],
         isWall
@@ -33,10 +34,51 @@ export default function Grid() {
       grid[row] = newRow;
   
       setState(prev => ({ ...prev, grid }));
-    } else {
-      return;
+
+    } else if (isStart && !state.isStartPickup) {
+
+      console.log('clicked')
+      setState(prev => ({ ...prev, isStartPickup: true }));
+
+    } else if (state.isStartPickup) {
+        
+      console.log(row,col)
+   
+      const setNewGrid = () => {
+        const grid = [];
+        
+        // for each row in the grid... 
+        for (let rowArray = 0; rowArray < 15; rowArray++) {
+          const currentRow = [];
+      
+          // for each column in the row...
+          for (let colValue = 0; colValue < 50; colValue++) {
+      
+            // create node and push
+            const newNode = {
+              ...state.grid[rowArray][colValue],
+              isStart: rowArray === row && colValue === col,
+            }
+
+            currentRow.push(newNode);
+          }
+        
+          grid.push(currentRow);
+        }
+      
+        return grid;
+      }
+    
+        setState(prev => ({ ...prev, grid: setNewGrid() }));
+        
     }
+
   }
+  
+
+
+
+
 
   return (
     <div 

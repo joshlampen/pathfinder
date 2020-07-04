@@ -9,11 +9,11 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 const classNames = require('classnames');
 
 export default function Node(props) {
-  const { row, col, isStart, isFinish, isWall, mousePressed, toggleWall } = props;
+  const { row, col, isStart, isFinish, isWall, mousePressed, toggleWall, isStartPickup } = props;
 
   const checkGridPressed = () => {
     if (mousePressed) {
-      toggleWall(row, col, !isWall, isStart, isFinish);
+      toggleWall(row, col, !isWall, isStart, isFinish, isStartPickup);
     }
   }
 
