@@ -19,6 +19,16 @@ export default function Grid() {
     setState(prev => ({ ...prev, mousePressed: false }))
   }
 
+  function toggleNode(row, col, isWall, isStart, isFinish) {
+    if (!isStart && !isFinish && !state.inProgress) {
+      //If the node can be a wall
+      return toggleWall(row, col, isWall, isStart, isFinish)
+    } else {
+      //If the node is either a start or end
+    }
+    return null;
+  }
+
   function toggleWall(row, col, isWall, isStart, isFinish) {
     if (!isStart && !isFinish && !state.inProgress) {
       const newNode = {
@@ -57,7 +67,8 @@ export default function Grid() {
               isVisited={isVisited}
               isWall={isWall}
               mousePressed={state.mousePressed}
-              toggleWall = {toggleWall}
+              toggleWall={toggleWall}
+              toggleNode={toggleNode}
             />
           )
         })
