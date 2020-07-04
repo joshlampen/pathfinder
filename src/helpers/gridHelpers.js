@@ -1,5 +1,5 @@
-const START_NODE_ROW = 7
-const START_NODE_COL = 5
+const START_NODE_ROW = 0
+const START_NODE_COL = 0
 
 const FINISH_NODE_ROW = 14
 const FINISH_NODE_COL = 30
@@ -44,4 +44,17 @@ const setInitialGrid = () => {
   return grid;
 }
 
-export { START_NODE_ROW, START_NODE_COL, FINISH_NODE_ROW, FINISH_NODE_COL, setInitialGrid }
+const resetCss = (grid, inProgress) => {
+  if (!inProgress) {
+    grid.forEach(row => {
+      row.forEach(node => {
+        document.getElementById(`node-${node.row}-${node.col}`).className = 'Node'
+      })
+  	})
+  } else {
+    return;    
+  }
+
+}
+
+export { START_NODE_ROW, START_NODE_COL, FINISH_NODE_ROW, FINISH_NODE_COL, setInitialGrid, resetCss }
