@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Node from './Node';
-import { START_NODE_ROW, START_NODE_COL, FINISH_NODE_ROW, FINISH_NODE_COL, setInitialGrid } from '../helpers/gridHelpers';
+import { START_NODE_ROW, START_NODE_COL, FINISH_NODE_ROW, FINISH_NODE_COL, setInitialGrid, resetCss } from '../helpers/gridHelpers';
 import visualizeDijkstra from '../helpers/dijkstraHelpers';
 import '../styles/Grid.css';
 
@@ -179,6 +179,7 @@ export default function Grid() {
             finishRow: FINISH_NODE_ROW,
             finishCol: FINISH_NODE_COL
           }))
+          resetCss(state.grid)
         }}
       >
         Refresh
