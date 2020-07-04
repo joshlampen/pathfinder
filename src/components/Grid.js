@@ -8,7 +8,9 @@ export default function Grid() {
   const [state, setState] = useState({
     grid: setInitialGrid(),
     mousePressed: false,
-    inProgress: false
+    inProgress: false,
+    hasStart: true,
+    hasFinish: false,
   })
 
   const mouseDown = (row, col) => {
@@ -20,13 +22,55 @@ export default function Grid() {
   }
 
   function toggleNode(row, col, isWall, isStart, isFinish) {
-    if (!isStart && !isFinish && !state.inProgress) {
-      //If the node can be a wall
-      return toggleWall(row, col, isWall, isStart, isFinish)
+
+    if (isStart || !state.hasStart && !state.inProgress) {
+      console.log('in is Start')
+      return toggleStart(row, col, isWall, isStart, isFinish);
+    } else if (isFinish) {
+      console.log('is finish')
+      return;
     } else {
-      //If the node is either a start or end
+      console.log('is wall')
+      return toggleWall(row, col, isWall, isStart, isFinish)
     }
-    return null;
+  }
+
+  function toggleStart(row, col, isWall, isStart, isFinish) {
+    if (state.hasStart) {
+      const newNode = {
+        ...state.grid[row][col],
+        isStart: false
+      }
+
+      const newRow = [...state.grid[row]];
+      newRow[col] = newNode;
+
+      const grid = [...state.grid];
+      grid[row] = newRow;
+
+      let hasStart = false;
+
+      setState(prev => ({ ...prev, grid, hasStart }));
+      console.log(state.grid)
+
+    } else {
+      const newNode = {
+        ...state.grid[row][col],
+        isStart: true
+      }
+
+      const newRow = [...state.grid[row]];
+      newRow[col] = newNode;
+
+      const grid = [...state.grid];
+      grid[row] = newRow;
+
+      let hasStart = true;
+
+      setState(prev => ({ ...prev, grid, hasStart }));
+      console.log(state.grid)
+    }
+    return;
   }
 
   function toggleWall(row, col, isWall, isStart, isFinish) {
@@ -67,7 +111,6 @@ export default function Grid() {
               isVisited={isVisited}
               isWall={isWall}
               mousePressed={state.mousePressed}
-              toggleWall={toggleWall}
               toggleNode={toggleNode}
             />
           )
