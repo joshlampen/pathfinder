@@ -158,7 +158,7 @@ export default function Grid() {
         })
       })}
       <button
-        onClick = {() => {
+        onClick = { () => {
           setState(prev => ({ ...prev, inProgress: true }))
           visualizeDijkstra(state.grid, state.startRow, state.startCol, state.finishRow, state.finishCol)
         }}
@@ -166,20 +166,25 @@ export default function Grid() {
         Please Work!
       </button>
       <button
-        onClick = {() => {
-          setState(prev => ({
-            ...prev,
-            grid: setInitialGrid(),
-            mousePressed: false,
-            inProgress: false,
-            hasStart: true,
-            startRow: START_NODE_ROW,
-            startCol: START_NODE_COL,
-            hasFinish: true,
-            finishRow: FINISH_NODE_ROW,
-            finishCol: FINISH_NODE_COL
-          }))
-          resetCss(state.grid)
+        onClick={() => {
+          setState(prev => ({ ...prev, inProgress: false}))
+          if (!state.inProgress) {
+            resetCss(state.grid, state.inProgress)
+            setState(prev => ({
+              ...prev,
+              grid: setInitialGrid(),
+              mousePressed: false,
+              inProgress: false,
+              hasStart: true,
+              startRow: START_NODE_ROW,
+              startCol: START_NODE_COL,
+              hasFinish: true,
+              finishRow: FINISH_NODE_ROW,
+              finishCol: FINISH_NODE_COL
+            }))
+          } else {
+            return;
+          }
         }}
       >
         Refresh
