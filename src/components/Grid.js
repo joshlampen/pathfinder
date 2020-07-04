@@ -21,16 +21,16 @@ export default function Grid() {
 
   function toggleWall(row, col, isWall, isStart, isFinish) {
     if (!isStart && !isFinish && !state.inProgress) {
-      const newNode = {
+      const newNode = { // insert new isWall value into node
         ...state.grid[row][col],
         isWall
       }
   
       const newRow = [...state.grid[row]];
-      newRow[col] = newNode;
+      newRow[col] = newNode; // insert new node into row
   
       const grid = [...state.grid];
-      grid[row] = newRow;
+      grid[row] = newRow; // insert new row into grid
   
       setState(prev => ({ ...prev, grid }));
     } else {
