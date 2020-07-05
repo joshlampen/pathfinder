@@ -17,8 +17,8 @@ const updateUnvisitedNeighbors = (node, grid) => {
 	const unvisitedNeighbors = getUnvisitedNeighbors(node, grid);
 
 	for (const neighbor of unvisitedNeighbors) {
-		if (node.isWeighted) {
-			neighbor.distance = node.distance + 3;
+		if (node.isWeight) {
+			neighbor.distance = node.distance + 2;
 			neighbor.previousNode = node
 		} else {
 			neighbor.distance = node.distance + 1;
@@ -97,12 +97,13 @@ const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
 			}, 10 * i)
 		} else {
 			setTimeout(() => {
-				// for each node in the array, add the 'visited' class
-				if (node.isWeighted) {
-					document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-visited';
-				} else {
-					document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
-				}
+				// // for each node in the array, add the 'visited' class
+				// if (node.isWeight) {
+				// 	document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-visited';
+				// } else {
+				// 	document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
+				// }
+        document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
 			}, 10 * i)
 		}
   }

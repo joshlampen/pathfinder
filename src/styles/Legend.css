@@ -1,0 +1,18 @@
+.Legend {
+  width: 1125px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgb(245, 245, 245);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+}
+
+.legend-item p {
+  margin-left: 15px;
+}

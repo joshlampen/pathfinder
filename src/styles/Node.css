@@ -9,15 +9,17 @@
 
 .node-weight {
   animation-name: weightAnimation;
-  animation-duration: 0.5s;
-  background-color: #3d5c5c;
+  animation-duration: 0.3s;
+  color: black;
 }
 
-.node-weight-visited {
-  animation-name: weightVisited;
-  animation-duration: 4s;
-  background-color: #003366;
-}
+/* .node-weight-visited {
+  animation-name: visitedAnimation;
+  animation-duration: 1.5s;
+  background-color: #42C0FB;
+  border: 1px solid #5acbffce;
+  color: black;
+} */
 
 .node-wall {
   animation-name: wallAnimation;
@@ -30,6 +32,7 @@
   animation-duration: 1.5s;
   background-color: #42C0FB;
   border: 1px solid #5acbffce;
+  color: black;
 }
 
 .node-shortest-path {
@@ -37,6 +40,7 @@
   animation-duration: 1s;
   background-color: #FFE600;
   border-color: #ebd301;
+  color: black;
 }
 
 @keyframes visitedAnimation {
@@ -126,10 +130,12 @@
 
 @keyframes weightAnimation {
   0% {
-    transform: scale(0.2);
+    color: rgb(68, 68, 68);
+    transform: scale(0.5);
   }
 
   100% {
+    color: black;
     transform: scale(1);
   }
 }
