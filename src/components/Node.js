@@ -10,7 +10,7 @@ const classNames = require('classnames');
 
 export default function Node(props) {
   const { row, col, isStart, isFinish, isWall, mousePressed, toggleWall, isStartPickup, isEndPickup, isWeighted } = props;
-  console.log(isWeighted)
+
   const checkGridPressed = () => {
     if (mousePressed) {
       toggleWall(row, col, !isWall, isStart, isFinish, isStartPickup, isEndPickup, isWeighted);

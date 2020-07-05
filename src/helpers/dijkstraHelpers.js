@@ -19,8 +19,14 @@ const updateUnvisitedNeighbors = (node, grid) => {
 	const unvisitedNeighbors = getUnvisitedNeighbors(node, grid);
 
 	for (const neighbor of unvisitedNeighbors) {
-		neighbor.distance = node.distance + 1;
-		neighbor.previousNode = node;
+		if (node.isWeighted) {
+			neighbor.distance = node.distance + 2;
+			neighbor.previousNode = node
+		} else {
+			neighbor.distance = node.distance + 1;
+			neighbor.previousNode = node;			
+		}
+
 	}
 }
 
@@ -56,22 +62,26 @@ const dijkstra = (grid, startNode, finishNode) => {
 
 		if (closestNode.isWeighted) {
 			setTimeout(() => {
+				if (closestNode.distance === Infinity) return visitedNodesInOrder;
 				closestNode.isVisited = true;
 				visitedNodesInOrder.push(closestNode);
 
 				if(closestNode === finishNode) return visitedNodesInOrder; // algorithm complete, finished node has been found
-				updateUnvisitedNeighbors(closestNode, grid);	
+				updateUnvisitedNeighbors(closestNode, grid);
 			}, 1000)
+
 		}
 
-		// if the start node is completely surrounded by walls, we can't find any more neighbors (where distance isn't infinity) and are therefore stuck
 		if (closestNode.distance === Infinity) return visitedNodesInOrder;
 
 		closestNode.isVisited = true;
 		visitedNodesInOrder.push(closestNode);
 
 		if(closestNode === finishNode) return visitedNodesInOrder; // algorithm complete, finished node has been found
-		updateUnvisitedNeighbors(closestNode, grid);	
+		updateUnvisitedNeighbors(closestNode, grid);
+		
+		// if the start node is completely surrounded by walls, we can't find any more neighbors (where distance isn't infinity) and are therefore stuck
+	
 	}
 }
 
