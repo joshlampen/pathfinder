@@ -16,7 +16,9 @@ export default function Grid() {
     startRow: 0,
     startCol: 0,
     finishRow: 14,
-    finishCol: 30
+    finishCol: 30,
+    makeWall: true,
+    makeWeight: false
   });
 
   const mouseDown = (row, col) => {
@@ -119,10 +121,25 @@ export default function Grid() {
   function toggleWall(row, col, isWall, isStart, isFinish) {
 
     //if the user clicks on an empty square, create a wall
-    if (!isStart && !isFinish && !state.inProgress && !state.isStartPickup && !state.isEndPickup) {
+    if (!isStart && !isFinish && !state.inProgress && !state.isStartPickup && !state.isEndPickup && state.makeWall) {
       const newNode = {
         ...state.grid[row][col],
         isWall,
+      };
+
+      const newRow = [...state.grid[row]];
+      newRow[col] = newNode;
+
+      const grid = [...state.grid];
+      grid[row] = newRow;
+
+      setState((prev) => ({ ...prev, grid }));
+
+      //if the user clicks on an empty square and the state is set to make weight, then create a weight
+     } else if (!isStart && !isFinish && !state.inProgress && !state.isStartPickup && !state.isEndPickup && state.makeWeight) {
+      const newNode = {
+        ...state.grid[row][col],
+        isWeighted: true,
       };
 
       const newRow = [...state.grid[row]];
@@ -249,7 +266,6 @@ export default function Grid() {
             isVisited,
             isWall,
             isWeighted,
-            mousePressed,
           } = node;
           return (
             <Node
@@ -288,6 +304,25 @@ export default function Grid() {
       </button>
       <button
         onClick={() => {
+          if (!state.inProgress && state.makeWall) {
+            setState(prev => ({
+              ...prev,
+              makeWall: false,
+              makeWeight: true
+            }))
+          } else {
+            setState(prev => ({
+              ...prev,
+              makeWall: true, 
+              makeWeight: false
+            }))
+          }
+        }}
+      >
+        {state.makeWall ? "Make weights" : "Make walls"}
+      </button>
+      <button
+        onClick={() => {
           if (state.inProgress === 'done' || !state.inProgress) {
             resetCss(state.grid)
             setState(prev => ({
@@ -300,7 +335,9 @@ export default function Grid() {
               startCol: 0,
               finishRow: 14,
               finishCol: 30,
-              inProgress: false
+              inProgress: false,
+              makeWall: true,
+              makeWeight: false
             }))
           } else {
             return;

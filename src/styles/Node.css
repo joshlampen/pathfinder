@@ -13,7 +13,7 @@
 .node-weight-visited {
   animation-name: weightVisited;
   animation-duration: 4s;
-  background-color: #42C0FB;
+  background-color: #003366;
 }
 
 .node-wall {
@@ -149,7 +149,7 @@
 
   100% {
     transform: scale(1);
-    background-color: #42C0FB;
+    background-color: #003366;
     border: 1px solid #5acbffce
   }
 }
