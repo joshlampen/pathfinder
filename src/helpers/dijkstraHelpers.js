@@ -1,5 +1,3 @@
-import { START_NODE_ROW, START_NODE_COL } from "./gridHelpers";
-
 // get the unvisited neighboring nodes for the node being analyzed
 const getUnvisitedNeighbors = (node, grid) => {
 	const neighbors = [];
@@ -81,11 +79,13 @@ const getShortestPathNodes = finishNode => {
 	return path;
 }
 
-const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
+// const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
+const animateDijkstra = (visitedNodesInOrder, shortestPathNodes) => {
   for (let i = 0; i <= visitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
     if (i === visitedNodesInOrder.length) {
       setTimeout(() => {
-				animateShortestPath(shortestPathNodes, setState);
+				// animateShortestPath(shortestPathNodes, setState);
+				animateShortestPath(shortestPathNodes);
 			}, 10 * i)
     } else {
       setTimeout(() => {
@@ -97,26 +97,29 @@ const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
   }
 }
 
-const animateShortestPath = (shortestPathNodes, setState) => {
+// const animateShortestPath = (shortestPathNodes, setState) => {
+const animateShortestPath = shortestPathNodes => {
   for (let i = 0; i < shortestPathNodes.length; i++) {
     setTimeout(() => {
       const node = shortestPathNodes[i];
 			document.getElementById(`node-${node.row}-${node.col}`).className += ' node-shortest-path';
 			
 		}, 50 * i);
-		if (i === shortestPathNodes.length - 1) {
-			setTimeout(() => {
-				setState((prev) => ({ ...prev, inProgress: 'done' }));
-			}, 75 * i)
-		}
+		// if (i === shortestPathNodes.length - 1) {
+		// 	setTimeout(() => {
+		// 		setState((prev) => ({ ...prev, inProgress: 'done' }));
+		// 	}, 75 * i)
+		// }
 	}
 }
 
-export default async function visualizeDijkstra(grid, START_NODE_ROW, START_NODE_COL, FINISH_NODE_ROW, FINISH_NODE_COL, setState) {
-  const startNode = grid[START_NODE_ROW][START_NODE_COL];
-  const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
-  const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
-  const shortestPathNodes = getShortestPathNodes(finishNode);
+// export default async function visualizeDijkstra(grid, START_NODE_ROW, START_NODE_COL, FINISH_NODE_ROW, FINISH_NODE_COL, setState) {
+export default async function visualizeDijkstra(grid, startNode, finishNode) {
+  const startNodeObj = grid[startNode.row][startNode.col];
+  const finishNodeObj = grid[finishNode.row][finishNode.col];
+  const visitedNodesInOrder = dijkstra(grid, startNodeObj, finishNodeObj);
+  const shortestPathNodes = getShortestPathNodes(finishNodeObj);
 
-	animateDijkstra(visitedNodesInOrder, shortestPathNodes, setState);
+	// animateDijkstra(visitedNodesInOrder, shortestPathNodes, setState);
+	animateDijkstra(visitedNodesInOrder, shortestPathNodes);
 }

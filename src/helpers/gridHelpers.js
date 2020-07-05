@@ -1,30 +1,4 @@
-const START_NODE_ROW = 0
-const START_NODE_COL = 0
-
-const FINISH_NODE_ROW = 14
-const FINISH_NODE_COL = 30
-
-// creates the nodes that are pushed into the grid array
-const createNode = (row, col) => {
-  const node = {
-    row,
-    col,
-    isStart: row === START_NODE_ROW && col === START_NODE_COL,
-    isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
-    distance: Infinity,
-    isVisited: false,
-    isWall: false,
-    previousNode: null,
-    mousedown: false,
-    onMouseEnter: false,
-    onMouseUp: false,
-  };
-
-  return node;
-}
-
-// create the initial array of node objects
-const setInitialGrid = () => {
+export default function setInitialGrid() {   // create the initial array of node objects
   const grid = [];
   
   // for each row in the grid... 
@@ -44,12 +18,21 @@ const setInitialGrid = () => {
   return grid;
 }
 
-const resetCss = (grid) => {
-  grid.forEach(row => {
-    row.forEach(node => {
-      document.getElementById(`node-${node.row}-${node.col}`).className = 'Node'
-    })
-  })
-}
+// creates the nodes that are pushed into the initial grid array
+const createNode = (row, col) => {
+  const node = {
+    row,
+    col,
+    isStart: row === 7 && col === 4,
+    isFinish: row === 7 && col === 40,
+    distance: Infinity,
+    isVisited: false,
+    isWall: false,
+    previousNode: null,
+    mousedown: false,
+    onMouseEnter: false,
+    onMouseUp: false,
+  };
 
-export { START_NODE_ROW, START_NODE_COL, FINISH_NODE_ROW, FINISH_NODE_COL, setInitialGrid, resetCss }
+  return node;
+}
