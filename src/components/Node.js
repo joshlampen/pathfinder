@@ -9,11 +9,21 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 const classNames = require('classnames');
 
 export default function Node(props) {
-  const { row, col, isStart, isFinish, isWall, mousePressed, toggleWall, isStartPickup, isEndPickup, isWeighted } = props;
+  const { row, col, isStart, isFinish, isWall, mousePressed, toggleWall, togglePickup, isStartPickup, isFinishPickup, moveNode, isWeighted } = props;
 
-  const checkGridPressed = () => {
-    if (mousePressed) {
-      toggleWall(row, col, !isWall, isStart, isFinish, isStartPickup, isEndPickup, isWeighted);
+  const handleMouseEnter = () => {
+    if (mousePressed && (isStartPickup || isFinishPickup)) {
+      moveNode(row, col, isStartPickup, isFinishPickup);
+    } else if (mousePressed && !isStart && !isFinish) {
+      toggleWall(row, col, !isWall);
+    }
+  }
+
+  const handleMouseDown = () => {
+    if (isStart || isFinish) {
+      togglePickup(row, col, isStart, isFinish);
+    } else {
+      toggleWall(row, col, !isWall);
     }
   }
 
@@ -40,8 +50,8 @@ export default function Node(props) {
     <div
       id={`node-${row}-${col}`}
       className={classes}
-      onMouseEnter={checkGridPressed}
-      onMouseDown={() => toggleWall(row, col, !isWall, isStart, isFinish)}
+      onMouseEnter={handleMouseEnter}
+      onMouseDown={handleMouseDown}
     >
       {mountStartIcon()}
       {mountFinishIcon()}
