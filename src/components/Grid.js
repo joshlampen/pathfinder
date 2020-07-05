@@ -233,7 +233,6 @@ export default function Grid() {
   }
 }
 
-
   return (
     <div
       className="Grid"
@@ -268,23 +267,28 @@ export default function Grid() {
       })}
       <button
         onClick={() => {
-          setState((prev) => ({ ...prev, inProgress: true }));
-          visualizeDijkstra(
-            state.grid,
-            state.startRow,
-            state.startCol,
-            state.finishRow,
-            state.finishCol,
-            setState
-          );
+          if (state.inProgress === true) {
+            return;
+          } else {
+            setState((prev) => ({ ...prev, inProgress: true }));
+            visualizeDijkstra(
+              state.grid,
+              state.startRow,
+              state.startCol,
+              state.finishRow,
+              state.finishCol,
+              setState
+            );
+          }
+
         }}
       >
         Please Work!
       </button>
       <button
         onClick={() => {
-          if (!state.inProgress) {
-            resetCss(state.grid, state.inProgress)
+          if (state.inProgress === 'done') {
+            resetCss(state.grid)
             setState(prev => ({
               ...prev,
               grid: setInitialGrid(),
@@ -294,7 +298,8 @@ export default function Grid() {
               startRow: 0,
               startCol: 0,
               finishRow: 14,
-              finishCol: 30
+              finishCol: 30,
+              inProgress: false
             }))
           } else {
             return;
