@@ -17,8 +17,13 @@ const updateUnvisitedNeighbors = (node, grid) => {
 	const unvisitedNeighbors = getUnvisitedNeighbors(node, grid);
 
 	for (const neighbor of unvisitedNeighbors) {
-		neighbor.distance = node.distance + 1;
-		neighbor.previousNode = node;
+		if (node.isWeighted) {
+			neighbor.distance = node.distance + 3;
+			neighbor.previousNode = node
+		} else {
+			neighbor.distance = node.distance + 1;
+			neighbor.previousNode = node;			
+		}
 	}
 }
 
@@ -49,10 +54,10 @@ const dijkstra = (grid, startNode, finishNode) => {
 	while (unvisitedNodes.length > 0) { // while there are still unvisited nodes...
 		sortNodesByDistance(unvisitedNodes);
 		const closestNode = unvisitedNodes.shift() // remove the first node in the array (i.e. one of the neighbors)
+		console.log(closestNode.distance)
 
 		if (closestNode.isWall) continue;
 
-		// if the start node is completely surrounded by walls, we can't find any more neighbors (where distance isn't infinity) and are therefore stuck
 		if (closestNode.distance === Infinity) return visitedNodesInOrder;
 
 		closestNode.isVisited = true;
@@ -60,6 +65,9 @@ const dijkstra = (grid, startNode, finishNode) => {
 
 		if(closestNode === finishNode) return visitedNodesInOrder; // algorithm complete, finished node has been found
 		updateUnvisitedNeighbors(closestNode, grid);
+		
+		// if the start node is completely surrounded by walls, we can't find any more neighbors (where distance isn't infinity) and are therefore stuck
+	
 	}
 }
 
@@ -81,19 +89,23 @@ const getShortestPathNodes = finishNode => {
 
 // const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
 const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
-  for (let i = 0; i <= visitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
-    if (i === visitedNodesInOrder.length) {
-      setTimeout(() => {
+	for (let i = 0; i <= visitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
+		const node = visitedNodesInOrder[i]
+
+		if (i === visitedNodesInOrder.length) {
+			setTimeout(() => {
 				animateShortestPath(shortestPathNodes, setState);
-				// animateShortestPath(shortestPathNodes);
 			}, 10 * i)
-    } else {
-      setTimeout(() => {
-        // for each node in the array, add the 'visited' class
-        const node = visitedNodesInOrder[i];
-        document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
-      }, 10 * i);
-    }
+		} else {
+			setTimeout(() => {
+				// for each node in the array, add the 'visited' class
+				if (node.isWeighted) {
+					document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-visited';
+				} else {
+					document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
+				}
+			}, 10 * i)
+		}
   }
 }
 

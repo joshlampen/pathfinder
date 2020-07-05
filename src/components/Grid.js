@@ -12,10 +12,10 @@ export default function Grid() {
     toggleWall,
     moveNode,
     resetGrid,
-    startVisualization
+    startVisualization,
+    toggleWeight,
   } = useGridData()
   
-
   return (
     <div
       className="Grid"
@@ -31,6 +31,7 @@ export default function Grid() {
             isFinish,
             isVisited,
             isWall,
+            isWeighted,
           } = node;
           return (
             <Node
@@ -41,6 +42,7 @@ export default function Grid() {
               isFinish={isFinish}
               isVisited={isVisited}
               isWall={isWall}
+              isWeighted={isWeighted}
               mousePressed={state.mousePressed}
               toggleWall={toggleWall}
               togglePickup={togglePickup}
@@ -59,7 +61,12 @@ export default function Grid() {
       <button
         onClick={resetGrid}
       >
-        Refresh
+        Reset
+      </button>
+      <button
+        onClick={toggleWeight}
+      >
+        {state.makeWall ? "Make weights" : "Make walls"}
       </button>
     </div>
   );

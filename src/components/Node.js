@@ -9,7 +9,7 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 const classNames = require('classnames');
 
 export default function Node(props) {
-  const { row, col, isStart, isFinish, isWall, mousePressed, toggleWall, togglePickup, isStartPickup, isFinishPickup, moveNode } = props;
+  const { row, col, isStart, isFinish, isWall, mousePressed, toggleWall, togglePickup, isStartPickup, isFinishPickup, moveNode, isWeighted } = props;
 
   const handleMouseEnter = () => {
     if (mousePressed && (isStartPickup || isFinishPickup)) {
@@ -30,7 +30,8 @@ export default function Node(props) {
   const classes = classNames("Node", {
     'node-start': isStart,
     'node-finish': isFinish,
-    'node-wall': isWall
+    'node-wall': isWall,
+    'node-weight': isWeighted,
   });
 
   const mountStartIcon = () => {

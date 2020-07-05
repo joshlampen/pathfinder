@@ -50,6 +50,8 @@ export default function useGridData() {
     inProgress: false,
     isStartPickup: false,
     isFinishPickup: false,
+    makeWall: true,
+    makeWeight: false
   });
 
   const mouseDown = (row, col) => {
@@ -133,6 +135,8 @@ export default function useGridData() {
         inProgress: false,
         isStartPickup: false,
         isFinishPickup: false,
+        makeWall: true,
+        makeWeight: false
       })
   
       state.grid.forEach(row => {
@@ -153,5 +157,13 @@ export default function useGridData() {
     }
   }
 
-  return { state, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization }
+  const toggleWeight = () => {
+    if (!state.inProgress && state.makeWall) {
+      setState(prev => ({ ...prev, makeWall: false, makeWeight: true }))
+    } else if(!state.inProgress && !state.makeWall) {
+      setState(prev => ({ ...prev, makeWall: true, makeWeight: false }))
+    }
+  }
+
+  return { state, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight }
 }
