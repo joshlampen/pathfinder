@@ -26,96 +26,7 @@ export default function Grid() {
   const mouseUp = (row, col) => {
     setState((prev) => ({ ...prev, mousePressed: false }));
   };
-
-  /*function toggleNode(row, col, isWall, isStart, isFinish) {
-
-    if (isStart || !state.hasStart) {
-      return toggleStart(row, col);
-    } else if (isFinish || !state.hasFinish) {
-      return toggleEnd(row, col);
-    } else {
-      return toggleWall(row, col, isWall, isStart, isFinish)
-    }
-  }
-
-  function toggleStart(row, col) {
-    if (state.hasStart) {
-      const newNode = {
-        ...state.grid[row][col],
-        isStart: false
-      }
-
-      const newRow = [...state.grid[row]];
-      newRow[col] = newNode;
-
-      const grid = [...state.grid];
-      grid[row] = newRow;
-
-      let hasStart = false;
-
-      setState(prev => ({ ...prev, grid, hasStart }));
-      return;
-
-    } else {
-      const newNode = {
-        ...state.grid[row][col],
-        isStart: true
-      }
-
-      const newRow = [...state.grid[row]];
-      newRow[col] = newNode;
-
-      const grid = [...state.grid];
-      grid[row] = newRow;
-
-      const hasStart = true;
-      const startRow = row;
-      const startCol = col;
-
-      setState(prev => ({ ...prev, grid, hasStart, startRow, startCol }));
-      return
-    }
-  }
-
-  function toggleEnd(row, col) {
-    if (state.hasFinish) {
-      const newNode = {
-        ...state.grid[row][col],
-        isFinish: false
-      }
-
-      const newRow = [...state.grid[row]];
-      newRow[col] = newNode;
-
-      const grid = [...state.grid];
-      grid[row] = newRow;
-
-      let hasFinish = false;
-
-      setState(prev => ({ ...prev, grid, hasFinish }));
-      return;
-
-    } else {
-      const newNode = {
-        ...state.grid[row][col],
-        isFinish: true
-      }
-
-      const newRow = [...state.grid[row]];
-      newRow[col] = newNode;
-
-      const grid = [...state.grid];
-      grid[row] = newRow;
-
-      const hasFinish = true;
-      const finishRow = row;
-      const finishCol = col;
-
-      setState(prev => ({ ...prev, grid, hasFinish, finishRow, finishCol }));
-      return
-    }
-  }*/
-
+  
   function toggleWall(row, col, isWall, isStart, isFinish) {
 
     //if the user clicks on an empty square, create a wall
@@ -151,7 +62,7 @@ export default function Grid() {
           const currentRow = [];
 
           // for each column in the row...
-          for (let colValue = 0; colValue < 50; colValue++) {
+          for (let colValue = 0; colValue < 45; colValue++) {
 
             // resave all the nodes with a new isStart condition mapped to a new row and col value
             const newNode = {
@@ -200,7 +111,7 @@ export default function Grid() {
         const currentRow = [];
 
         // for each column in the row...
-        for (let colValue = 0; colValue < 50; colValue++) {
+        for (let colValue = 0; colValue < 45; colValue++) {
 
           // resave all the nodes with a new isStart condition mapped to a new row and col value
           const newNode = {
@@ -248,7 +159,6 @@ export default function Grid() {
             isFinish,
             isVisited,
             isWall,
-            mousePressed,
           } = node;
           return (
             <Node
