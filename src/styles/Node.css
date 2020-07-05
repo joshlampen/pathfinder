@@ -4,6 +4,12 @@
   border: 1px solid rgba(168, 168, 168, 0.5);
 }
 
+.node-weight {
+  animation-name: weightAnimation;
+  animation-duration: 0.5s;
+  background-color: 3d5c5c
+}
+
 .node-wall {
   animation-name: wallAnimation;
   animation-duration: 0.5s;
@@ -105,6 +111,16 @@
 
   100% {
     background-color: black;
+    transform: scale(1);
+  }
+}
+
+@keyframes weightAnimation {
+  0% {
+    transform: scale(0.2);
+  }
+
+  100% {
     transform: scale(1);
   }
 }
