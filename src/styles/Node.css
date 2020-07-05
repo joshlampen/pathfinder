@@ -1,12 +1,15 @@
 .Node {
-  width: 18px;
-  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 23px;
+  height: 23px;
   border: 1px solid rgba(168, 168, 168, 0.5);
 }
 
 .node-wall {
   animation-name: wallAnimation;
-  animation-duration: 0.5s;
+  animation-duration: 0.3s;
   background-color: black;
 }
 
@@ -17,6 +20,15 @@
   border: 1px solid #5acbffce;
 }
 
+<<<<<<< HEAD
+/* .node-finish {
+}
+
+.node-start {
+} */
+
+=======
+>>>>>>> master
 .node-shortest-path {
   animation-name: shortestPathAnimation;
   animation-duration: 1s;
@@ -100,7 +112,7 @@
 @keyframes wallAnimation {
   0% {
     background-color: rgb(68, 68, 68);
-    transform: scale(0.2);
+    transform: scale(0.5);
   }
 
   100% {
