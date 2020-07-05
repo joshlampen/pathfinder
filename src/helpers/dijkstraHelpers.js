@@ -26,7 +26,6 @@ const updateUnvisitedNeighbors = (node, grid) => {
 			neighbor.distance = node.distance + 1;
 			neighbor.previousNode = node;			
 		}
-
 	}
 }
 
@@ -59,18 +58,6 @@ const dijkstra = (grid, startNode, finishNode) => {
 		const closestNode = unvisitedNodes.shift() // remove the first node in the array (i.e. one of the neighbors)
 
 		if (closestNode.isWall) continue;
-
-		if (closestNode.isWeighted) {
-			setTimeout(() => {
-				if (closestNode.distance === Infinity) return visitedNodesInOrder;
-				closestNode.isVisited = true;
-				visitedNodesInOrder.push(closestNode);
-
-				if(closestNode === finishNode) return visitedNodesInOrder; // algorithm complete, finished node has been found
-				updateUnvisitedNeighbors(closestNode, grid);
-			}, 1000)
-
-		}
 
 		if (closestNode.distance === Infinity) return visitedNodesInOrder;
 
@@ -109,9 +96,15 @@ const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
 			}, 10 * i)
     } else {
       setTimeout(() => {
-        // for each node in the array, add the 'visited' class
-        const node = visitedNodesInOrder[i];
-        document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
+				// for each node in the array, add the 'visited' class
+				const node = visitedNodesInOrder[i]
+				if (!node.isWeighted) {
+					document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';					
+				} else {
+					setTimeout(() => {
+						document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';					
+					}, 500 * i)
+				}
       }, 10 * i);
     }
   }
