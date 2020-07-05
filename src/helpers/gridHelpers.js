@@ -33,7 +33,7 @@ const setInitialGrid = () => {
     const currentRow = [];
 
     // for each column in the row...
-    for (let col = 0; col < 50; col++) {
+    for (let col = 0; col < 45; col++) {
 
       // create node and push
       currentRow.push(createNode(row, col));
