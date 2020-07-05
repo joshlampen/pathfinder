@@ -248,6 +248,7 @@ export default function Grid() {
             isFinish,
             isVisited,
             isWall,
+            isWeighted,
             mousePressed,
           } = node;
           return (
@@ -259,6 +260,7 @@ export default function Grid() {
               isFinish={isFinish}
               isVisited={isVisited}
               isWall={isWall}
+              isWeighted={isWeighted}
               mousePressed={state.mousePressed}
               toggleWall={toggleWall}
             />

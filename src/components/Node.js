@@ -9,18 +9,19 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 const classNames = require('classnames');
 
 export default function Node(props) {
-  const { row, col, isStart, isFinish, isWall, mousePressed, toggleWall, isStartPickup, isEndPickup } = props;
-
+  const { row, col, isStart, isFinish, isWall, mousePressed, toggleWall, isStartPickup, isEndPickup, isWeighted } = props;
+  console.log(isWeighted)
   const checkGridPressed = () => {
     if (mousePressed) {
-      toggleWall(row, col, !isWall, isStart, isFinish, isStartPickup, isEndPickup);
+      toggleWall(row, col, !isWall, isStart, isFinish, isStartPickup, isEndPickup, isWeighted);
     }
   }
 
   const classes = classNames("Node", {
     'node-start': isStart,
     'node-finish': isFinish,
-    'node-wall': isWall
+    'node-wall': isWall,
+    'node-weight': isWeighted,
   });
 
   const mountStartIcon = () => {

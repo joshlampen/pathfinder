@@ -7,7 +7,7 @@
 .node-weight {
   animation-name: weightAnimation;
   animation-duration: 0.5s;
-  background-color: 3d5c5c
+  background-color: #3d5c5c;
 }
 
 .node-wall {

@@ -54,6 +54,16 @@ const dijkstra = (grid, startNode, finishNode) => {
 
 		if (closestNode.isWall) continue;
 
+		if (closestNode.isWeighted) {
+			setTimeout(() => {
+				closestNode.isVisited = true;
+				visitedNodesInOrder.push(closestNode);
+
+				if(closestNode === finishNode) return visitedNodesInOrder; // algorithm complete, finished node has been found
+				updateUnvisitedNeighbors(closestNode, grid);	
+			}, 1000)
+		}
+
 		// if the start node is completely surrounded by walls, we can't find any more neighbors (where distance isn't infinity) and are therefore stuck
 		if (closestNode.distance === Infinity) return visitedNodesInOrder;
 
@@ -61,7 +71,7 @@ const dijkstra = (grid, startNode, finishNode) => {
 		visitedNodesInOrder.push(closestNode);
 
 		if(closestNode === finishNode) return visitedNodesInOrder; // algorithm complete, finished node has been found
-		updateUnvisitedNeighbors(closestNode, grid);
+		updateUnvisitedNeighbors(closestNode, grid);	
 	}
 }
 

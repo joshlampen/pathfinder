@@ -14,6 +14,7 @@ const createNode = (row, col) => {
     distance: Infinity,
     isVisited: false,
     isWall: false,
+    isWeighted: row === 0 && col === 1, //test
     previousNode: null,
     mousedown: false,
     onMouseEnter: false,
