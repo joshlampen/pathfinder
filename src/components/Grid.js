@@ -176,10 +176,7 @@ export default function Grid() {
             isFinish,
             isVisited,
             isWall,
-<<<<<<< HEAD
             isWeighted,
-=======
->>>>>>> 005ed1c5744292886e3cdafd41fe082f59f0a0de
           } = node;
           return (
             <Node
