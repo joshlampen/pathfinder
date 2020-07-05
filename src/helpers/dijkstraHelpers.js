@@ -89,24 +89,35 @@ const getShortestPathNodes = finishNode => {
 }
 
 const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
-  for (let i = 0; i <= visitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
-    if (i === visitedNodesInOrder.length) {
-      setTimeout(() => {
+	for (let i = 0; i <= visitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
+		const clearWalls = () => {
+			const node = visitedNodesInOrder[i]
+			document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
+		}
+
+		let timer;
+
+		if (i === visitedNodesInOrder.length) {
+			timer = clearInterval(timer)
+			setTimeout(() => {
 				animateShortestPath(shortestPathNodes, setState);
+				return
 			}, 10 * i)
-    } else {
-      setTimeout(() => {
+		} else {
+			setTimeout(() => {
 				// for each node in the array, add the 'visited' class
-				const node = visitedNodesInOrder[i]
-				if (!node.isWeighted) {
-					document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';					
-				} else {
-					setTimeout(() => {
-						document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';					
-					}, 500 * i)
+				const animateWalls = () => {
+					clearInterval(timer)
+					timer = setInterval(clearWalls, i)
 				}
-      }, 10 * i);
-    }
+				const node = visitedNodesInOrder[i]
+				if (node.isWeighted) {
+					animateWalls()
+				} else {
+					document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
+				}
+			}, 10 * i)
+		}
   }
 }
 
