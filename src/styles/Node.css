@@ -20,12 +20,15 @@
   border: 1px solid #5acbffce;
 }
 
+<<<<<<< HEAD
 /* .node-finish {
 }
 
 .node-start {
 } */
 
+=======
+>>>>>>> master
 .node-shortest-path {
   animation-name: shortestPathAnimation;
   animation-duration: 1s;
