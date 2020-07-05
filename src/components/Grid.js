@@ -267,7 +267,7 @@ export default function Grid() {
       })}
       <button
         onClick={() => {
-          if (state.inProgress === true) {
+          if (state.inProgress || state.inProgress === 'done') {
             return;
           } else {
             setState((prev) => ({ ...prev, inProgress: true }));
@@ -280,14 +280,13 @@ export default function Grid() {
               setState
             );
           }
-
         }}
       >
         Please Work!
       </button>
       <button
         onClick={() => {
-          if (state.inProgress === 'done') {
+          if (state.inProgress === 'done' || !state.inProgress) {
             resetCss(state.grid)
             setState(prev => ({
               ...prev,

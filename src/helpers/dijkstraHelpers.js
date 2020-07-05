@@ -107,7 +107,7 @@ const animateShortestPath = (shortestPathNodes, setState) => {
 		if (i === shortestPathNodes.length - 1) {
 			setTimeout(() => {
 				setState((prev) => ({ ...prev, inProgress: 'done' }));
-			}, 51 * i)
+			}, 75 * i)
 		}
 	}
 }
