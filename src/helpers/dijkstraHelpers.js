@@ -54,7 +54,6 @@ const dijkstra = (grid, startNode, finishNode) => {
 	while (unvisitedNodes.length > 0) { // while there are still unvisited nodes...
 		sortNodesByDistance(unvisitedNodes);
 		const closestNode = unvisitedNodes.shift() // remove the first node in the array (i.e. one of the neighbors)
-		console.log(closestNode.distance)
 
 		if (closestNode.isWall) continue;
 
