@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import Node from "./Node";
 import useGridData from "../hooks/useGridData";
-import visualizeDijkstra from "../helpers/dijkstraHelpers";
 import "../styles/Grid.css";
 
 export default function Grid() {

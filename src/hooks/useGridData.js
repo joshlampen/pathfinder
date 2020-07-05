@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import setInitialGrid from "../helpers/gridHelpers";
 import visualizeDijkstra from "../helpers/dijkstraHelpers";
 
 export default function useGridData() {
@@ -66,7 +65,7 @@ export default function useGridData() {
     if (isStart && !state.isStartPickup && !state.inProgress) {
       setState(prev => ({ ...prev, isStartPickup: true }));
       moveNode(row, col, isStart, isFinish)
-    } else {
+    } else if (isFinish && !state.isFinishPickup && !state.inProgress) {
       setState(prev => ({ ...prev, isFinishPickup: true }));
       moveNode(row, col, isStart, isFinish)
     }
@@ -100,28 +99,48 @@ export default function useGridData() {
   }
 
   useEffect(() => {
-    const grid = setInitialGrid();
+    const oldGrid = [...state.grid];
+
+    const grid = oldGrid.map((row, rowIndex) => {
+      return row.map((node, colIndex) => {
+        const newNode = {
+          ...node,
+          isStart: rowIndex === startNode.row && colIndex === startNode.col,
+          isFinish: rowIndex === finishNode.row && colIndex === finishNode.col,
+        };
+
+        if (newNode.isStart || newNode.isFinish) {
+          newNode.isWall = false;
+        }
+
+        return newNode;
+      })
+    })
 
     setState(prev => ({ ...prev, grid }))
   }, [startNode, finishNode])
 
-  const resetGrid = (grid) => {
-    setStartNode({ row: 7, col: 4 });
-    setFinishNode({ row: 7, col: 40 });
-
-    setState({
-      grid: setInitialGrid(),
-      mousePressed: false,
-      inProgress: false,
-      isStartPickup: false,
-      isFinishPickup: false,
-    })
-
-    state.grid.forEach(row => {
-      row.forEach(node => {
-        document.getElementById(`node-${node.row}-${node.col}`).className = 'Node'
+  const resetGrid = () => {
+    if (state.inProgress === true) {
+      return;
+    } else {
+      setStartNode({ row: 7, col: 4 });
+      setFinishNode({ row: 7, col: 40 });
+  
+      setState({
+        grid: setInitialGrid(),
+        mousePressed: false,
+        inProgress: false,
+        isStartPickup: false,
+        isFinishPickup: false,
       })
-    })
+  
+      state.grid.forEach(row => {
+        row.forEach(node => {
+          document.getElementById(`node-${node.row}-${node.col}`).className = 'Node'
+        })
+      })
+    }
   }
 
   const startVisualization = () => {
@@ -130,7 +149,7 @@ export default function useGridData() {
     } else {
       setState(prev => ({ ...prev, inProgress: true }));
 
-      visualizeDijkstra(state.grid, startNode, finishNode);
+      visualizeDijkstra(state.grid, startNode, finishNode, setState)
     }
   }
 
