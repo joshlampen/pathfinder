@@ -35,11 +35,10 @@ export default function useGridData() {
       distance: Infinity,
       isVisited: false,
       isWall: false,
-      isWeighted: false,
+      isWeight: false,
       previousNode: null,
-      mousedown: false,
-      onMouseEnter: false,
-      onMouseUp: false,
+      lastRow: row === 14,
+      lastCol: col === 44
     };
     
     return node;
@@ -51,8 +50,7 @@ export default function useGridData() {
     inProgress: false,
     isStartPickup: false,
     isFinishPickup: false,
-    makeWall: true,
-    makeWeight: false
+    drawWall: true,
   });
 
   const mouseDown = (row, col) => {
@@ -75,7 +73,8 @@ export default function useGridData() {
   }
 
   const moveNode = (row, col, isStartPickup, isFinishPickup) => {
-    const newNode = { row, col }
+    const newNode = { row, col };
+
     if (isStartPickup) {
       setStartNode(newNode);
     } else {
@@ -83,13 +82,13 @@ export default function useGridData() {
     }
   }
 
-  const toggleWall = (row, col, isWall, isWeighted) => {
+  const toggleWall = (row, col, isWall, isWeight) => {
     //if the user clicks on an empty square, create a wall
-    if (!state.inProgress && state.makeWall) {
+    if (!state.inProgress && state.drawWall) {
       const newNode = {
         ...state.grid[row][col],
         isWall,
-        isWeighted: false
+        isWeight: false
       };
 
       const newRow = [...state.grid[row]];
@@ -99,10 +98,10 @@ export default function useGridData() {
       grid[row] = newRow;
 
       setState(prev => ({ ...prev, grid }));
-    } else if (!state.inProgress && !state.makeWall) {
+    } else if (!state.inProgress && !state.drawWall) {
       const newNode = {
         ...state.grid[row][col],
-        isWeighted,
+        isWeight,
         isWall: false
       };
 
@@ -151,35 +150,41 @@ export default function useGridData() {
         inProgress: false,
         isStartPickup: false,
         isFinishPickup: false,
-        makeWall: true,
-        makeWeight: false
+        drawWall: true,
       })
   
       state.grid.forEach(row => {
         row.forEach(node => {
-          document.getElementById(`node-${node.row}-${node.col}`).className = 'Node'
+          document.getElementById(`node-${node.row}-${node.col}`).className = 'Node';
+
+          if (node.lastRow) {
+            document.getElementById(`node-${node.row}-${node.col}`).className += ' node-last-row';
+          }
+          
+          if (node.lastCol) {
+            document.getElementById(`node-${node.row}-${node.col}`).className += ' node-last-col';
+          }
         })
       })
     }
   }
 
   const startVisualization = () => {
-    if (state.inProgress || state.inProgress === 'done') {
+    if (state.inProgress || state.inProgress === 'DONE') {
       return;
     } else {
       setState(prev => ({ ...prev, inProgress: true }));
 
-      visualizeDijkstra(state.grid, startNode, finishNode, setState)
+      visualizeDijkstra(state.grid, startNode, finishNode, setState);
     }
   }
 
   const toggleWeight = () => {
-    if (!state.inProgress && state.makeWall) {
-      setState(prev => ({ ...prev, makeWall: false, makeWeight: true }))
-    } else if(!state.inProgress && !state.makeWall) {
-      setState(prev => ({ ...prev, makeWall: true, makeWeight: false }))
+    if (!state.inProgress) {
+      const drawWall = !state.drawWall
+      setState(prev => ({ ...prev, drawWall }));
     }
   }
 
-  return { state, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight }
+  return { state, setState, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight }
 }
