@@ -6,7 +6,13 @@ export default function Nav() {
     <nav
       className="Nav"
     >
-      Test
+      <section className="logo">
+        Pathfinder
+      </section>
+      <section className="viewcount">
+        View Count
+      </section>
+
     </nav>
   )
 }
