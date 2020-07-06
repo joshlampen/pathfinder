@@ -1,12 +1,15 @@
 import React from "react";
 import Node from "./Node";
-import Button from "./Button";
+import BasicButton from "./BasicButton";
+import Toggle from "./Toggle";
 import useGridData from "../hooks/useGridData";
 import "../styles/Grid.css";
+import "../styles/ToolBar.css";
 
 export default function Grid() {
   const {
     state,
+    setState,
     mouseDown,
     mouseUp,
     togglePickup,
@@ -19,26 +22,28 @@ export default function Grid() {
   
   return (
     <div>
-      <section>
-        <Button
-          text='Visualize'
-          onClick={startVisualization}
-        />
-        <Button
-          text='Reset Grid'
-          onClick={resetGrid}
-        />
-        <Button
-          text='Draw Wall'
-          onClick={toggleWeight}
-          selected={state.makeWall}
-        />
-        <Button
-          text='Draw Weight'
-          onClick={toggleWeight}
-          selected={!state.makeWall}
-        />
-      </section>
+      <div className='ToolBar'>
+        <section className='Buttons'>
+          <BasicButton
+            text='Visualize'
+            size='large'
+            color='primary'
+            onClick={startVisualization}
+          />
+          <BasicButton
+            text='Reset Grid'
+            size='small'
+            color='secondary'
+            onClick={resetGrid}
+          />
+        </section>
+        <section className='Toggle'>
+          <Toggle
+            drawWall={state.drawWall}
+            toggleWeight={toggleWeight}
+          />
+        </section>
+      </div>
       <div
         className="Grid"
         onMouseDown={mouseDown}
@@ -54,6 +59,8 @@ export default function Grid() {
               isVisited,
               isWall,
               isWeight,
+              lastRow,
+              lastCol
             } = node;
             return (
               <Node
@@ -65,6 +72,8 @@ export default function Grid() {
                 isVisited={isVisited}
                 isWall={isWall}
                 isWeight={isWeight}
+                lastRow={lastRow}
+                lastCol={lastCol}
                 mousePressed={state.mousePressed}
                 toggleWall={toggleWall}
                 togglePickup={togglePickup}

@@ -1,11 +1,14 @@
 .Legend {
-  width: 1125px;
+  width: 1124px;
   display: flex;
   justify-content: space-around;
   align-items: center;
   background-color: rgb(245, 245, 245);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  border-left: 1px solid rgba(168, 168, 168, 0.5);
+  border-right: 1px solid rgba(168, 168, 168, 0.5);
+  border-bottom: 1px solid rgba(168, 168, 168, 0.5);
 }
 
 .legend-item {
@@ -15,4 +18,109 @@
 
 .legend-item p {
   margin-left: 15px;
+}
+
+.legend-unvisited {
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(168, 168, 168, 0.5);
+  background-color: rgb(253, 253, 253);
+}
+
+.legend-visited {
+  animation: legendVisitedAnimation 6s infinite;
+  width: 24px;
+  height: 24px;
+  background-color: #42C0FB;
+  border: 1px solid #5acbffce;
+}
+
+.legend-shortest-path {
+  animation: legendShortestPathAnimation 6s infinite;
+  animation-timing-function: cubic-bezier(0.1, 1, 0.2, 1.0);
+  width: 24px;
+  height: 24px;
+  background-color: #FFE600;
+  border: 1px solid #ebd301;
+}
+
+@keyframes legendVisitedAnimation {
+  0% {
+    background-color: #002435;
+    transform: scale(0.2);
+    border-radius: 100%;
+  }
+  
+  5% {
+    background-color: #0b3e56;
+    border-radius: 67%;
+  }
+  
+  10% {
+    background-color: #165877;
+    border-radius: 33%;
+  }
+  
+  15% {
+    background-color: #277fa8;
+    border-color: #277fa8;
+    transform: scale(1.3);
+    border-radius: 0%;
+  }
+
+  20% {
+    background-color: #37a6da;
+    border-color: #37a6da;
+  }
+  
+  25% {
+    background-color: #42C0FB;
+    border-color: #5acbffce;
+    transform: scale(1);
+  }
+  
+  100% {
+    background-color: #42C0FB;
+    border-color: #5acbffce;
+    transform: scale(1);
+  }
+}
+
+@keyframes legendShortestPathAnimation {
+  0% {
+    background-color: #fae955;
+    border-color: #fae955;
+    transform: scale(1.5);
+  }
+  
+  3% {
+    background-color: #fbe840;
+    border-color: #fbe840;
+  }
+  
+  7% {
+    background-color: #fde72b;
+    border-color: #fde72b;
+    transform: scale(0.5);
+  }
+  
+  10% {
+    background-color: #fde71c;
+    border-color: #fde71c;
+  }
+  
+  13% {
+    background-color: #fee70e;
+    border-color: #fee70e;
+  }
+
+  17% {
+    background-color: #FFE600;
+    border-color: #ebd301;
+  }
+
+  100% {
+    background-color: #FFE600;
+    border-color: #ebd301;
+  }
 }

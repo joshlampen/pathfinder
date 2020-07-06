@@ -37,9 +37,8 @@ export default function useGridData() {
       isWall: false,
       isWeight: false,
       previousNode: null,
-      mousedown: false,
-      onMouseEnter: false,
-      onMouseUp: false,
+      lastRow: row === 14,
+      lastCol: col === 44
     };
     
     return node;
@@ -51,7 +50,7 @@ export default function useGridData() {
     inProgress: false,
     isStartPickup: false,
     isFinishPickup: false,
-    makeWall: true,
+    drawWall: true,
   });
 
   const mouseDown = (row, col) => {
@@ -85,7 +84,7 @@ export default function useGridData() {
 
   const toggleWall = (row, col, isWall, isWeight) => {
     //if the user clicks on an empty square, create a wall
-    if (!state.inProgress && state.makeWall) {
+    if (!state.inProgress && state.drawWall) {
       const newNode = {
         ...state.grid[row][col],
         isWall,
@@ -99,7 +98,7 @@ export default function useGridData() {
       grid[row] = newRow;
 
       setState(prev => ({ ...prev, grid }));
-    } else if (!state.inProgress && !state.makeWall) {
+    } else if (!state.inProgress && !state.drawWall) {
       const newNode = {
         ...state.grid[row][col],
         isWeight,
@@ -151,12 +150,20 @@ export default function useGridData() {
         inProgress: false,
         isStartPickup: false,
         isFinishPickup: false,
-        makeWall: true,
+        drawWall: true,
       })
   
       state.grid.forEach(row => {
         row.forEach(node => {
-          document.getElementById(`node-${node.row}-${node.col}`).className = 'Node'
+          document.getElementById(`node-${node.row}-${node.col}`).className = 'Node';
+
+          if (node.lastRow) {
+            document.getElementById(`node-${node.row}-${node.col}`).className += ' node-last-row';
+          }
+          
+          if (node.lastCol) {
+            document.getElementById(`node-${node.row}-${node.col}`).className += ' node-last-col';
+          }
         })
       })
     }
@@ -174,8 +181,8 @@ export default function useGridData() {
 
   const toggleWeight = () => {
     if (!state.inProgress) {
-      const makeWall = !state.makeWall
-      setState(prev => ({ ...prev, makeWall }));
+      const drawWall = !state.drawWall
+      setState(prev => ({ ...prev, drawWall }));
     }
   }
 

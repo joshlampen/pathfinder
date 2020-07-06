@@ -10,17 +10,17 @@ export default function Legend() {
       className='Legend'
     >
       <section className='legend-item'>
-        <section className='Node'></section>
+        <section className='legend-unvisited'></section>
         <p>Unvisited</p>
       </section>
       
       <section className='legend-item'>
-        <section className='Node node-visited'></section>
+        <section className='legend-visited'></section>
         <p>Visited</p>
       </section>
 
       <section className='legend-item'>
-        <section className='Node node-shortest-path'></section>
+        <section className='legend-shortest-path'></section>
         <p>Shortest Path</p>
       </section>
 

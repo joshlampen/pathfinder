@@ -2,9 +2,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 23px;
-  height: 23px;
-  border: 1px solid rgba(168, 168, 168, 0.5);
+  width: 24px;
+  height: 24px;
+  border-left: 1px solid rgba(168, 168, 168, 0.5);
+  border-top: 1px solid rgba(168, 168, 168, 0.5);
+}
+
+.node-last-row {
+  border-bottom: 1px solid rgba(168, 168, 168, 0.5);
+}
+
+.node-last-col {
+  border-right: 1px solid rgba(168, 168, 168, 0.5);
 }
 
 .node-weight {
@@ -12,14 +21,6 @@
   animation-duration: 0.3s;
   color: black;
 }
-
-/* .node-weight-visited {
-  animation-name: visitedAnimation;
-  animation-duration: 1.5s;
-  background-color: #42C0FB;
-  border: 1px solid #5acbffce;
-  color: black;
-} */
 
 .node-wall {
   animation-name: wallAnimation;
@@ -31,15 +32,29 @@
   animation-name: visitedAnimation;
   animation-duration: 1.5s;
   background-color: #42C0FB;
-  border: 1px solid #5acbffce;
+  border-left: 1px solid #5acbffce;
+  border-top: 1px solid #5acbffce;
   color: black;
+}
+
+.node-visited-last-row {
+  animation-name: visitedAnimation;
+  animation-duration: 1.5s;
+  border-bottom: 1px solid #5acbffce;
+}
+
+.node-visited-last-col {
+  animation-name: visitedAnimation;
+  animation-duration: 1.5s;
+  border-right: 1px solid #5acbffce;
 }
 
 .node-shortest-path {
   animation-name: shortestPathAnimation;
   animation-duration: 1s;
   background-color: #FFE600;
-  border-color: #ebd301;
+  border-left: 1px solid #ebd301;
+  border-top: 1px solid #ebd301;
   color: black;
 }
 
@@ -63,7 +78,7 @@
   60% {
     background-color: #277fa8;
     border-color: #277fa8;
-    border-radius: 2px;
+    /* border-radius: 2px; */
     transform: scale(1.3);
     border-radius: 0%;
   }
@@ -71,13 +86,13 @@
   80% {
     background-color: #37a6da;
     border-color: #37a6da;
-    border-radius: 1.5px;
+    /* border-radius: 1.5px; */
   }
   
   100% {
     background-color: #42C0FB;
     border-color: #5acbffce;
-    border-radius: 1px;
+    /* border-radius: 1px; */
     transform: scale(1);
   }
 }
@@ -137,28 +152,5 @@
   100% {
     color: black;
     transform: scale(1);
-  }
-}
-
-@keyframes weightVisited {
-  0% {
-    transform: scale(0.2);
-    background-color: #3d5c5c;
-  }
-
-  50% {
-    transform: scale(0.5);
-    background-color: #3d5c5c;
-  }
-
-  75% {
-    transform: scale(0.9);
-    background-color: #3d5c5c;
-  }
-
-  100% {
-    transform: scale(1);
-    background-color: #003366;
-    border: 1px solid #5acbffce
   }
 }

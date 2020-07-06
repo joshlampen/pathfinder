@@ -10,7 +10,7 @@ import { faWeightHanging } from '@fortawesome/free-solid-svg-icons';
 const classNames = require('classnames');
 
 export default function Node(props) {
-  const { row, col, isStart, isFinish, isWall, mousePressed, toggleWall, togglePickup, isStartPickup, isFinishPickup, moveNode, isWeight } = props;
+  const { row, col, isStart, isFinish, isWall, mousePressed, toggleWall, togglePickup, isStartPickup, isFinishPickup, moveNode, isWeight, lastRow, lastCol } = props;
 
   const handleMouseEnter = () => {
     if (mousePressed && (isStartPickup || isFinishPickup)) {
@@ -28,11 +28,13 @@ export default function Node(props) {
     }
   }
 
-  const classes = classNames("Node", {
+  const classes = classNames('Node', {
     'node-start': isStart,
     'node-finish': isFinish,
     'node-wall': isWall,
     'node-weight': isWeight,
+    'node-last-row': lastRow,
+    'node-last-col': lastCol,
   });
 
   const mountIcon = () => {
