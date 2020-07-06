@@ -170,7 +170,7 @@ export default function useGridData() {
     } else {
       setState(prev => ({ ...prev, inProgress: true }));
     visualizeBfs(state.grid, startNode, finishNode, setState)
-    // visualizeDijkstra(state.grid, startNode, finishNode, setState)
+    //visualizeDijkstra(state.grid, startNode, finishNode, setState)
     }
   }
 
