@@ -52,24 +52,26 @@ describe("Bfs should return the visited nodes", () => {
     grid[1][2].isWall = true;
     grid[1][0].isWall = true;
 
-    const search = bfs(startNode, finishNode, grid);
-    expect(search.length).toBe(1)
+    const search = bfs(grid, startNode, finishNode);
+    expect(search.length).toBe(2)
   })
 
-  test("algorithm should check the top, bottom, left then right", () => {
+  test("algorithm should check the left, down, right up", () => {
     const grid = setInitialGrid();
     const startNode = grid[1][1];
     const finishNode = grid[1][2];
 
-    let gridLength = 0;
-    for (let row of grid) {
-      for (let col of row) {
-        gridLength ++
-      }
-    }
+    const search = bfs(grid, startNode, finishNode);
+    expect(search.length).toBe(4)
+  })
 
-    const search = bfs(startNode, finishNode, grid);
-    expect(search.length).toBe(5)
+  test("algorithm should check the top, bottom, left then right", () => {
+    const grid = setInitialGrid();
+    const startNode = grid[7][4];
+    const finishNode = grid[7][40];
+
+    const search = bfs(grid, startNode, finishNode);
+    expect(search).toBe(5)
   })
 })
 
@@ -79,7 +81,7 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const grid = setInitialGrid();
     const startNode = grid[1][1];
     const finishNode = grid[2][1];
-    bfs(startNode, finishNode, grid)
+    bfs(grid, startNode, finishNode)
 
     expect(getShortestPathNodes(finishNode).length).toBe(3)
   })
@@ -88,7 +90,7 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const grid = setInitialGrid();
     const startNode = grid[1][1];
     const finishNode = grid[1][2];
-    bfs(startNode, finishNode, grid)
+    bfs(grid, startNode, finishNode)
 
     expect(getShortestPathNodes(finishNode).length).toBe(3)
   })
@@ -97,7 +99,7 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const grid = setInitialGrid();
     const startNode = grid[1][1];
     const finishNode = grid[2][2];
-    bfs(startNode, finishNode, grid)
+    bfs(grid, startNode, finishNode)
 
     expect(getShortestPathNodes(finishNode).length).toBe(4)
   })

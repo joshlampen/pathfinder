@@ -108,7 +108,7 @@ export const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState
   }
 }
 
-const animateShortestPath = (shortestPathNodes, setState) => {
+export const animateShortestPath = (shortestPathNodes, setState) => {
 // const animateShortestPath = shortestPathNodes => {
   for (let i = 0; i < shortestPathNodes.length; i++) {
     setTimeout(() => {
