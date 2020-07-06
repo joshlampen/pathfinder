@@ -57,7 +57,7 @@ export const animateBfs = (visitedNodesInOrder, shortestPathNodes, setState) => 
 		if (i === visitedNodesInOrder.length) {
 			setTimeout(() => {
 				animateShortestPath(shortestPathNodes, setState);
-			}, 15 * i)
+			}, 10 * i)
 		} else {
 			setTimeout(() => {
 				// for each node in the array, add the 'visited' class
@@ -66,7 +66,7 @@ export const animateBfs = (visitedNodesInOrder, shortestPathNodes, setState) => 
 				} else {
 					document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
 				}
-			}, 15 * i)
+			}, 10 * i)
 		}
   }
 }
