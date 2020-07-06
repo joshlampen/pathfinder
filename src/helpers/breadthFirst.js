@@ -42,3 +42,8 @@ export const bfs = (start, end, grid) => {
   }
   return visitedNodes;
 }
+
+/*next steps: 
+- Visualize bfs
+- Integrate to the front-end
+*/
