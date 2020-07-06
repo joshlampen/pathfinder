@@ -1,4 +1,7 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSortDown } from '@fortawesome/free-solid-svg-icons';
+import NavButton from './NavButton';
 import '../styles/Nav.css';
 
 export default function Nav() {
@@ -6,9 +9,15 @@ export default function Nav() {
     <nav
       className="Nav"
     >
-      <section className="logo">
+      <span className="logo">
         Pathfinder
-      </section>
+      </span>
+      <ul className='nav-buttons'>
+        <NavButton
+          text='Tutorial'
+        />
+        <li><a href=''>Select Algorithm <FontAwesomeIcon icon={faSortDown} className='nav-icon'/></a></li>
+      </ul>
     </nav>
   )
 }
