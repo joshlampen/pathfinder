@@ -1,6 +1,6 @@
 import { getShortestPathNodes, animateShortestPath } from '../helpers/dijkstraHelpers'
 
-export const getNeighborsBfs = (node, grid) => {
+export const getNeighborsBreadthFirst = (node, grid) => {
   const neighbors = [];
   
   const { row, col } = node;
@@ -23,7 +23,7 @@ export const getNeighborsBfs = (node, grid) => {
   return neighbors;
 }
 
-export const bfs = (grid, start, end) => {
+export const breadthFirst = (grid, start, end) => {
   let queue = [start];
   let visitedNodes = [start];
 
@@ -31,12 +31,11 @@ export const bfs = (grid, start, end) => {
     const currentNode = queue.shift();
     currentNode.isVisited = true;
     visitedNodes.push(currentNode);
-    console.log(queue.length)
 
-    if (currentNode.isFinish || currentNode === end) {
+    if (currentNode === end) {
       return visitedNodes;
     }
-    const neighbors = getNeighborsBfs(currentNode, grid);
+    const neighbors = getNeighborsBreadthFirst(currentNode, grid);
     neighbors.forEach(neighbor => {
       if (!neighbor.isVisited) {
         neighbor.previousNode = currentNode;
@@ -45,12 +44,11 @@ export const bfs = (grid, start, end) => {
         }
       }
     })
-  // return visitedNodes;
   }
   return visitedNodes;
 }
 
-export const animateBfs = (visitedNodesInOrder, shortestPathNodes, setState) => {
+export const animateBreadthFirst = (visitedNodesInOrder, shortestPathNodes, setState) => {
 	for (let i = 0; i <= visitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
 		const node = visitedNodesInOrder[i]
 
@@ -61,21 +59,17 @@ export const animateBfs = (visitedNodesInOrder, shortestPathNodes, setState) => 
 		} else {
 			setTimeout(() => {
 				// for each node in the array, add the 'visited' class
-				if (node.isWeighted) {
-					document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-visited';
-				} else {
-					document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
-				}
+				document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
 			}, 10 * i)
 		}
   }
 }
 
-export default function visualizeBfs(grid, startNode, finishNode, setState) {
+export default function visualizeBreadthFirst(grid, startNode, finishNode, setState) {
   const startNodeObj = grid[startNode.row][startNode.col];
   const finishNodeObj = grid[finishNode.row][finishNode.col];
-  const visitedNodesInOrder = bfs(grid, startNodeObj, finishNodeObj);
+  const visitedNodesInOrder = breadthFirst(grid, startNodeObj, finishNodeObj);
   const shortestPathNodes = getShortestPathNodes(finishNodeObj);
 
-	animateBfs(visitedNodesInOrder, shortestPathNodes, setState);
+	animateBreadthFirst(visitedNodesInOrder, shortestPathNodes, setState);
 }
