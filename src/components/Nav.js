@@ -1,5 +1,4 @@
 import React from 'react';
-import NavButton from './NavButton';
 import Dropdown from './Dropdown';
 import Counter from './Counter'
 import '../styles/Nav.css';
@@ -21,9 +20,7 @@ export default function Nav(props) {
         </span>
       </section>
       <ul className='nav-buttons'>
-        <NavButton
-          text='Tutorial'
-        />
+        <button>Tutorial</button>
         <Dropdown
           toggleAlgorithm={toggleAlgorithm}
         />
