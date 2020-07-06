@@ -12,6 +12,18 @@
   justify-content: space-between;
 }
 
+.Nav section {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.spacer {
+  height: 50%;
+  border-left: 1px solid white;
+  margin: 0px 15px 0px 20px;
+}
+
 .logo {
   font-family: 'Orbitron', sans-serif;
   font-size: 25px;
@@ -52,5 +64,4 @@
   font-family: 'Orbitron', sans-serif;
   font-size: 15px;
   color: white;
-  margin-left: 60px;
 }

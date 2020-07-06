@@ -53,6 +53,7 @@ export default function useGridData() {
     isStartPickup: false,
     isFinishPickup: false,
     drawWall: true,
+    algorithm: 'DIJKSTRA'
   });
 
   const mouseDown = (row, col) => {
@@ -153,6 +154,7 @@ export default function useGridData() {
         isStartPickup: false,
         isFinishPickup: false,
         drawWall: true,
+        algorithm: 'DIJKSTRA'
       })
   
       state.grid.forEach(row => {
@@ -171,14 +173,22 @@ export default function useGridData() {
     }
   }
 
-  const startVisualization = () => {
+  const startVisualization = algorithm => {
     if (state.inProgress || state.inProgress === 'DONE') {
       return;
     } else {
-      setState(prev => ({ ...prev, inProgress: true }));
-      //visualizeBreadthFirst(state.grid, startNode, finishNode, setState)
-    //visualizeDijkstra(state.grid, startNode, finishNode, setState)
-      visualizeDepthFirst(state.grid, startNode, finishNode, setState);
+      switch (algorithm) {
+        case 'DIJKSTRA':
+          visualizeDijkstra(state.grid, startNode, finishNode, setState);
+          break;
+          case 'DEPTH-FIRST':
+            visualizeDepthFirst(state.grid, startNode, finishNode, setState);
+          break;
+          case 'BREADTH-FIRST':
+            visualizeBreadthFirst(state.grid, startNode, finishNode, setState);
+          }
+
+      return setState(prev => ({ ...prev, inProgress: true }));
     }
   }
 
@@ -188,6 +198,6 @@ export default function useGridData() {
       setState(prev => ({ ...prev, drawWall }));
     }
   }
-
-  return { state, setState, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight }
+  
+  return { state, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight }
 }
