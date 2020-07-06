@@ -1,44 +1,4 @@
-export const testGrid = () => {   // create the initial array of node objects
-  const grid = [];
-  
-  // for each row in the grid... 
-  for (let row = 0; row < 5; row++) {
-    const currentRow = [];
-
-    // for each column in the row...
-    for (let col = 0; col < 5; col++) {
-
-      // create node and push
-      currentRow.push(createNode(row, col));
-    }
-    
-    grid.push(currentRow);
-  }
-
-  return grid;
-}
-
-// creates the nodes that are pushed into the initial grid array
-export const createNode = (row, col) => {
-  const node = {
-    row,
-    col,
-    isStart: row === 0 && col === 0,
-    isFinish: row === 1 && col === 1,
-    distance: Infinity,
-    isVisited: false,
-    isWall: false,
-    isWeighted: false,
-    previousNode: null,
-    mousedown: false,
-    onMouseEnter: false,
-    onMouseUp: false,
-  };
-  
-  return node;
-}
-
-export const getUnvisitedNeighbors = (node, grid) => {
+export const getUnvisitedNeighborsBfs = (node, grid) => {
   const neighbors = [];
   const { row, col } = node;
 
@@ -72,7 +32,7 @@ export const bfs = (start, end, grid) => {
       return visitedNodes;
     }
 
-    const neighbors = getUnvisitedNeighbors(currentNode, grid);
+    const neighbors = getUnvisitedNeighborsBfs(currentNode, grid);
     neighbors.forEach(neighbor => {
       if (!neighbor.isVisited && !neighbor.isWall) {
         neighbor.previousNode = currentNode;
