@@ -40,7 +40,10 @@ export default function useGridData() {
       isWeight: false,
       previousNode: null,
       lastRow: row === 14,
-      lastCol: col === 44
+      lastCol: col === 44,
+      distanceToStart: 0,
+      heuristic: 0,
+      cost: 0,
     };
     
     return node;
