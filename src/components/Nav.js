@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/Nav.css';
+import Counter from './Counter'
 
 export default function Nav() {
   return (
@@ -10,7 +11,8 @@ export default function Nav() {
         Pathfinder
       </section>
       <section className="viewcount">
-        View Count
+        View Count: 
+        <Counter/>
       </section>
 
     </nav>
