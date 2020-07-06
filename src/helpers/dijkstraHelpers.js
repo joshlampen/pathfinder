@@ -46,7 +46,7 @@ const removeNestedNodes = grid => {
 }
 
 // core dijkstra algorithm
-const dijkstra = (grid, startNode, finishNode) => {
+export const dijkstra = (grid, startNode, finishNode) => {
 	const visitedNodesInOrder = [];
 	startNode.distance = 0;
 	const unvisitedNodes = removeNestedNodes(grid);
@@ -71,7 +71,7 @@ const dijkstra = (grid, startNode, finishNode) => {
 }
 
 // find the shortest path by starting at the end node and moving to node.previousNode
-const getShortestPathNodes = finishNode => {
+export const getShortestPathNodes = finishNode => {
   const path = [];
   
   let currentNode = finishNode;

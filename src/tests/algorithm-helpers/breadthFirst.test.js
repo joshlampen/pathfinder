@@ -1,4 +1,5 @@
-import { dijkstra, getShortestPathNodes } from "../../helpers/dijkstraHelpers";
+import { bfs } from '../../helpers/breadthFirst';
+import { getShortestPathNodes } from '../../helpers/dijkstraHelpers'
 
 const setInitialGrid = () => {   // create the initial array of node objects
   const grid = [];
@@ -20,13 +21,13 @@ const setInitialGrid = () => {   // create the initial array of node objects
   return grid;
 }
 
-// creates the nodes that are pushed into the initial grid array
 const createNode = (row, col) => {
   const node = {
     row,
     col,
-    isStart: null,
-    isFinish: null,
+    // isStart: row === startNode.row && col === startNode.col,
+    // isFinish: row === finishNode.row && col === finishNode.col,
+    // isStart and isFinish are not needed for these tests
     distance: Infinity,
     isVisited: false,
     isWall: false,
@@ -40,30 +41,37 @@ const createNode = (row, col) => {
   return node;
 }
 
-describe("Dijkstra hould return the visited nodes", () => {
+describe("Bfs should return the visited nodes", () => {
 
   test("When start node is surrounded by walls, length of visited nodes should be 1", () => {
     const grid = setInitialGrid();
     const startNode = grid[1][1];
-    const finishNode = grid[6][6];
+    const finishNode = grid[4][4];
     grid[0][1].isWall = true;
     grid[2][1].isWall = true;
     grid[1][2].isWall = true;
     grid[1][0].isWall = true;
 
-    const search = dijkstra(grid, startNode, finishNode);
-    expect(search.length).toBe(1);
+    const search = bfs(startNode, finishNode, grid);
+    expect(search.length).toBe(1)
   })
 
-  test("Algorithm sorts up, left, right down - should return the appropriate number of nodes once an end node as been found", () => {
+  test("algorithm should check the top, bottom, left then right", () => {
     const grid = setInitialGrid();
     const startNode = grid[1][1];
-    const endNode = grid[2][1];
+    const finishNode = grid[1][2];
 
-    const search = dijkstra(grid, startNode, endNode);
+    let gridLength = 0;
+    for (let row of grid) {
+      for (let col of row) {
+        gridLength ++
+      }
+    }
+
+    const search = bfs(startNode, finishNode, grid);
     expect(search.length).toBe(5)
   })
-});
+})
 
 describe("getShortestPath should return an array of nodes from origin to end", () => {
 
@@ -71,7 +79,7 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const grid = setInitialGrid();
     const startNode = grid[1][1];
     const finishNode = grid[2][1];
-    dijkstra(grid, startNode, finishNode)
+    bfs(startNode, finishNode, grid)
 
     expect(getShortestPathNodes(finishNode).length).toBe(3)
   })
@@ -80,7 +88,7 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const grid = setInitialGrid();
     const startNode = grid[1][1];
     const finishNode = grid[1][2];
-    const dijkstraArray = dijkstra(grid, startNode, finishNode)
+    bfs(startNode, finishNode, grid)
 
     expect(getShortestPathNodes(finishNode).length).toBe(3)
   })
@@ -89,7 +97,7 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const grid = setInitialGrid();
     const startNode = grid[1][1];
     const finishNode = grid[2][2];
-    const dijkstraArray = dijkstra(grid, startNode, finishNode)
+    bfs(startNode, finishNode, grid)
 
     expect(getShortestPathNodes(finishNode).length).toBe(4)
   })
