@@ -35,6 +35,7 @@ export const breadthFirst = (grid, start, end) => {
     if (currentNode === end) {
       return visitedNodes;
     }
+    
     const neighbors = getNeighborsBreadthFirst(currentNode, grid);
     neighbors.forEach(neighbor => {
       if (!neighbor.isVisited) {
@@ -45,6 +46,7 @@ export const breadthFirst = (grid, start, end) => {
       }
     })
   }
+
   return visitedNodes;
 }
 
@@ -58,7 +60,15 @@ export const animateBreadthFirst = (visitedNodesInOrder, shortestPathNodes, setS
 			}, 10 * i)
 		} else {
 			setTimeout(() => {
-				// for each node in the array, add the 'visited' class
+        // for each node in the array, add the 'visited' class
+        if (node.lastRow) {
+          document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited-last-row';
+        } 
+        
+        if (node.lastCol) {
+          document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited-last-col';
+        }
+
 				document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
 			}, 10 * i)
 		}

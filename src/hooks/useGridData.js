@@ -176,7 +176,7 @@ export default function useGridData() {
       return;
     } else {
       setState(prev => ({ ...prev, inProgress: true }));
-    //visualizeBreadthFirst(state.grid, startNode, finishNode, setState)
+      //visualizeBreadthFirst(state.grid, startNode, finishNode, setState)
     //visualizeDijkstra(state.grid, startNode, finishNode, setState)
       visualizeDepthFirst(state.grid, startNode, finishNode, setState);
     }
