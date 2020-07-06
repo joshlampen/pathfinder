@@ -1,56 +1,75 @@
-import { getShortestPathNodes, animateDijkstra } from '../helpers/dijkstraHelpers'
+import { getShortestPathNodes, animateShortestPath } from '../helpers/dijkstraHelpers'
 
-export const getUnvisitedNeighborsBfs = (node, grid) => {
+export const getNeighborsBreadthFirst = (node, grid) => {
   const neighbors = [];
+  
   const { row, col } = node;
 
   if (grid[row - 1] && !grid[row - 1][col].isWall) {
     neighbors.push(grid[row - 1][col]);
   }
 
+  if (grid[row][col + 1] && !grid[row][col + 1].isWall) {
+    neighbors.push(grid[row][col + 1]);
+  }
+
   if (grid[row + 1] && !grid[row + 1][col].isWall) {
     neighbors.push(grid[row + 1][col]);
   }
-
-  if (grid[row][col - 1] && !grid[row][col - 1].isWall) {
-    neighbors.push(grid[row][col - 1]);
-  }
   
-  if (grid[row][col + 1] && !grid[row][col + 1].isWall) {
-    neighbors.push(grid[row][col + 1])
+  if (grid[row][col - 1] && !grid[row][col - 1].isWall) {
+    neighbors.push(grid[row][col - 1])
   }
   return neighbors;
 }
 
-export const bfs = (start, end, grid) => {
+export const breadthFirst = (grid, start, end) => {
   let queue = [start];
-  let visitedNodes = [];
+  let visitedNodes = [start];
 
   while (queue.length > 0) {
     const currentNode = queue.shift();
     currentNode.isVisited = true;
     visitedNodes.push(currentNode);
+
     if (currentNode === end) {
       return visitedNodes;
     }
-
-    const neighbors = getUnvisitedNeighborsBfs(currentNode, grid);
+    const neighbors = getNeighborsBreadthFirst(currentNode, grid);
     neighbors.forEach(neighbor => {
-      if (!neighbor.isVisited && !neighbor.isWall) {
+      if (!neighbor.isVisited) {
         neighbor.previousNode = currentNode;
-        queue.push(neighbor)
+        if (queue.indexOf(neighbor) < 0) {
+          queue.push(neighbor);
+        }
       }
     })
   }
   return visitedNodes;
 }
 
-export default function visualizeBfs(grid, startNode, finishNode, setState) {
+export const animateBreadthFirst = (visitedNodesInOrder, shortestPathNodes, setState) => {
+	for (let i = 0; i <= visitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
+		const node = visitedNodesInOrder[i]
+
+		if (i === visitedNodesInOrder.length) {
+			setTimeout(() => {
+				animateShortestPath(shortestPathNodes, setState);
+			}, 10 * i)
+		} else {
+			setTimeout(() => {
+				// for each node in the array, add the 'visited' class
+				document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
+			}, 10 * i)
+		}
+  }
+}
+
+export default function visualizeBreadthFirst(grid, startNode, finishNode, setState) {
   const startNodeObj = grid[startNode.row][startNode.col];
   const finishNodeObj = grid[finishNode.row][finishNode.col];
-  const visitedNodesInOrder = bfs(grid, startNodeObj, finishNodeObj);
+  const visitedNodesInOrder = breadthFirst(grid, startNodeObj, finishNodeObj);
   const shortestPathNodes = getShortestPathNodes(finishNodeObj);
 
-	animateDijkstra(visitedNodesInOrder, shortestPathNodes, setState);
-	// animateDijkstra(visitedNodesInOrder, shortestPathNodes);
+	animateBreadthFirst(visitedNodesInOrder, shortestPathNodes, setState);
 }

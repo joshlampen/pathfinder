@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import visualizeDijkstra from "../helpers/dijkstraHelpers";
+import visualizeBreadthFirst from "../helpers/breadthFirst";
+import visualizeDepthFirst from "../helpers/depthFirst";
 
 export default function useGridData() {
   const [startNode, setStartNode] = useState({ row: 7, col: 4 });
@@ -174,8 +176,9 @@ export default function useGridData() {
       return;
     } else {
       setState(prev => ({ ...prev, inProgress: true }));
-
-      visualizeDijkstra(state.grid, startNode, finishNode, setState);
+    //visualizeBreadthFirst(state.grid, startNode, finishNode, setState)
+    //visualizeDijkstra(state.grid, startNode, finishNode, setState)
+      visualizeDepthFirst(state.grid, startNode, finishNode, setState);
     }
   }
 

@@ -47,3 +47,10 @@
 .nav-icon {
   margin: 0px 0px 7px 5px;
 }
+
+.viewcount {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 15px;
+  color: white;
+  margin-left: 60px;
+}

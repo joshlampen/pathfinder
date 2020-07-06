@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown } from '@fortawesome/free-solid-svg-icons';
 import NavButton from './NavButton';
 import '../styles/Nav.css';
+import Counter from './Counter'
 
 export default function Nav() {
   return (
@@ -12,6 +13,10 @@ export default function Nav() {
       <span className="logo">
         Pathfinder
       </span>
+      <section className="viewcount">
+        View Count: 
+        <Counter/>
+      </section>
       <ul className='nav-buttons'>
         <NavButton
           text='Tutorial'

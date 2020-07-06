@@ -1,4 +1,4 @@
-import { breadthFirst } from '../../helpers/breadthFirst';
+import { depthFirst } from '../../helpers/depthFirst';
 import { getShortestPathNodes } from '../../helpers/dijkstraHelpers'
 
 const setInitialGrid = () => {   // create the initial array of node objects
@@ -41,28 +41,28 @@ const createNode = (row, col) => {
   return node;
 }
 
-describe(" should return the visited nodes", () => {
+describe("should return the visited nodes", () => {
 
   test("When start node is surrounded by walls, length of visited nodes should be 1", () => {
     const grid = setInitialGrid();
     const startNode = grid[1][1];
-    const finishNode = grid[4][4];
+    const finishNode = grid[6][1];
     grid[0][1].isWall = true;
     grid[2][1].isWall = true;
     grid[1][2].isWall = true;
     grid[1][0].isWall = true;
 
-    const search = breadthFirst(grid, startNode, finishNode);
+    const search = depthFirst(grid, startNode, finishNode);
     expect(search.length).toBe(2)
   })
 
-  test("algorithm should check the left, down, right up", () => {
+  test("algorithm should check the up direction first till the wall", () => {
     const grid = setInitialGrid();
-    const startNode = grid[1][1];
-    const finishNode = grid[1][2];
+    const startNode = grid[4][7];
+    const finishNode = grid[0][7];
 
-    const search = breadthFirst(grid, startNode, finishNode);
-    expect(search.length).toBe(4)
+    const search = depthFirst(grid, startNode, finishNode);
+    expect(search.length).toBe(6)
   })
 })
 
@@ -70,29 +70,20 @@ describe("getShortestPath should return an array of nodes from origin to end", (
 
   test("Return distance between start node and end node when possible on x-plane", () => {
     const grid = setInitialGrid();
-    const startNode = grid[1][1];
-    const finishNode = grid[2][1];
-    breadthFirst(grid, startNode, finishNode)
+    const startNode = grid[0][0];
+    const finishNode = grid[0][15];
+    depthFirst(grid, startNode, finishNode)
 
-    expect(getShortestPathNodes(finishNode).length).toBe(3)
+    expect(getShortestPathNodes(finishNode).length).toBe(17)
   })
 
   test("return distance between start and end node on y-plane", () => {
     const grid = setInitialGrid();
-    const startNode = grid[1][1];
-    const finishNode = grid[1][2];
-    breadthFirst(grid, startNode, finishNode)
+    const startNode = grid[0][0];
+    const finishNode = grid[14][44];
+    depthFirst(grid, startNode, finishNode)
 
-    expect(getShortestPathNodes(finishNode).length).toBe(3)
-  })
-
-  test("return distance between start and end node when diagonal", () => {
-    const grid = setInitialGrid();
-    const startNode = grid[1][1];
-    const finishNode = grid[2][2];
-    breadthFirst(grid, startNode, finishNode)
-
-    expect(getShortestPathNodes(finishNode).length).toBe(4)
+    expect(getShortestPathNodes(finishNode).length).toBe(60)
   })
   
 })
