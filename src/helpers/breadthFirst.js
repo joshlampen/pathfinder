@@ -1,3 +1,5 @@
+import { getShortestPathNodes, animateDijkstra } from '../helpers/dijkstraHelpers'
+
 export const getUnvisitedNeighborsBfs = (node, grid) => {
   const neighbors = [];
   const { row, col } = node;
@@ -43,7 +45,12 @@ export const bfs = (start, end, grid) => {
   return visitedNodes;
 }
 
-/*next steps: 
-- Visualize bfs
-- Integrate to the front-end
-*/
+export default function visualizeBfs(grid, startNode, finishNode, setState) {
+  const startNodeObj = grid[startNode.row][startNode.col];
+  const finishNodeObj = grid[finishNode.row][finishNode.col];
+  const visitedNodesInOrder = bfs(grid, startNodeObj, finishNodeObj);
+  const shortestPathNodes = getShortestPathNodes(finishNodeObj);
+
+	animateDijkstra(visitedNodesInOrder, shortestPathNodes, setState);
+	// animateDijkstra(visitedNodesInOrder, shortestPathNodes);
+}

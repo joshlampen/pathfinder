@@ -87,7 +87,7 @@ export const getShortestPathNodes = finishNode => {
 }
 
 // const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
-const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
+export const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
 	for (let i = 0; i <= visitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
 		const node = visitedNodesInOrder[i]
 
