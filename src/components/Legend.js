@@ -25,7 +25,7 @@ export default function Legend() {
       </section>
 
       <section className='legend-item'>
-        <section className='Node node-wall'></section>
+        <section className='Node node-wall legend-wall'></section>
         <p>Wall</p>
       </section>
 
