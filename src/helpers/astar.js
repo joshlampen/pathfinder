@@ -22,22 +22,21 @@ export const astar = (grid, start, end) => {
     currentNode.isVisited = true;
 
     if (currentNode.col === end.col && currentNode.row === end.row) {
-      break;
+      return visitedNodes;
     }
-
+    
     const neighbors = getNeighborsBreadthFirst(currentNode, grid);
-    currentNode.distance = 0;
     neighbors.forEach(neighbor => {
 
       if (!neighbor.isVisited && !neighbor.isWall) {
         if (neighbor.isWeight) {
-          neighbor.distance = currentNode.distance + 3;
+          neighbor.distanceToStart = currentNode.distanceToStart + 2;
         } else {
-          neighbor.distance = currentNode.distance + 1;
+          neighbor.distanceToStart = currentNode.distanceToStart + 1;
         }
 
         neighbor.heuristic = manhattanDistance(neighbor, end);
-        neighbor.cost = neighbor.distance + neighbor.heuristic;
+        neighbor.cost = neighbor.distanceToStart + neighbor.heuristic;
         neighbor.previousNode = currentNode
 
         if (!unVisitedNodes.length) {

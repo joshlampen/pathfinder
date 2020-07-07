@@ -20,6 +20,7 @@ export const getNeighborsBreadthFirst = (node, grid) => {
   if (grid[row][col - 1] && !grid[row][col - 1].isWall) {
     neighbors.push(grid[row][col - 1])
   }
+
   return neighbors;
 }
 
