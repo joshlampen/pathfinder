@@ -1,21 +1,7 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-
-export const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#1167b1',
-      dark: '#03254c',
-      contrastText: '#fff'
-    },
-    secondary: {
-      main: '#2a96f4',
-      dark: '#187bcd',
-      contrastText: '#fff'
-    }
-  }
-})
+import { theme } from '../styles/buttonTheme'
+import { ThemeProvider } from '@material-ui/core/styles';
 
 const style = {
   marginRight: '10px',

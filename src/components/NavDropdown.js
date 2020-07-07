@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Dropdown(props) {
+export default function NavDropdown(props) {
   const { toggleAlgorithm, disableNav } = props;
 
   const classes = useStyles();
@@ -32,10 +32,10 @@ export default function Dropdown(props) {
   const anchorRef = useRef(null);
 
   const handleToggle = () => {
-      setOpen((prevOpen) => !prevOpen);
-    };
+    setOpen(prevOpen => !prevOpen);
+  };
 
-  const handleClose = (event) => {
+  const handleClose = event => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -43,7 +43,7 @@ export default function Dropdown(props) {
     setOpen(false);
   };
 
-  function handleListKeyDown(event) {
+  const handleListKeyDown = event => {
     if (event.key === 'Tab') {
       event.preventDefault();
       setOpen(false);
@@ -80,7 +80,7 @@ export default function Dropdown(props) {
         className={classes.root}
         disabled={disableNav}
       >
-        &nbsp;Select Algorithm&nbsp;&nbsp;{manageIconMount()}&nbsp;
+        &nbsp;Select Algorithm&nbsp;&nbsp;{manageIconMount()}
       </Button>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
         {({ TransitionProps, placement }) => (
