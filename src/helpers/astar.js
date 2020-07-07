@@ -28,38 +28,72 @@ export const astar = (grid, start, end) => {
     const neighbors = getNeighborsBreadthFirst(currentNode, grid);
     neighbors.forEach(neighbor => {
 
-      neighbor.heuristic = manhattanDistance(neighbor, end);
+      heuristic = manhattanDistance(neighbor, end);
 
       if (!neighbor.isVisited && !neighbor.isWall) {
-        if (neighbor.isWeight) {
-          neighbor.cost = currentNode.distanceToStart + neighbor.heuristic + 3;
-        } else {
-          neighbor.cost = currentNode.distanceToStart + neighbor.heuristic + 1;
-        }
+        const currentDistance = currentNode.distanceToStart + heuristic;
+        const hasDuplicate = false;
+        const betterPath = true;
 
-        neighbor.previousNode = currentNode;
-
-        if (!unVisitedNodes.length) {
-          unVisitedNodes.push(neighbor)
-        } else {
-          let hasMatch = false;
-          for (let i = 0; i < unVisitedNodes.length; i++) {
-            const unVisitedNode = unVisitedNodes[i];
-
-            if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.cost > neighbor.cost) {
-              // unVisitedNode = neighbor;
-              unVisitedNodes.push(neighbor)
-              hasMatch = true;
-
-            } else if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.cost <= neighbor.cost) {
-              hasMatch = true;
+        unVisitedNodes.forEach(node => {
+          if (node.row === neighbor.row && node.col === neighbor.col) {
+            if (currentDistance < node.distanceToStart) {
+              node.distanceToStart = currentDistance;
+              hasDuplicate = true;
+            } else {
+              hasDuplicate = true;
+              betterPath = false;
             }
-          }
+          } 
+        })
 
-          if (!hasMatch) {
-            unVisitedNodes.push(neighbor)
-          }          
+        if ((betterPath && hasDuplicate) || betterPath) {
+          neighbor.distanceToStart = currentDistance;
+          neighbor.heuristic = heuristic;
+          neighbor.cost = neighbor.distanceToStart + neighbor.heuristic;
+          neighbor.previous = currentNode;
         }
+
+        if (!hasDuplicate) {
+          unVisitedNodes.push(neighbor);
+        }
+
+        // if (neighbor.isWeight) {
+        //   neighbor.distanceToStart = currentNode.distanceToStart + neighbor.heuristic + 3;
+        // } else {
+        //   neighbor.distanceToStart = currentNode.distanceToStart + neighbor.heuristic + 1;
+        // }
+
+        // neighbor.previousNode = currentNode;
+
+        // unVisitedNodes.forEach(node => {
+        //   if (node.col === neighbor.col && node.row === neighbor.row) {
+        //     if (neighbor.distanceToStart > neighbor)
+        //   }
+        // }
+
+        // if (!unVisitedNodes.length) {
+        //   unVisitedNodes.push(neighbor)
+        // } else {
+        //   let hasMatch = false;
+        //   for (let i = 0; i < unVisitedNodes.length; i++) {
+        //     const unVisitedNode = unVisitedNodes[i];
+
+        //     if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.distanceToStart > neighbor.distanceToStart) {
+        //       unVisitedNode = neighbor;
+        //       unVisitedNode.cost = neighbor.distanceToStart + neighbor.heuristic
+        //       // unVisitedNodes.push(neighbor)
+        //       hasMatch = true;
+
+        //     } else if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.distanceToStart <= neighbor.distanceToStart) {
+        //       hasMatch = true;
+        //     }
+        //   }
+
+        //   if (!hasMatch) {
+        //     unVisitedNodes.push(neighbor)
+        //   }          
+        // }
       }
     })
   }
