@@ -14,7 +14,7 @@ export default function Description(props) {
 
   useEffect(() => { 
     if (algorithm === 'DIJKSTRA') {
-    Promise.resolve(axios.get("/descriptions/7"))
+    Promise.resolve(axios.get("/descriptions/1"))
       .then(response => {
         setDesc({
         algName: response.data.algorithm_name,
@@ -22,7 +22,7 @@ export default function Description(props) {
         })
       }) 
     } else if (algorithm === 'DEPTH-FIRST') {
-      Promise.resolve(axios.get("/descriptions/8"))
+      Promise.resolve(axios.get("/descriptions/2"))
       .then(response => {
         setDesc({
           algName: response.data.algorithm_name,
@@ -30,7 +30,7 @@ export default function Description(props) {
           })
       }) 
     } else if (algorithm === 'BREADTH-FIRST') {
-      Promise.resolve(axios.get("/descriptions/9"))
+      Promise.resolve(axios.get("/descriptions/3"))
       .then(response => {
         setDesc({
           algName: response.data.algorithm_name,

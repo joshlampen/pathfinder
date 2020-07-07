@@ -35,7 +35,7 @@ export default function Grid(props) {
   }, [state.inProgress])
 
   const manageVisualization = (algorithm) => {
-    Promise.resolve(axios.put("/counters/2"))
+    Promise.resolve(axios.put("/counters/1"))
       .then(() => {
         toggleCounter();
         toggleNavDisable()

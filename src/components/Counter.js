@@ -6,7 +6,7 @@ export default function Counter(props) {
   const { incrementCounter } = props
 
   useEffect(() => { 
-    Promise.resolve(axios.get("/counters/2"))
+    Promise.resolve(axios.get("/counters/1"))
       .then(response => {
         setCounter(response.data.visited)
       })
