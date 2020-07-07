@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import visualizeDijkstra from "../helpers/dijkstraHelpers";
 import visualizeBreadthFirst from "../helpers/breadthFirst";
 import visualizeDepthFirst from "../helpers/depthFirst";
+import visualizeAstar from "../helpers/astar";
 
 export default function useGridData() {
   const [startNode, setStartNode] = useState({ row: 7, col: 4 });
@@ -182,7 +183,8 @@ export default function useGridData() {
     } else {
       switch (algorithm) {
         case 'DIJKSTRA':
-          visualizeDijkstra(state.grid, startNode, finishNode, setState);
+          visualizeAstar(state.grid, startNode, finishNode, setState);
+          //visualizeDijkstra(state.grid, startNode, finishNode, setState);
           break;
           case 'DEPTH-FIRST':
             visualizeDepthFirst(state.grid, startNode, finishNode, setState);

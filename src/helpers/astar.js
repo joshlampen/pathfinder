@@ -1,4 +1,4 @@
-import { getUnvisitedNeighbors } from '../helpers/dijkstraHelpers';
+import { getUnvisitedNeighbors, getShortestPathNodes, animateDijkstra } from '../helpers/dijkstraHelpers';
 
 const manhattanDistance = (currentNode, endNode) => {
   //Used for heuristics
@@ -14,6 +14,7 @@ export const astar = (grid, start, end) => {
   while (unVisitedNodes.length) {
 
     unVisitedNodes.sort((nodeA, nodeB) => nodeA.cost - nodeB.cost);
+    console.log(unVisitedNodes.length)
 
     const currentNode = unVisitedNodes.shift();
 
@@ -38,16 +39,27 @@ export const astar = (grid, start, end) => {
 
         if (!unVisitedNodes.length) {
           unVisitedNodes.push(neighbor)
+          neighbor.previous = currentNode;
         } else {
           unVisitedNodes.forEach(unVisitedNode => {
             if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.cost < neighbor.cost) {
               return;
             }
             unVisitedNodes.push(neighbor)
+            neighbor.previous = currentNode;
           })
         }
       }
     })
   }
   return visitedNodes;
+}
+
+export default async function visualizeAstar(grid, startNode, finishNode, setState) {
+  const startNodeObj = grid[startNode.row][startNode.col];
+  const finishNodeObj = grid[finishNode.row][finishNode.col];
+  const visitedNodesInOrder = astar(grid, startNodeObj, finishNodeObj);
+  const shortestPathNodes = getShortestPathNodes(finishNodeObj);
+
+	animateDijkstra(visitedNodesInOrder, shortestPathNodes, setState);
 }
