@@ -37,7 +37,7 @@ export default function useGridData() {
       distance: Infinity,
       isVisited: false,
       isWall: false,
-      isWeight: false,
+      isWeight: 0,
       previousNode: null,
       lastRow: row === 14,
       lastCol: col === 44,
