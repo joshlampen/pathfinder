@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Dropdown(props) {
-  const { toggleAlgorithm } = props;
+  const { toggleAlgorithm, disableNav } = props;
 
   const classes = useStyles();
   const [open, setOpen] = useState(false);
@@ -71,6 +71,7 @@ export default function Dropdown(props) {
         aria-haspopup="true"
         onClick={handleToggle}
         className={classes.root}
+        disabled={disableNav}
       >
         &nbsp;Select Algorithm&nbsp;
       </Button>

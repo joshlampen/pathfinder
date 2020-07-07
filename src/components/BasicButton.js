@@ -25,6 +25,18 @@ const style = {
 export default function BasicButton(props) {
   const { text, onClick, size, color, inProgress } = props;
 
+  const manageDisable = () => {
+    if (text === 'Reset Grid') {
+      if (inProgress === true) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return inProgress
+    }
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <Button
@@ -34,6 +46,7 @@ export default function BasicButton(props) {
         style={style}
         onClick={onClick}
         disableElevation
+        disabled={manageDisable()}
       >
         {text}
       </Button>
