@@ -1,6 +1,10 @@
 {
   "name": "pathfinder",
   "version": "0.1.0",
+  "engines": {
+    "node": "10.16.1",
+    "npm": "6.9.0"
+  },
   "private": true,
   "proxy": "https://evening-citadel-63039.herokuapp.com",
   "dependencies": {
@@ -16,12 +20,14 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
+    "express": "^4.17.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server.js",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
