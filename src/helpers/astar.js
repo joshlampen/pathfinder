@@ -5,7 +5,7 @@ const manhattanDistance = (currentNode, endNode) => {
   //Used for heuristics
   const differenceInCol = Math.abs(currentNode.col - endNode.col);
   const differenceInRow = Math.abs(currentNode.row - endNode.row);
-  return differenceInCol + differenceInRow;
+  return differenceInCol + differenceInRow
 }
 
 export const astar = (grid, start, end) => {
@@ -28,16 +28,16 @@ export const astar = (grid, start, end) => {
     const neighbors = getNeighborsBreadthFirst(currentNode, grid);
     neighbors.forEach(neighbor => {
 
+      neighbor.heuristic = manhattanDistance(neighbor, end);
+
       if (!neighbor.isVisited && !neighbor.isWall) {
         if (neighbor.isWeight) {
-          neighbor.distanceToStart = currentNode.distanceToStart + 2;
+          neighbor.cost = currentNode.distanceToStart + neighbor.heuristic + 2;
         } else {
-          neighbor.distanceToStart = currentNode.distanceToStart + 1;
+          neighbor.cost = currentNode.distanceToStart + neighbor.heuristic - 1;
         }
 
-        neighbor.heuristic = manhattanDistance(neighbor, end);
-        neighbor.cost = neighbor.distanceToStart + neighbor.heuristic;
-        neighbor.previousNode = currentNode
+        neighbor.previousNode = currentNode;
 
         if (!unVisitedNodes.length) {
           unVisitedNodes.push(neighbor)
@@ -45,21 +45,25 @@ export const astar = (grid, start, end) => {
           let hasMatch = false;
           for (let i = 0; i < unVisitedNodes.length; i++) {
             const unVisitedNode = unVisitedNodes[i];
+
             if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.cost > neighbor.cost) {
               unVisitedNode = neighbor;
+              console.log('made it here')
               hasMatch = true;
+
             } else if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.cost <= neighbor.cost) {
               hasMatch = true;
             }
           }
+
           if (!hasMatch) {
             unVisitedNodes.push(neighbor)
-          }
+          }          
         }
       }
     })
   }
-  return visitedNodes;
+  return visitedNodes
 }
 
 export default async function visualizeAstar(grid, startNode, finishNode, setState) {
