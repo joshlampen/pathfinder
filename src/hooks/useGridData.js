@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import visualizeDijkstra from "../helpers/dijkstraHelpers";
 import visualizeBreadthFirst from "../helpers/breadthFirst";
 import visualizeDepthFirst from "../helpers/depthFirst";
+import visualizeAstar from "../helpers/astar";
 
 export default function useGridData() {
   const [startNode, setStartNode] = useState({ row: 7, col: 4 });
@@ -37,10 +38,13 @@ export default function useGridData() {
       distance: Infinity,
       isVisited: false,
       isWall: false,
-      isWeight: false,
+      isWeight: 0,
       previousNode: null,
       lastRow: row === 14,
-      lastCol: col === 44
+      lastCol: col === 44,
+      distanceToStart: 0,
+      heuristic: 0,
+      cost: 0,
     };
     
     return node;
@@ -179,6 +183,9 @@ export default function useGridData() {
         break;
       case 'BREADTH-FIRST':
         visualizeBreadthFirst(state.grid, startNode, finishNode, setState);
+        break;
+      case 'A-STAR':
+        visualizeAstar(state.grid, startNode, finishNode, setState);
         break;
     }
 

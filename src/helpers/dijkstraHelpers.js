@@ -1,5 +1,5 @@
 // get the unvisited neighboring nodes for the node being analyzed
-const getUnvisitedNeighbors = (node, grid) => {
+export const getUnvisitedNeighbors = (node, grid) => {
 	const neighbors = [];
 
 	const { row, col } = node;
@@ -74,19 +74,17 @@ export const dijkstra = (grid, startNode, finishNode) => {
 export const getShortestPathNodes = finishNode => {
   const path = [];
   
-  let currentNode = finishNode;
+	let currentNode = finishNode;
 
-  path.unshift(currentNode);
-
+  // path.unshift(currentNode);
 	while (currentNode) {
     path.unshift(currentNode);
 		currentNode = currentNode.previousNode; // once we reach the start node, this becomes null and the loop breaks
-  }
-  
+	}
 	return path;
 }
 
-const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
+export const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
 	for (let i = 0; i <= visitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
 		const node = visitedNodesInOrder[i];
 

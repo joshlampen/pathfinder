@@ -99,6 +99,7 @@ export default function NavDropdown(props) {
                   </MenuItem>
                   <MenuItem className={classes.select} onClick={() => handleAlgToggle('DEPTH-FIRST')}>Depth-First</MenuItem>
                   <MenuItem className={classes.select} onClick={() => handleAlgToggle('BREADTH-FIRST')}>Breadth-First</MenuItem>
+                  <MenuItem className={classes.select} onClick={() => handleAlgToggle('A-STAR')}>A*</MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>
