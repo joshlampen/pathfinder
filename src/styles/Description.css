@@ -1,3 +1,9 @@
 .Description {
   width: 1126px;
+  margin: 10px 0px 10px 0px;
+}
+
+.Description p {
+  margin-bottom: 20px;
+  line-height: 1.5;
 }

@@ -7,6 +7,9 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -53,6 +56,10 @@ export default function Dropdown(props) {
     toggleAlgorithm(algorithm)
   }
 
+  const manageIconMount = () => {
+    return open ? <FontAwesomeIcon icon={faCaretUp} /> : <FontAwesomeIcon icon={faCaretDown} />
+  }
+
   useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
@@ -73,7 +80,7 @@ export default function Dropdown(props) {
         className={classes.root}
         disabled={disableNav}
       >
-        &nbsp;Select Algorithm&nbsp;
+        &nbsp;Select Algorithm&nbsp;&nbsp;{manageIconMount()}&nbsp;
       </Button>
       <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
         {({ TransitionProps, placement }) => (
@@ -90,8 +97,8 @@ export default function Dropdown(props) {
                   >
                     Dijkstra
                   </MenuItem>
-                  <MenuItem className={classes.select} onClick={() => handleAlgToggle('DEPTH-FIRST')}>Depth First</MenuItem>
-                  <MenuItem className={classes.select} onClick={() => handleAlgToggle('BREADTH-FIRST')}>Breadth First</MenuItem>
+                  <MenuItem className={classes.select} onClick={() => handleAlgToggle('DEPTH-FIRST')}>Depth-First</MenuItem>
+                  <MenuItem className={classes.select} onClick={() => handleAlgToggle('BREADTH-FIRST')}>Breadth-First</MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>

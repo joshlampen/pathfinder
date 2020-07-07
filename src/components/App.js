@@ -37,8 +37,7 @@ export default function App() {
         incrementCounter={state.incrementCounter}
         disableNav={state.disableNav}
       />
-      <Description 
-        algorithm={state.algorithm}/>
+      <Description algorithm={state.algorithm} />
       <Grid
         algorithm={state.algorithm}
         toggleCounter={toggleCounter}

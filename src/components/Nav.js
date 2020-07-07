@@ -21,9 +21,7 @@ export default function Nav(props) {
           Pathfinder
         </a>
         <span className='spacer'>&nbsp;</span>
-        <span className='viewcount'>
-          <Counter incrementCounter={incrementCounter} /> paths visualized
-        </span>
+        <Counter incrementCounter={incrementCounter} />
       </section>
       <ul className='nav-buttons'>
         <li>
