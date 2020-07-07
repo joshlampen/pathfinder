@@ -3,7 +3,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 
 export default function Toggle(props) {
-  const { drawWall, toggleWeight } = props;
+  const { drawWall, toggleWeight, inProgress, algorithm } = props;
 
   return (
     <ToggleButtonGroup
@@ -12,8 +12,19 @@ export default function Toggle(props) {
       exclusive
       onChange={toggleWeight}
     >
-      <ToggleButton value={true}>&nbsp;&nbsp; Draw Wall &nbsp;&nbsp;</ToggleButton>
-      <ToggleButton value={false}>&nbsp;Draw Weight&nbsp;</ToggleButton>
+      <ToggleButton
+        value={true}
+        disabled={inProgress}
+        >
+        &nbsp;&nbsp; Draw Wall &nbsp;&nbsp;
+      </ToggleButton>
+
+      <ToggleButton
+        value={false}
+        disabled={inProgress || (algorithm === 'DEPTH-FIRST' || algorithm === 'BREADTH-FIRST')}
+      >
+        &nbsp;Draw Weight&nbsp;
+      </ToggleButton>
     </ToggleButtonGroup>
   )
 }

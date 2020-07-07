@@ -14,6 +14,8 @@ export default function Counter(props) {
     
     
   return (
-    <>{`${counter}`}</>
+    <span className='viewcount'>
+      {counter} paths visualized
+    </span>
   )
 }      
