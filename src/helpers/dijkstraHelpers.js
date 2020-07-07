@@ -1,5 +1,5 @@
 // get the unvisited neighboring nodes for the node being analyzed
-const getUnvisitedNeighbors = (node, grid) => {
+export const getUnvisitedNeighbors = (node, grid) => {
 	const neighbors = [];
 
 	const { row, col } = node;
