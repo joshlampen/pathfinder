@@ -2,10 +2,18 @@ import React, { useState, useEffect } from "react";
 import visualizeDijkstra from "../helpers/dijkstraHelpers";
 import visualizeBreadthFirst from "../helpers/breadthFirst";
 import visualizeDepthFirst from "../helpers/depthFirst";
+import axios from "axios"
 
 export default function useGridData() {
   const [startNode, setStartNode] = useState({ row: 7, col: 4 });
   const [finishNode, setFinishNode] = useState({ row: 7, col: 40 });
+  const [presetWalls, setPresetWalls] = useState([])
+
+  useEffect(() => {
+    axios.get("/walled_nodes/test").then((response) => {
+      setPresetWalls(response.data)
+    })
+  }, [])
 
   const setInitialGrid = () => {   // create the initial array of node objects
     const grid = [];
@@ -13,17 +21,17 @@ export default function useGridData() {
     // for each row in the grid... 
     for (let row = 0; row < 15; row++) {
       const currentRow = [];
-  
+      
       // for each column in the row...
       for (let col = 0; col < 45; col++) {
-  
+        
         // create node and push
         currentRow.push(createNode(row, col));
       }
       
       grid.push(currentRow);
     }
-  
+    
     return grid;
   }
   
@@ -56,14 +64,37 @@ export default function useGridData() {
     algorithm: 'DIJKSTRA'
   });
 
+  const mapPresetWalls = walls => {
+    const oldGrid = [...state.grid];
+
+    const grid = oldGrid.map(row => {
+      return row.map(node => {
+        for (const wall of walls) {
+          if (wall.row === node.row && wall.col === node.col) {
+            const newNode = {
+              ...node,
+              isWall: true
+            }
+    
+            return newNode;
+          }
+        }
+
+        return node;
+      })
+    })
+
+    setState(prev => ({ ...prev, grid }))
+  }
+
   const mouseDown = (row, col) => {
     setState((prev) => ({ ...prev, mousePressed: true }));
   };
-
+  
   const mouseUp = (row, col) => {
     setState((prev) => ({ ...prev, isStartPickup: false, isFinishPickup: false, mousePressed: false }));
   };
-
+  
   const togglePickup = (row, col, isStart, isFinish) => {
     // if a user clicks on the start node, activate the node
     if (isStart && !state.isStartPickup && !state.inProgress) {
@@ -199,5 +230,5 @@ export default function useGridData() {
     }
   }
   
-  return { state, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight }
+  return { state, presetWalls, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight, mapPresetWalls }
 }

@@ -20,6 +20,7 @@ export default function Grid(props) {
 
   const {
     state,
+    presetWalls,
     mouseDown,
     mouseUp,
     togglePickup,
@@ -28,10 +29,12 @@ export default function Grid(props) {
     resetGrid,
     startVisualization,
     toggleWeight,
+    mapPresetWalls
   } = useGridData()
   
   return (
     <div>
+      <button onClick={() => mapPresetWalls(presetWalls)}>Click Me</button>
       <div className='ToolBar'>
         <section className='Buttons'>
           <BasicButton
