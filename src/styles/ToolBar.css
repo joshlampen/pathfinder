@@ -1,6 +1,7 @@
 .ToolBar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 15px;
   background-color: rgb(245, 245, 245);
   border-top-left-radius: 10px;
@@ -15,8 +16,27 @@
   align-items: center;
 }
 
+.Tools {
+  display: flex;
+  align-items: center;
+}
+
 .Toggle {
   display: flex;
   align-items: center;
+  margin-right: 10px;
+}
+
+.toolbar-left-spacer {
+  height: 100%;
+  border-left: 1px solid rgba(168, 168, 168, 0.5);
+  font-size: 35px;
+  margin-left: 10px;
+}
+
+.toolbar-right-spacer {
+  height: 100%;
+  border-left: 1px solid rgba(168, 168, 168, 0.5);
+  font-size: 35px;
   margin-right: 10px;
 }
