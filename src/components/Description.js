@@ -14,7 +14,7 @@ export default function Description(props) {
 
   useEffect(() => { 
     if (algorithm === 'DIJKSTRA') {
-    Promise.resolve(axios.get("/descriptions/1"))
+    Promise.resolve(axios.get("/descriptions/7"))
       .then(response => {
         setDesc({
         algName: response.data.algorithm_name,
@@ -22,7 +22,7 @@ export default function Description(props) {
         })
       }) 
     } else if (algorithm === 'DEPTH-FIRST') {
-      Promise.resolve(axios.get("/descriptions/2"))
+      Promise.resolve(axios.get("/descriptions/8"))
       .then(response => {
         setDesc({
           algName: response.data.algorithm_name,
@@ -30,7 +30,7 @@ export default function Description(props) {
           })
       }) 
     } else if (algorithm === 'BREADTH-FIRST') {
-      Promise.resolve(axios.get("/descriptions/3"))
+      Promise.resolve(axios.get("/descriptions/9"))
       .then(response => {
         setDesc({
           algName: response.data.algorithm_name,
@@ -41,7 +41,7 @@ export default function Description(props) {
 
   return (
     <div className='Description'>
-      <h2><FontAwesomeIcon icon={faWaveSquare} />&nbsp;&nbsp; {desc.algName} Algorithm</h2>
+      <h2><FontAwesomeIcon icon={faWaveSquare} />&nbsp;&nbsp; {desc.algName}</h2>
       <p>
         {desc.algDesc}
       </p>
