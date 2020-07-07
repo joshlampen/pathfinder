@@ -32,9 +32,9 @@ export const astar = (grid, start, end) => {
 
       if (!neighbor.isVisited && !neighbor.isWall) {
         if (neighbor.isWeight) {
-          neighbor.cost = currentNode.distanceToStart + neighbor.heuristic + 2;
+          neighbor.cost = currentNode.distanceToStart + neighbor.heuristic + 3;
         } else {
-          neighbor.cost = currentNode.distanceToStart + neighbor.heuristic - 1;
+          neighbor.cost = currentNode.distanceToStart + neighbor.heuristic + 1;
         }
 
         neighbor.previousNode = currentNode;
@@ -47,8 +47,8 @@ export const astar = (grid, start, end) => {
             const unVisitedNode = unVisitedNodes[i];
 
             if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.cost > neighbor.cost) {
-              unVisitedNode = neighbor;
-              console.log('made it here')
+              // unVisitedNode = neighbor;
+              unVisitedNodes.push(neighbor)
               hasMatch = true;
 
             } else if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.cost <= neighbor.cost) {
