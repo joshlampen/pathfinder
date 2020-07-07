@@ -1,9 +1,8 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { createMuiTheme } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/core/styles'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
-const theme = createMuiTheme({
+export const theme = createMuiTheme({
   palette: {
     primary: {
       main: '#1167b1',
@@ -24,8 +23,8 @@ const style = {
 }
 
 export default function BasicButton(props) {
-  const { text, onClick, size, color } = props
-  
+  const { text, onClick, size, color, inProgress } = props;
+
   return (
     <ThemeProvider theme={theme}>
       <Button

@@ -11,19 +11,22 @@ export default function Nav(props) {
       className="Nav"
     >
       <section>
-        <span className="logo">
+        <a href='/' className="logo">
           Pathfinder
-        </span>
+        </a>
         <span className='spacer'>&nbsp;</span>
         <span className='viewcount'>
-          <Counter incrementCounter={incrementCounter} /> algorithms visualized
+          <Counter incrementCounter={incrementCounter} /> paths visualized
         </span>
       </section>
       <ul className='nav-buttons'>
         <button>Tutorial</button>
-        <Dropdown
-          toggleAlgorithm={toggleAlgorithm}
-        />
+        <span className='spacer'>&nbsp;</span>
+        <li>
+          <Dropdown
+            toggleAlgorithm={toggleAlgorithm}
+          />
+        </li>
       </ul>
     </nav>
   )
