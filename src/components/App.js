@@ -14,7 +14,6 @@ export default function App() {
   
   const toggleAlgorithm = newAlgorithm => {
     const algorithm = newAlgorithm;
-    
     setState(prev => ({ ...prev, algorithm }))
   }
 
@@ -30,7 +29,8 @@ export default function App() {
         toggleAlgorithm={toggleAlgorithm}
         incrementCounter={state.incrementCounter}
       />
-      <Description />
+      <Description 
+        algorithm={state.algorithm}/>
       <Grid
         algorithm={state.algorithm}
         inProgress={state.inProgress}
