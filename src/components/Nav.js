@@ -1,6 +1,6 @@
 import React from 'react';
 import Counter from './Counter'
-import Dropdown from './Dropdown';
+import NavDropdown from './NavDropdown';
 import Button from '@material-ui/core/Button';
 import '../styles/Nav.css';
 
@@ -34,7 +34,7 @@ export default function Nav(props) {
         </li>
         <span className='spacer'>&nbsp;</span>
         <li>
-          <Dropdown
+          <NavDropdown
             toggleAlgorithm={toggleAlgorithm}
             disableNav={disableNav}
           />
