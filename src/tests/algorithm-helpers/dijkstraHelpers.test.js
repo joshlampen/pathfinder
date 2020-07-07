@@ -73,7 +73,7 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const finishNode = grid[2][1];
     dijkstra(grid, startNode, finishNode)
 
-    expect(getShortestPathNodes(finishNode).length).toBe(3)
+    expect(getShortestPathNodes(finishNode).length).toBe(2)
   })
 
   test("return distance between start and end node on y-plane", () => {
@@ -82,7 +82,7 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const finishNode = grid[1][2];
     const dijkstraArray = dijkstra(grid, startNode, finishNode)
 
-    expect(getShortestPathNodes(finishNode).length).toBe(3)
+    expect(getShortestPathNodes(finishNode).length).toBe(2)
   })
 
   test("return distance between start and end node when diagonal", () => {
@@ -91,7 +91,7 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const finishNode = grid[2][2];
     const dijkstraArray = dijkstra(grid, startNode, finishNode)
 
-    expect(getShortestPathNodes(finishNode).length).toBe(4)
+    expect(getShortestPathNodes(finishNode).length).toBe(3)
   })
   
 })

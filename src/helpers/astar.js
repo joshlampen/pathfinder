@@ -1,4 +1,5 @@
-import { getUnvisitedNeighbors, getShortestPathNodes, animateDijkstra } from '../helpers/dijkstraHelpers';
+import { getShortestPathNodes, animateDijkstra, getUnvisitedNeighbors } from '../helpers/dijkstraHelpers';
+import { getNeighborsBreadthFirst } from './breadthFirst'
 
 const manhattanDistance = (currentNode, endNode) => {
   //Used for heuristics
@@ -21,9 +22,11 @@ export const astar = (grid, start, end) => {
     visitedNodes.push(currentNode);
     currentNode.isVisited = true;
 
-    if (currentNode.col === end.col && currentNode.row === end.row) return visitedNodes;
+    if (currentNode.col === end.col && currentNode.row === end.row) {
+      return visitedNodes;
+    }
 
-    const neighbors = getUnvisitedNeighbors(currentNode, grid);
+    const neighbors = getNeighborsBreadthFirst(currentNode, grid);
 
     neighbors.forEach(neighbor => {
       currentNode.distance = 0;
@@ -36,17 +39,20 @@ export const astar = (grid, start, end) => {
 
         neighbor.heuristic = manhattanDistance(neighbor, end);
         neighbor.cost = neighbor.distance + neighbor.heuristic;
+        neighbor.previousNode = currentNode
 
         if (!unVisitedNodes.length) {
           unVisitedNodes.push(neighbor)
-          neighbor.previous = currentNode;
         } else {
-          unVisitedNodes.forEach(unVisitedNode => {
-            if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.cost < neighbor.cost) {
+          unVisitedNodes.forEach((unVisitedNode, idx) => {
+            if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.cost <= neighbor.cost) {
               return;
             }
-            unVisitedNodes.push(neighbor)
-            neighbor.previous = currentNode;
+
+            //if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.cost > neighbor.cost) {
+              unVisitedNodes.push(neighbor);
+            // }
+
           })
         }
       }

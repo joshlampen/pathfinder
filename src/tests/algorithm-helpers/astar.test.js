@@ -1,4 +1,5 @@
 import { astar } from "../../helpers/astar"
+import { getShortestPathNodes } from "../../helpers/dijkstraHelpers";
 
 const setInitialGrid = () => {   // create the initial array of node objects
   const grid = [];
@@ -55,6 +56,7 @@ describe("Astar hould return the visited nodes", () => {
 
     const search = astar(grid, startNode, finishNode);
     expect(search.length).toBe(1);
+    expect(getShortestPathNodes(finishNode).length).toBe(1);
   })
 
   test("Algorithm can shoot in a straight line if end node is on the same y plane", () => {
@@ -64,6 +66,7 @@ describe("Astar hould return the visited nodes", () => {
 
     const search = astar(grid, startNode, endNode);
     expect(search.length).toBe(3)
+    expect(getShortestPathNodes(endNode).length).toBe(3);
   })
 
   test("Algorithm can easily go around a wall", () => {
@@ -74,6 +77,7 @@ describe("Astar hould return the visited nodes", () => {
     grid[1][2].isWall = true;
 
     const search = astar(grid, startNode, endNode);
-    expect(search.length).toBe(5)
+    expect(search.length).toBe(5);
+    expect(getShortestPathNodes(endNode).length).toBe(5);
   })
 });

@@ -74,7 +74,7 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const finishNode = grid[0][15];
     depthFirst(grid, startNode, finishNode)
 
-    expect(getShortestPathNodes(finishNode).length).toBe(17)
+    expect(getShortestPathNodes(finishNode).length).toBe(16)
   })
 
   test("return distance between start and end node on y-plane", () => {
@@ -83,7 +83,7 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const finishNode = grid[14][44];
     depthFirst(grid, startNode, finishNode)
 
-    expect(getShortestPathNodes(finishNode).length).toBe(60)
+    expect(getShortestPathNodes(finishNode).length).toBe(59)
   })
   
 })
