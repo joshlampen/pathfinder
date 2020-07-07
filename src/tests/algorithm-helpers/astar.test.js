@@ -54,9 +54,10 @@ describe("Astar hould return the visited nodes", () => {
     grid[1][2].isWall = true;
     grid[1][0].isWall = true;
 
-    const search = astar(grid, startNode, finishNode);
-    expect(search.length).toBe(1);
+    const visitedNodes = astar(grid, startNode, finishNode);
+    expect(visitedNodes.length).toBe(1);
     expect(getShortestPathNodes(finishNode).length).toBe(1);
+    
   })
 
   test("Algorithm can shoot in a straight line if end node is on the same y plane", () => {
@@ -79,5 +80,15 @@ describe("Astar hould return the visited nodes", () => {
     const search = astar(grid, startNode, endNode);
     expect(search.length).toBe(5);
     expect(getShortestPathNodes(endNode).length).toBe(5);
+  })
+
+  test("When start node has no obstacles, it should go straight for the target", () => {
+    const grid = setInitialGrid();
+    const startNode = grid[1][1];
+    const finishNode = grid[1][15];
+
+    const search = astar(grid, startNode, finishNode);
+    expect(search.length).toBe(15);
+    expect(getShortestPathNodes(finishNode).length).toBe(15);
   })
 });

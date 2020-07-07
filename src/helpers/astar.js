@@ -15,7 +15,6 @@ export const astar = (grid, start, end) => {
   while (unVisitedNodes.length) {
 
     unVisitedNodes.sort((nodeA, nodeB) => nodeA.cost - nodeB.cost);
-    console.log(unVisitedNodes.length)
 
     const currentNode = unVisitedNodes.shift();
 
@@ -23,18 +22,18 @@ export const astar = (grid, start, end) => {
     currentNode.isVisited = true;
 
     if (currentNode.col === end.col && currentNode.row === end.row) {
-      return visitedNodes;
+      break;
     }
 
     const neighbors = getNeighborsBreadthFirst(currentNode, grid);
-
+    currentNode.distance = 0;
     neighbors.forEach(neighbor => {
-      currentNode.distance = 0;
+
       if (!neighbor.isVisited && !neighbor.isWall) {
         if (neighbor.isWeight) {
-          neighbor.distance = currentNode.distance + 2;
+          neighbor.distance = currentNode.distance + 3;
         } else {
-          neighbor.distance = currentNode.distance + 1
+          neighbor.distance = currentNode.distance + 1;
         }
 
         neighbor.heuristic = manhattanDistance(neighbor, end);
@@ -44,16 +43,19 @@ export const astar = (grid, start, end) => {
         if (!unVisitedNodes.length) {
           unVisitedNodes.push(neighbor)
         } else {
-          unVisitedNodes.forEach((unVisitedNode, idx) => {
-            if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.cost <= neighbor.cost) {
-              return;
+          let hasMatch = false;
+          for (let i = 0; i < unVisitedNodes.length; i++) {
+            const unVisitedNode = unVisitedNodes[i];
+            if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.cost > neighbor.cost) {
+              unVisitedNode = neighbor;
+              hasMatch = true;
+            } else if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.cost <= neighbor.cost) {
+              hasMatch = true;
             }
-
-            //if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.cost > neighbor.cost) {
-              unVisitedNodes.push(neighbor);
-            // }
-
-          })
+          }
+          if (!hasMatch) {
+            unVisitedNodes.push(neighbor)
+          }
         }
       }
     })
