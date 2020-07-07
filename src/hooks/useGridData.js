@@ -183,15 +183,18 @@ export default function useGridData() {
     } else {
       switch (algorithm) {
         case 'DIJKSTRA':
+          visualizeDijkstra(state.grid, startNode, finishNode, setState);
+          break;
+        case 'DEPTH-FIRST':
+          visualizeDepthFirst(state.grid, startNode, finishNode, setState);
+          break;
+        case 'BREADTH-FIRST':
+          visualizeBreadthFirst(state.grid, startNode, finishNode, setState);
+          break;
+        case 'A-STAR':
           visualizeAstar(state.grid, startNode, finishNode, setState);
-          //visualizeDijkstra(state.grid, startNode, finishNode, setState);
           break;
-          case 'DEPTH-FIRST':
-            visualizeDepthFirst(state.grid, startNode, finishNode, setState);
-          break;
-          case 'BREADTH-FIRST':
-            visualizeBreadthFirst(state.grid, startNode, finishNode, setState);
-          }
+      }
 
       return setState(prev => ({ ...prev, inProgress: true }));
     }
