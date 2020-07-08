@@ -33,41 +33,91 @@ const sortNodesByDistance = unvisitedNodes => {
 }
 
 // loops through the grid array and removes the nested layers of the nodes
-const removeNestedNodes = grid => {
-	const nodes = [];
+const getUnvisitedNodes = (grid, prevVisitedNodes) => {
+  const unNestedNodes = [];
+  let unVisitedNodes = [];
 
-	for (const row of grid) {
-		for (const node of row) {
-			nodes.push(node);
-		}
-	}
+  for (const row of grid) {
+    for (const node of row) {
+      unNestedNodes.push(node);
+    }
+  }
 
-	return nodes;
+  if (prevVisitedNodes.length) {
+    for (const node of unNestedNodes) {
+      let visited = false;
+
+      for (const visitedNode of prevVisitedNodes) {
+        if (node.row === visitedNode.row && node.col === visitedNode.col) {
+          visited = true;
+        }
+      }
+
+      if (!visited) unVisitedNodes.push(node);
+    }
+  } else {
+    unVisitedNodes = unNestedNodes;
+  }
+
+	return unVisitedNodes;
 }
 
 // core dijkstra algorithm
-export const dijkstra = (grid, startNode, finishNode) => {
-	const visitedNodesInOrder = [];
+export const dijkstra = (grid, startNode, finishNode, interNode, prevVisitedNodesInOrder) => {
+  const visitedNodesInOrder = {
+    firstRun: prevVisitedNodesInOrder,
+    secondRun: [],
+  };
+
+  // if (prevVisitedNodesInOrder.length) {
+  //   for (const node of prevVisitedNodesInOrder) {
+  //     visitedNodesInOrder.push(node);
+  //   }
+  // }
+
 	startNode.distance = 0;
-	const unvisitedNodes = removeNestedNodes(grid);
+  const unvisitedNodes = getUnvisitedNodes(grid, prevVisitedNodesInOrder.firstRun);
+  
+  if (interNode) {
+    while (unvisitedNodes.length > 0) { // while there are still unvisited nodes...
+      sortNodesByDistance(unvisitedNodes);
+      const closestNode = unvisitedNodes.shift() // remove the first node in the array (i.e. one of the neighbors)
+  
+      if (closestNode.isWall) continue;
+  
+      if (closestNode.distance === Infinity) return visitedNodesInOrder;
+      // if the start node is completely surrounded by walls, we can't find any more neighbors (where distance isn't infinity) and are therefore stuck
+  
+      closestNode.isVisited = true;
+      visitedNodesInOrder.firstRun.push(closestNode);
+  
+      if(closestNode === interNode) {
+        console.log(visitedNodesInOrder.firstRun);
+        dijkstra(grid, interNode, finishNode, null, visitedNodesInOrder.firstRun); // intermediate node has been found
+      }
 
-	while (unvisitedNodes.length > 0) { // while there are still unvisited nodes...
-		sortNodesByDistance(unvisitedNodes);
-		const closestNode = unvisitedNodes.shift() // remove the first node in the array (i.e. one of the neighbors)
-
-		if (closestNode.isWall) continue;
-
-		if (closestNode.distance === Infinity) return visitedNodesInOrder;
-
-		closestNode.isVisited = true;
-		visitedNodesInOrder.push(closestNode);
-
-		if(closestNode === finishNode) return visitedNodesInOrder; // algorithm complete, finished node has been found
-		updateUnvisitedNeighbors(closestNode, grid);
-		
-		// if the start node is completely surrounded by walls, we can't find any more neighbors (where distance isn't infinity) and are therefore stuck
-	
-	}
+      updateUnvisitedNeighbors(closestNode, grid);
+    }
+  } else {
+    while (unvisitedNodes.length > 0) { // while there are still unvisited nodes...
+      sortNodesByDistance(unvisitedNodes);
+      const closestNode = unvisitedNodes.shift() // remove the first node in the array (i.e. one of the neighbors)
+  
+      if (closestNode.isWall) continue;
+  
+      if (closestNode.distance === Infinity) return visitedNodesInOrder;
+      // if the start node is completely surrounded by walls, we can't find any more neighbors (where distance isn't infinity) and are therefore stuck
+  
+      closestNode.isVisited = true;
+      visitedNodesInOrder.push(closestNode);
+  
+      if(closestNode === finishNode) {
+        console.log(visitedNodesInOrder)
+        return visitedNodesInOrder; // algorithm complete, finished node has been found
+      }
+      updateUnvisitedNeighbors(closestNode, grid);
+    }
+  }
 }
 
 // find the shortest path by starting at the end node and moving to node.previousNode
@@ -123,10 +173,12 @@ export const animateShortestPath = (shortestPathNodes, setState) => {
   }
 }
 
-export default async function visualizeDijkstra(grid, startNode, finishNode, setState) {
+export default async function visualizeDijkstra(grid, startNode, finishNode, interNode, setState) {
   const startNodeObj = grid[startNode.row][startNode.col];
   const finishNodeObj = grid[finishNode.row][finishNode.col];
-  const visitedNodesInOrder = dijkstra(grid, startNodeObj, finishNodeObj);
+  const interNodeObj = interNode ? grid[interNode.row][interNode.col] : null;
+  const visitedNodesInOrder = dijkstra(grid, startNodeObj, finishNodeObj, interNodeObj);
+  console.log(visitedNodesInOrder)
   const shortestPathNodes = getShortestPathNodes(finishNodeObj);
 
 	animateDijkstra(visitedNodesInOrder, shortestPathNodes, setState);

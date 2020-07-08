@@ -13,6 +13,7 @@ export default function Grid(props) {
 
   const {
     state,
+    interNode,
     mouseDown,
     mouseUp,
     togglePickup,
@@ -22,7 +23,8 @@ export default function Grid(props) {
     startVisualization,
     toggleWeight,
     clearWeights,
-    loadWalls
+    loadWalls,
+    createInterNode
   } = useGridData()
 
   useEffect(() => {
@@ -69,8 +71,9 @@ export default function Grid(props) {
             text='Add Node'
             size='small'
             color='secondary'
-            onClick={() => console.log('test')}
+            onClick={createInterNode}
             inProgress={state.inProgress}
+            interNode={interNode}
           />
         <BasicButton
             text='Generate Maze'
@@ -106,6 +109,7 @@ export default function Grid(props) {
               col,
               isStart,
               isFinish,
+              isInter,
               isVisited,
               isWall,
               isWeight,
@@ -119,6 +123,7 @@ export default function Grid(props) {
                 col={col}
                 isStart={isStart}
                 isFinish={isFinish}
+                isInter={isInter}
                 isVisited={isVisited}
                 isWall={isWall}
                 isWeight={isWeight}
@@ -129,6 +134,7 @@ export default function Grid(props) {
                 togglePickup={togglePickup}
                 isStartPickup={state.isStartPickup}
                 isFinishPickup={state.isFinishPickup}
+                isInterPickup={state.isInterPickup}
                 moveNode={moveNode}
               />
             );
