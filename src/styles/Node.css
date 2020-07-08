@@ -130,35 +130,35 @@
 @keyframes secondVisitedAnimation {
   0% {
     /* background-color: #350035; */
-    background-color: #043500;
+    background-color: #032900;
     transform: scale(0.2);
     border-radius: 100%;
   }
   
   20% {
     /* background-color: #57124a; */
-    background-color: #0b4b0d;
+    background-color: #0b410d;
     border-radius: 67%;
   }
   
   40% {
     /* background-color: #78235f; */
-    background-color: #13611a;
+    background-color: #12591a;
     border-radius: 33%;
   }
   
   60% {
     /* background-color: #ab3d7f; */
-    background-color: #1e822d;
-    border-color: #1e822d;
+    background-color: #1e7d2d;
+    border-color: #1e7d2d;
     transform: scale(1.3);
     border-radius: 0%;
   }
 
   80% {
     /* background-color: #dd589f; */
-    background-color: #2aa340;
-    border-color: #2aa340;
+    background-color: #29a140;
+    border-color: #29a140;
   }
   
   100% {
