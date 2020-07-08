@@ -23,11 +23,14 @@ export const astar = (grid, start, end) => {
       if (nodeA.cost < nodeB.cost) return -1;
       if (nodeA.heuristic > nodeB.heuristic) return 1;
       if (nodeA.heuristic < nodeB.heuristic) return -1;
+      // if (nodeA.distanceToStart > nodeB.distanceToStart) return 1;
+      // if (nodeA.distanceToStart < nodeB.distanceToStart) return -1;
     });
 
     const currentNode = unVisitedNodes.shift();    
 
     if (currentNode.col === end.col && currentNode.row === end.row) {
+      visitedNodes.push(currentNode)
       return visitedNodes;
     }
     
@@ -71,11 +74,39 @@ export const astar = (grid, start, end) => {
   return visitedNodes
 }
 
-export default async function visualizeAstar(grid, startNode, finishNode, setState) {
-  const startNodeObj = grid[startNode.row][startNode.col];
-  const finishNodeObj = grid[finishNode.row][finishNode.col];
-  const visitedNodesInOrder = astar(grid, startNodeObj, finishNodeObj);
-  const shortestPathNodes = getShortestPathNodes(finishNodeObj);
+export default async function visualizeAstar(grid, startNode, finishNode, interNode, setState) {
+  const firstGrid = grid.map(row => {
+    return row.map(node => {
+      const newNode = {
+        ...node,
+        isVisited: false,
+      }
 
-	animateDijkstra(visitedNodesInOrder, shortestPathNodes, setState);
+      return newNode
+    })
+  })
+
+  const secondGrid = grid.map(row => {
+    return row.map(node => {
+      const newNode = {
+        ...node,
+        isVisited: false,
+      }
+
+      return newNode
+    })
+  })
+
+  const startNodeObj = firstGrid[startNode.row][startNode.col];
+  const firstInterNodeObj = interNode ? firstGrid[interNode.row][interNode.col] : null;
+  const secondInterNodeObj = interNode ? secondGrid[interNode.row][interNode.col] : null;
+  const finishNodeObj = interNode ? secondGrid[finishNode.row][finishNode.col] : firstGrid[finishNode.row][finishNode.col];
+
+  const firstVisitedNodesInOrder = interNode ? astar(firstGrid, startNodeObj, firstInterNodeObj) : astar(firstGrid, startNodeObj, finishNodeObj);
+  const secondVisitedNodesInOrder = interNode ? astar(secondGrid, secondInterNodeObj, finishNodeObj) : null
+
+  const firstShortestPathNodes = interNode ? getShortestPathNodes(startNodeObj, firstInterNodeObj) : getShortestPathNodes(startNodeObj, finishNodeObj);
+  const secondShortestPathNodes = interNode ? getShortestPathNodes(secondInterNodeObj, finishNodeObj) : null;
+
+  animateDijkstra(firstVisitedNodesInOrder, firstShortestPathNodes, secondVisitedNodesInOrder, secondShortestPathNodes, setState);
 }
