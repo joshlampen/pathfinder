@@ -58,6 +58,18 @@
   color: black;
 }
 
+.node-shortest-path-last-row {
+  animation-name: shortestPathAnimation;
+  animation-duration: 1s;
+  border-bottom: 1px solid #ebd301;
+}
+
+.node-shortest-path-last-col {
+  animation-name: shortestPathAnimation;
+  animation-duration: 1s;
+  border-right: 1px solid #ebd301;
+}
+
 @keyframes visitedAnimation {
   0% {
     background-color: #002435;

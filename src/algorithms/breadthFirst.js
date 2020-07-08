@@ -112,5 +112,7 @@ export default function visualizeBreadthFirst(grid, startNode, finishNode, inter
 
   animateBreadthFirst(firstVisitedNodesInOrder, firstShortestPathNodes, setState);
 
-  if (secondVisitedNodesInOrder) animateBreadthFirst(secondVisitedNodesInOrder, secondShortestPathNodes, setState);
+  if (secondVisitedNodesInOrder) {
+    animateBreadthFirst(secondVisitedNodesInOrder, secondShortestPathNodes, setState);
+  }
 }
