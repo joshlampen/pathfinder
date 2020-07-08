@@ -37,8 +37,16 @@ export default function Description(props) {
           algDesc: response.data.desc
           })
       }) 
-    }}, [algorithm]);
-
+    } else if (algorithm === 'A-STAR') {
+      Promise.resolve(axios.get("/descriptions/4"))
+      .then(response => {
+        setDesc({
+          algName: response.data.algorithm_name,
+          algDesc: response.data.desc
+          })
+      }) 
+    }}, [algorithm]);  
+    
   return (
     <div className='Description'>
       <h2><FontAwesomeIcon icon={faWaveSquare} />&nbsp;&nbsp; {desc.algName}</h2>

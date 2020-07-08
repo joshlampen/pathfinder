@@ -45,12 +45,15 @@ export default function ToolBarDropdown(props) {
       }),
       axios.get("/saved_grids/invaders").then((response) => {
         return response.data[0].rows;
+      }),
+      axios.get("/saved_grids/pokemon").then((response) => {
+        return response.data[0].rows;
       })
     ]).then(all => {
       setMaps(() => ({
         face: all[0],
         invaders: all[1],
-        test: all[2]
+        pokemon: all[2]
       }));
     })
   }, []);
@@ -125,6 +128,9 @@ export default function ToolBarDropdown(props) {
                     </MenuItem>
                     <MenuItem className={classes.select} onClick={() => handleWallLoad(maps.invaders)}>
                       Invaders
+                    </MenuItem>
+                    <MenuItem className={classes.select} onClick={() => handleWallLoad(maps.pokemon)}>
+                      Pokemon
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
