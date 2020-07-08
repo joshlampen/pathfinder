@@ -51,13 +51,16 @@ export const breadthFirst = (grid, start, end) => {
   return visitedNodes;
 }
 
-export const animateBreadthFirst = (visitedNodesInOrder, shortestPathNodes, setState) => {
-	for (let i = 0; i <= visitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
-		const node = visitedNodesInOrder[i]
+export const animateBreadthFirst = (firstVisitedNodesInOrder, firstShortestPathNodes, secondVisitedNodesInOrder, secondShortestPathNodes, setState) => {
+	for (let i = 0; i <= firstVisitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
+		const node = firstVisitedNodesInOrder[i]
 
-		if (i === visitedNodesInOrder.length) {
+		if (i === firstVisitedNodesInOrder.length) {
 			setTimeout(() => {
-				animateShortestPath(shortestPathNodes, setState);
+        animateShortestPath(firstShortestPathNodes, setState);
+        if (secondVisitedNodesInOrder) {
+          animateBreadthFirst(secondVisitedNodesInOrder, secondShortestPathNodes, null, null, setState)
+        }
 			}, 10 * i)
 		} else {
 			setTimeout(() => {
@@ -110,9 +113,5 @@ export default function visualizeBreadthFirst(grid, startNode, finishNode, inter
   const firstShortestPathNodes = interNode ? getShortestPathNodes(startNodeObj, firstInterNodeObj) : getShortestPathNodes(startNodeObj, finishNodeObj);
   const secondShortestPathNodes = interNode ? getShortestPathNodes(secondInterNodeObj, finishNodeObj) : null;
 
-  animateBreadthFirst(firstVisitedNodesInOrder, firstShortestPathNodes, setState);
-
-  if (secondVisitedNodesInOrder) {
-    animateBreadthFirst(secondVisitedNodesInOrder, secondShortestPathNodes, setState);
-  }
+  animateBreadthFirst(firstVisitedNodesInOrder, firstShortestPathNodes, secondVisitedNodesInOrder, secondShortestPathNodes, setState);
 }
