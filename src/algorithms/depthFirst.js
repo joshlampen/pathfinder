@@ -48,11 +48,39 @@ export const depthFirst = (grid, start, end) => {
   return visitedNodes;
 }
 
-export default function visualizeDepthFirst(grid, startNode, finishNode, setState) {
-  const startNodeObj = grid[startNode.row][startNode.col];
-  const finishNodeObj = grid[finishNode.row][finishNode.col];
-  const visitedNodesInOrder = depthFirst(grid, startNodeObj, finishNodeObj);
-  const shortestPathNodes = getShortestPathNodes(finishNodeObj);
+export default function visualizeDepthFirst(grid, startNode, finishNode, interNode, setState) {
+  const firstGrid = grid.map(row => {
+    return row.map(node => {
+      const newNode = {
+        ...node,
+        isVisited: false,
+      }
 
-	animateBreadthFirst(visitedNodesInOrder, shortestPathNodes, setState);
+      return newNode
+    })
+  })
+
+  const secondGrid = grid.map(row => {
+    return row.map(node => {
+      const newNode = {
+        ...node,
+        isVisited: false,
+      }
+
+      return newNode
+    })
+  })
+  
+  const startNodeObj = firstGrid[startNode.row][startNode.col];
+  const firstInterNodeObj = interNode ? firstGrid[interNode.row][interNode.col] : null;
+  const secondInterNodeObj = interNode ? secondGrid[interNode.row][interNode.col] : null;
+  const finishNodeObj = interNode ? secondGrid[finishNode.row][finishNode.col] : firstGrid[finishNode.row][finishNode.col];
+
+  const firstVisitedNodesInOrder = interNode ? depthFirst(firstGrid, startNodeObj, firstInterNodeObj) : depthFirst(firstGrid, startNodeObj, finishNodeObj);
+  const secondVisitedNodesInOrder = interNode ? depthFirst(secondGrid, secondInterNodeObj, finishNodeObj) : null
+
+  const firstShortestPathNodes = interNode ? getShortestPathNodes(startNodeObj, firstInterNodeObj) : getShortestPathNodes(startNodeObj, finishNodeObj);
+  const secondShortestPathNodes = interNode ? getShortestPathNodes(secondInterNodeObj, finishNodeObj) : null;
+
+  animateBreadthFirst(firstVisitedNodesInOrder, firstShortestPathNodes, secondVisitedNodesInOrder, secondShortestPathNodes, setState);
 }

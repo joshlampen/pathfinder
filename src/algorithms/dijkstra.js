@@ -86,13 +86,16 @@ export const getShortestPathNodes = (startNode, finishNode) => {
 	return path;
 }
 
-export const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
-  for (let i = 0; i <= visitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
-		const node = visitedNodesInOrder[i];
+export const animateDijkstra = (firstVisitedNodesInOrder, firstShortestPathNodes, secondVisitedNodesInOrder, secondShortestPathNodes, setState) => {
+  for (let i = 0; i <= firstVisitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
+		const node = firstVisitedNodesInOrder[i];
 
-		if (i === visitedNodesInOrder.length) {
+		if (i === firstVisitedNodesInOrder.length) {
 			setTimeout(() => {
-				animateShortestPath(shortestPathNodes, setState);
+        animateShortestPath(firstShortestPathNodes, setState);
+        if (secondVisitedNodesInOrder) {
+          animateDijkstra(secondVisitedNodesInOrder, secondShortestPathNodes, null, null, setState)
+        }
 			}, 10 * i)
 		} else {
 			setTimeout(() => {
@@ -114,6 +117,14 @@ export const animateShortestPath = (shortestPathNodes, setState) => {
   for (let i = 0; i < shortestPathNodes.length; i++) {
     setTimeout(() => {
       const node = shortestPathNodes[i];
+      if (node.lastRow) {
+        document.getElementById(`node-${node.row}-${node.col}`).className += ' node-shortest-path-last-row';
+      } 
+      
+      if (node.lastCol) {
+        document.getElementById(`node-${node.row}-${node.col}`).className += ' node-shortest-path-last-col';
+      }
+
 			document.getElementById(`node-${node.row}-${node.col}`).className += ' node-shortest-path';
 			
     }, 50 * i);
@@ -159,7 +170,5 @@ export default async function visualizeDijkstra(grid, startNode, finishNode, int
   const firstShortestPathNodes = interNode ? getShortestPathNodes(startNodeObj, firstInterNodeObj) : getShortestPathNodes(startNodeObj, finishNodeObj);
   const secondShortestPathNodes = interNode ? getShortestPathNodes(secondInterNodeObj, finishNodeObj) : null;
 
-  animateDijkstra(firstVisitedNodesInOrder, firstShortestPathNodes, setState);
-
-  if (secondVisitedNodesInOrder) animateDijkstra(secondVisitedNodesInOrder, secondShortestPathNodes, setState);
+  animateDijkstra(firstVisitedNodesInOrder, firstShortestPathNodes, secondVisitedNodesInOrder, secondShortestPathNodes, setState);
 }
