@@ -190,7 +190,7 @@ export default function useGridData() {
         visualizeDijkstra(state.grid, startNode, finishNode, interNode, setState);
         break;
       case 'DEPTH-FIRST':
-        visualizeDepthFirst(state.grid, startNode, finishNode, setState);
+        visualizeDepthFirst(state.grid, startNode, finishNode, interNode, setState);
         break;
       case 'BREADTH-FIRST':
         visualizeBreadthFirst(state.grid, startNode, finishNode, interNode, setState);
