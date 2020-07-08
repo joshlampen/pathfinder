@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import visualizeDijkstra from "../algorithms/dijkstra";
-import visualizeBreadthFirst from "../algorithms/breadthFirst";
-import visualizeDepthFirst from "../algorithms/depthFirst";
-import visualizeAstar from "../algorithms/astar";
+import dijkstra from "../algorithms/dijkstra";
+import breadthFirst from "../algorithms/breadthFirst";
+import depthFirst from "../algorithms/depthFirst";
+import astar from "../algorithms/astar";
+import visualizeAlgorithm from "../algorithms/algorithmHelpers"
 
 export default function useGridData() {
   const [startNode, setStartNode] = useState({ row: 7, col: 4 });
@@ -187,16 +188,16 @@ export default function useGridData() {
   const startVisualization = (algorithm) => {
     switch (algorithm) {
       case 'DIJKSTRA':
-        visualizeDijkstra(state.grid, startNode, finishNode, interNode, setState);
+        visualizeAlgorithm(dijkstra, state.grid, startNode, finishNode, interNode, setState);
         break;
       case 'DEPTH-FIRST':
-        visualizeDepthFirst(state.grid, startNode, finishNode, interNode, setState);
+        visualizeAlgorithm(depthFirst, state.grid, startNode, finishNode, interNode, setState);
         break;
       case 'BREADTH-FIRST':
-        visualizeBreadthFirst(state.grid, startNode, finishNode, interNode, setState);
+        visualizeAlgorithm(breadthFirst, state.grid, startNode, finishNode, interNode, setState);
         break;
       case 'A-STAR':
-        visualizeAstar(state.grid, startNode, finishNode, interNode, setState);
+        visualizeAlgorithm(astar, state.grid, startNode, finishNode, interNode, setState);
         break;
     }
 
