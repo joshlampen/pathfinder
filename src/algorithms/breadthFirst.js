@@ -1,4 +1,4 @@
-import { getShortestPathNodes, animateShortestPath } from '../helpers/dijkstraHelpers'
+import { getShortestPathNodes, animateShortestPath } from './dijkstra'
 
 export const getNeighborsBreadthFirst = (node, grid) => {
   const neighbors = [];

@@ -47,9 +47,11 @@ const removeNestedNodes = grid => {
 
 // core dijkstra algorithm
 export const dijkstra = (grid, startNode, finishNode) => {
+  console.log(grid);
 	const visitedNodesInOrder = [];
 	startNode.distance = 0;
 	const unvisitedNodes = removeNestedNodes(grid);
+	// const unvisitedNodes = grid;
 
 	while (unvisitedNodes.length > 0) { // while there are still unvisited nodes...
 		sortNodesByDistance(unvisitedNodes);
@@ -58,34 +60,34 @@ export const dijkstra = (grid, startNode, finishNode) => {
 		if (closestNode.isWall) continue;
 
 		if (closestNode.distance === Infinity) return visitedNodesInOrder;
+		// if the start node is completely surrounded by walls, we can't find any more neighbors (where distance isn't infinity) and are therefore stuck
 
 		closestNode.isVisited = true;
 		visitedNodesInOrder.push(closestNode);
 
-		if(closestNode === finishNode) return visitedNodesInOrder; // algorithm complete, finished node has been found
+		if (closestNode.row === finishNode.row && closestNode.col === finishNode.col) return visitedNodesInOrder; // algorithm complete, finished node has been found
 		updateUnvisitedNeighbors(closestNode, grid);
-		
-		// if the start node is completely surrounded by walls, we can't find any more neighbors (where distance isn't infinity) and are therefore stuck
-	
 	}
 }
 
 // find the shortest path by starting at the end node and moving to node.previousNode
-export const getShortestPathNodes = finishNode => {
+export const getShortestPathNodes = (startNode, finishNode) => {
   const path = [];
-  
-	let currentNode = finishNode;
 
-  // path.unshift(currentNode);
-	while (currentNode) {
+  let currentNode = finishNode;
+
+	while (currentNode && !(startNode.row === currentNode.row && startNode.col === currentNode.col)) {
     path.unshift(currentNode);
 		currentNode = currentNode.previousNode; // once we reach the start node, this becomes null and the loop breaks
-	}
+  }
+
+  path.unshift(startNode);
+  
 	return path;
 }
 
 export const animateDijkstra = (visitedNodesInOrder, shortestPathNodes, setState) => {
-	for (let i = 0; i <= visitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
+  for (let i = 0; i <= visitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
 		const node = visitedNodesInOrder[i];
 
 		if (i === visitedNodesInOrder.length) {
@@ -123,11 +125,41 @@ export const animateShortestPath = (shortestPathNodes, setState) => {
   }
 }
 
-export default async function visualizeDijkstra(grid, startNode, finishNode, setState) {
-  const startNodeObj = grid[startNode.row][startNode.col];
-  const finishNodeObj = grid[finishNode.row][finishNode.col];
-  const visitedNodesInOrder = dijkstra(grid, startNodeObj, finishNodeObj);
-  const shortestPathNodes = getShortestPathNodes(finishNodeObj);
+export default async function visualizeDijkstra(grid, startNode, finishNode, interNode, setState) {
+  const firstGrid = grid.map(row => {
+    return row.map(node => {
+      const newNode = {
+        ...node,
+        isVisited: false,
+      }
 
-	animateDijkstra(visitedNodesInOrder, shortestPathNodes, setState);
+      return newNode
+    })
+  })
+
+  const secondGrid = grid.map(row => {
+    return row.map(node => {
+      const newNode = {
+        ...node,
+        isVisited: false,
+      }
+
+      return newNode
+    })
+  })
+
+  const startNodeObj = firstGrid[startNode.row][startNode.col];
+  const firstInterNodeObj = interNode ? firstGrid[interNode.row][interNode.col] : null;
+  const secondInterNodeObj = interNode ? secondGrid[interNode.row][interNode.col] : null;
+  const finishNodeObj = interNode ? secondGrid[finishNode.row][finishNode.col] : firstGrid[finishNode.row][finishNode.col];
+
+  const firstVisitedNodesInOrder = interNode ? dijkstra(firstGrid, startNodeObj, firstInterNodeObj) : dijkstra(firstGrid, startNodeObj, finishNodeObj);
+  const secondVisitedNodesInOrder = interNode ? dijkstra(secondGrid, secondInterNodeObj, finishNodeObj) : null
+
+  const firstShortestPathNodes = interNode ? getShortestPathNodes(startNodeObj, firstInterNodeObj) : getShortestPathNodes(startNodeObj, finishNodeObj);
+  const secondShortestPathNodes = interNode ? getShortestPathNodes(secondInterNodeObj, finishNodeObj) : null;
+
+  animateDijkstra(firstVisitedNodesInOrder, firstShortestPathNodes, setState);
+
+  if (secondVisitedNodesInOrder) animateDijkstra(secondVisitedNodesInOrder, secondShortestPathNodes, setState);
 }

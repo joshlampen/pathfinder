@@ -1,4 +1,4 @@
-import { getShortestPathNodes, animateDijkstra, getUnvisitedNeighbors } from '../helpers/dijkstraHelpers';
+import { getShortestPathNodes, animateDijkstra, getUnvisitedNeighbors } from './dijkstra';
 import { getNeighborsBreadthFirst } from './breadthFirst'
 
 const heuristic = (currentNode, endNode) => {

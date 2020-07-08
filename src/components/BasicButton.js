@@ -9,7 +9,7 @@ const style = {
 }
 
 export default function BasicButton(props) {
-  const { text, onClick, size, color, inProgress } = props;
+  const { text, onClick, size, color, inProgress, interNode } = props;
 
   const manageDisable = () => {
     if (text === 'Reset Grid') {
@@ -32,7 +32,7 @@ export default function BasicButton(props) {
         style={style}
         onClick={onClick}
         disableElevation
-        disabled={manageDisable()}
+        disabled={interNode || manageDisable()}
       >
         {text}
       </Button>
