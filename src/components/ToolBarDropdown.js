@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -12,6 +13,7 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { theme } from '../styles/buttonTheme'
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,6 +35,25 @@ export default function NavDropdown(props) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
+
+  const [maps, setMaps] = useState({
+    face: [],
+    arrow: []
+  })
+  
+  useEffect(() => {
+    Promise.all([
+      axios.get("/walled_nodes/face").then((response) => {
+        return response.data;
+      })
+    ]).then((all) => {
+      setMaps(() => ({
+        face: all[0]
+      }));
+    })
+  }, []);
+
+  console.log(maps.face)
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
