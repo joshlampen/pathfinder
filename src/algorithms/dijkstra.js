@@ -47,7 +47,6 @@ const removeNestedNodes = grid => {
 
 // core dijkstra algorithm
 export const dijkstra = (grid, startNode, finishNode) => {
-  console.log(grid);
 	const visitedNodesInOrder = [];
 	startNode.distance = 0;
 	const unvisitedNodes = removeNestedNodes(grid);
@@ -86,34 +85,59 @@ export const getShortestPathNodes = (startNode, finishNode) => {
 	return path;
 }
 
-export const animateDijkstra = (firstVisitedNodesInOrder, firstShortestPathNodes, secondVisitedNodesInOrder, secondShortestPathNodes, setState) => {
+export const animateDijkstra = (firstVisitedNodesInOrder, firstShortestPathNodes, secondVisitedNodesInOrder, secondShortestPathNodes, setState, count) => {
   for (let i = 0; i <= firstVisitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
 		const node = firstVisitedNodesInOrder[i];
 
 		if (i === firstVisitedNodesInOrder.length) {
 			setTimeout(() => {
-        animateShortestPath(firstShortestPathNodes, setState);
         if (secondVisitedNodesInOrder) {
-          animateDijkstra(secondVisitedNodesInOrder, secondShortestPathNodes, null, null, setState)
+          animateDijkstra(secondVisitedNodesInOrder, secondShortestPathNodes, null, firstShortestPathNodes, setState, 1);
+        } else {
+          animateShortestPath(firstShortestPathNodes, secondShortestPathNodes, setState);
         }
 			}, 10 * i)
 		} else {
 			setTimeout(() => {
-        if (node.lastRow) {
-          document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited-last-row';
-        } 
-        
-        if (node.lastCol) {
-          document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited-last-col';
+        if (count > 0) {
+          if (node.lastRow) {
+            document.getElementById(`node-${node.row}-${node.col}`).className += ' node-second-visited-last-row';
+          } 
+          
+          if (node.lastCol) {
+            document.getElementById(`node-${node.row}-${node.col}`).className += ' node-second-visited-last-col';
+          }
+  
+          document.getElementById(`node-${node.row}-${node.col}`).className += ' node-second-visited';
+        } else {
+          if (node.lastRow) {
+            document.getElementById(`node-${node.row}-${node.col}`).className += ' node-first-visited-last-row';
+          } 
+          
+          if (node.lastCol) {
+            document.getElementById(`node-${node.row}-${node.col}`).className += ' node-first-visited-last-col';
+          }
+  
+          document.getElementById(`node-${node.row}-${node.col}`).className += ' node-first-visited';
         }
-
-        document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
 			}, 10 * i)
 		}
   }
 }
 
-export const animateShortestPath = (shortestPathNodes, setState) => {
+export const animateShortestPath = (firstShortestPathNodes, secondShortestPathNodes, setState) => {
+  const shortestPathNodes = [];
+
+  if (secondShortestPathNodes) {
+    for (const node of secondShortestPathNodes) {
+      shortestPathNodes.push(node);
+    }
+  }
+
+  for (const node of firstShortestPathNodes) {
+    shortestPathNodes.push(node);
+  }
+  
   for (let i = 0; i < shortestPathNodes.length; i++) {
     setTimeout(() => {
       const node = shortestPathNodes[i];
@@ -170,5 +194,5 @@ export default async function visualizeDijkstra(grid, startNode, finishNode, int
   const firstShortestPathNodes = interNode ? getShortestPathNodes(startNodeObj, firstInterNodeObj) : getShortestPathNodes(startNodeObj, finishNodeObj);
   const secondShortestPathNodes = interNode ? getShortestPathNodes(secondInterNodeObj, finishNodeObj) : null;
 
-  animateDijkstra(firstVisitedNodesInOrder, firstShortestPathNodes, secondVisitedNodesInOrder, secondShortestPathNodes, setState);
+  animateDijkstra(firstVisitedNodesInOrder, firstShortestPathNodes, secondVisitedNodesInOrder, secondShortestPathNodes, setState, 0);
 }

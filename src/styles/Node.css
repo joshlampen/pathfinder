@@ -28,8 +28,8 @@
   background-color: black;
 }
 
-.node-visited {
-  animation-name: visitedAnimation;
+.node-first-visited {
+  animation-name: firstVisitedAnimation;
   animation-duration: 1.5s;
   background-color: #42C0FB;
   border-left: 1px solid #5acbffce;
@@ -37,16 +37,37 @@
   color: black;
 }
 
-.node-visited-last-row {
-  animation-name: visitedAnimation;
+.node-first-visited-last-row {
+  animation-name: firstVisitedAnimation;
   animation-duration: 1.5s;
   border-bottom: 1px solid #5acbffce;
 }
 
-.node-visited-last-col {
-  animation-name: visitedAnimation;
+.node-first-visited-last-col {
+  animation-name: firstVisitedAnimation;
   animation-duration: 1.5s;
   border-right: 1px solid #5acbffce;
+}
+
+.node-second-visited {
+  animation-name: secondVisitedAnimation;
+  animation-duration: 1.5s;
+  background-color: #31B94D;
+  border-left: 1px solid #34c450d2;
+  border-top: 1px solid #34c450d2;
+  color: black;
+}
+
+.node-second-visited-last-row {
+  animation-name: secondVisitedAnimation;
+  animation-duration: 1.5s;
+  border-bottom: 1px solid #34c450d2;
+}
+
+.node-second-visited-last-col {
+  animation-name: secondVisitedAnimation;
+  animation-duration: 1.5s;
+  border-right: 1px solid #34c450d2;
 }
 
 .node-shortest-path {
@@ -70,7 +91,7 @@
   border-right: 1px solid #ebd301;
 }
 
-@keyframes visitedAnimation {
+@keyframes firstVisitedAnimation {
   0% {
     background-color: #002435;
     transform: scale(0.2);
@@ -102,6 +123,49 @@
   100% {
     background-color: #42C0FB;
     border-color: #5acbffce;
+    transform: scale(1);
+  }
+}
+
+@keyframes secondVisitedAnimation {
+  0% {
+    /* background-color: #350035; */
+    background-color: #043500;
+    transform: scale(0.2);
+    border-radius: 100%;
+  }
+  
+  20% {
+    /* background-color: #57124a; */
+    background-color: #0b4b0d;
+    border-radius: 67%;
+  }
+  
+  40% {
+    /* background-color: #78235f; */
+    background-color: #13611a;
+    border-radius: 33%;
+  }
+  
+  60% {
+    /* background-color: #ab3d7f; */
+    background-color: #1e822d;
+    border-color: #1e822d;
+    transform: scale(1.3);
+    border-radius: 0%;
+  }
+
+  80% {
+    /* background-color: #dd589f; */
+    background-color: #2aa340;
+    border-color: #2aa340;
+  }
+  
+  100% {
+    /* background-color: #FF69B4; */
+    /* border-color: #ff84c1d3; */
+    background-color: #31B94D;
+    border-color: #34c450d2;
     transform: scale(1);
   }
 }
