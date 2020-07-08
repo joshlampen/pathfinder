@@ -9,16 +9,16 @@ export const getNeighborsBreadthFirst = (node, grid) => {
     neighbors.push(grid[row - 1][col]);
   }
 
-  if (grid[row][col + 1] && !grid[row][col + 1].isWall) {
-    neighbors.push(grid[row][col + 1]);
-  }
-
   if (grid[row + 1] && !grid[row + 1][col].isWall) {
     neighbors.push(grid[row + 1][col]);
   }
-  
+
   if (grid[row][col - 1] && !grid[row][col - 1].isWall) {
     neighbors.push(grid[row][col - 1])
+  }
+
+  if (grid[row][col + 1] && !grid[row][col + 1].isWall) {
+    neighbors.push(grid[row][col + 1]);
   }
 
   return neighbors;

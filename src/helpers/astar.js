@@ -1,14 +1,20 @@
 import { getShortestPathNodes, animateDijkstra, getUnvisitedNeighbors } from '../helpers/dijkstraHelpers';
 import { getNeighborsBreadthFirst } from './breadthFirst'
 
-const manhattanDistance = (currentNode, endNode) => {
+const heuristic = (currentNode, endNode) => {
   //Used for heuristics
-  const differenceInCol = Math.abs(currentNode.col - endNode.col);
+
+  // const differenceInCol = (currentNode.col - endNode.col) ** 2;
+  // const differenceInRow = (currentNode.row = endNode.row) ** 2;
+  // return Math.floor((differenceInCol + differenceInRow) ** 0.5);
+
+  const differenceInCol = Math.abs(currentNode.col - endNode.col)
   const differenceInRow = Math.abs(currentNode.row - endNode.row);
-  return differenceInCol + differenceInRow
+  return differenceInCol + differenceInRow;
 }
 
 export const astar = (grid, start, end) => {
+
   let unVisitedNodes = [start];
   let visitedNodes = [];
 
@@ -26,76 +32,53 @@ export const astar = (grid, start, end) => {
     }
     
     const neighbors = getNeighborsBreadthFirst(currentNode, grid);
-    neighbors.forEach(neighbor => {
+    for (const neighbor of neighbors) {
 
-      heuristic = manhattanDistance(neighbor, end);
+      const heuristicToNode = heuristic(neighbor, currentNode);
+      const heuristicToEnd = heuristic(neighbor, end);
+
+      // if (heuristic(neighbor, end) * 2 < rowColVector(neighbor, end)) {
+      //   console.log('here')
+      //   heuristicToEnd *= 2
+      // }
 
       if (!neighbor.isVisited && !neighbor.isWall) {
-        const currentDistance = currentNode.distanceToStart + heuristic;
-        const hasDuplicate = false;
-        const betterPath = true;
+        let currentDistance = currentNode.distanceToStart + heuristicToNode;
+        let hasDuplicate = false;
+        let betterPath = true;
+
+        if (neighbor.isWeight) {
+          currentDistance += 3
+        }
+
+        if (currentNode.col === 39 && currentNode.row === 0) {
+          console.log(neighbor)
+        }
 
         unVisitedNodes.forEach(node => {
           if (node.row === neighbor.row && node.col === neighbor.col) {
-            if (currentDistance < node.distanceToStart) {
-              node.distanceToStart = currentDistance;
+            if (currentDistance < neighbor.distanceToStart) {
+              neighbor.distanceToStart = currentDistance;
               hasDuplicate = true;
             } else {
               hasDuplicate = true;
               betterPath = false;
             }
           } 
-        })
+        })    
 
-        if ((betterPath && hasDuplicate) || betterPath) {
-          neighbor.distanceToStart = currentDistance;
-          neighbor.heuristic = heuristic;
+        if (betterPath) {
+          neighbor.heuristic = heuristicToEnd;
           neighbor.cost = neighbor.distanceToStart + neighbor.heuristic;
-          neighbor.previous = currentNode;
+          neighbor.previousNode = currentNode;
         }
 
         if (!hasDuplicate) {
+          neighbor.distanceToStart = currentDistance;
           unVisitedNodes.push(neighbor);
-        }
-
-        // if (neighbor.isWeight) {
-        //   neighbor.distanceToStart = currentNode.distanceToStart + neighbor.heuristic + 3;
-        // } else {
-        //   neighbor.distanceToStart = currentNode.distanceToStart + neighbor.heuristic + 1;
-        // }
-
-        // neighbor.previousNode = currentNode;
-
-        // unVisitedNodes.forEach(node => {
-        //   if (node.col === neighbor.col && node.row === neighbor.row) {
-        //     if (neighbor.distanceToStart > neighbor)
-        //   }
-        // }
-
-        // if (!unVisitedNodes.length) {
-        //   unVisitedNodes.push(neighbor)
-        // } else {
-        //   let hasMatch = false;
-        //   for (let i = 0; i < unVisitedNodes.length; i++) {
-        //     const unVisitedNode = unVisitedNodes[i];
-
-        //     if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.distanceToStart > neighbor.distanceToStart) {
-        //       unVisitedNode = neighbor;
-        //       unVisitedNode.cost = neighbor.distanceToStart + neighbor.heuristic
-        //       // unVisitedNodes.push(neighbor)
-        //       hasMatch = true;
-
-        //     } else if (unVisitedNode.col === neighbor.col && unVisitedNode.row === neighbor.row && unVisitedNode.distanceToStart <= neighbor.distanceToStart) {
-        //       hasMatch = true;
-        //     }
-        //   }
-
-        //   if (!hasMatch) {
-        //     unVisitedNodes.push(neighbor)
-        //   }          
-        // }
+        }    
       }
-    })
+    }
   }
   return visitedNodes
 }
