@@ -108,7 +108,7 @@ export const animateDijkstra = (firstVisitedNodesInOrder, firstShortestPathNodes
         }
 
         document.getElementById(`node-${node.row}-${node.col}`).className += ' node-visited';
-			}, 10 * i)
+			}, 10 * i) //
 		}
   }
 }
