@@ -193,7 +193,7 @@ export default function useGridData() {
         visualizeDepthFirst(state.grid, startNode, finishNode, setState);
         break;
       case 'BREADTH-FIRST':
-        visualizeBreadthFirst(state.grid, startNode, finishNode, setState);
+        visualizeBreadthFirst(state.grid, startNode, finishNode, interNode, setState);
         break;
       case 'A-STAR':
         visualizeAstar(state.grid, startNode, finishNode, setState);
