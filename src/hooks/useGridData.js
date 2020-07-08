@@ -215,6 +215,29 @@ export default function useGridData() {
 
     setState(prev => ({ ...prev, grid, drawWall: true }))
   }
+
+  const loadWalls = walls => {
+    const oldGrid = [...state.grid];
   
-  return { state, setState, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight, clearWeights }
+    const grid = oldGrid.map(row => {
+      return row.map(node => {
+        for (const wall of walls) {
+          if (wall.row === node.row && wall.col === node.col) {
+            const newNode = {
+              ...node,
+              isWall: true
+            }
+    
+            return newNode;
+          }
+        }
+  
+        return node;
+      })
+    })
+
+    setState(prev => ({ ...prev, grid }))
+  }
+
+  return { state, setState, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight, clearWeights, loadWalls }
 }

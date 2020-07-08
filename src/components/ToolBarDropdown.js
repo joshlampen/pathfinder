@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -27,17 +28,32 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function NavDropdown(props) {
-  const { inProgress } = props;
+export default function ToolBarDropdown(props) {
+  const { inProgress, loadWalls } = props;
 
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
+  const [maps, setMaps] = useState({
+    face: [],
+  })
+
+  useEffect(() => {
+    Promise.all([
+      axios.get("/walled_nodes/face").then((response) => {
+        return response.data;
+      })
+    ]).then(all => {
+      setMaps(() => ({
+        face: all[0]
+      }));
+    })
+  }, []);
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
   };
-
+  
   const handleClose = event => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
@@ -53,10 +69,10 @@ export default function NavDropdown(props) {
     }
   }
 
-  const handleAlgToggle = algorithm => {
+  const handleWallLoad = walls => {
     setOpen(false);
 
-    return;
+    loadWalls(walls);
   }
 
   const manageIconMount = () => {
@@ -99,14 +115,9 @@ export default function NavDropdown(props) {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem 
-                      className={classes.select}
-                      onClick={() => handleAlgToggle('DIJKSTRA')}
-                    >
-                      Dijkstra
+                    <MenuItem className={classes.select} onClick={() => handleWallLoad(maps.face)}>
+                      Face
                     </MenuItem>
-                    <MenuItem className={classes.select} onClick={() => handleAlgToggle('DEPTH-FIRST')}>Depth-First</MenuItem>
-                    <MenuItem className={classes.select} onClick={() => handleAlgToggle('BREADTH-FIRST')}>Breadth-First</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
