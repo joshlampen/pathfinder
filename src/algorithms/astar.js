@@ -3,7 +3,7 @@ import { getNeighborsBreadthFirst } from './breadthFirst'
 
 const heuristic = (currentNode, endNode) => {
 
-  const differenceInCol = Math.abs(currentNode.col - endNode.col)
+  const differenceInCol = Math.abs(currentNode.col - endNode.col);
   const differenceInRow = Math.abs(currentNode.row - endNode.row);
   return differenceInCol + differenceInRow;
 }
@@ -21,8 +21,8 @@ export const astar = (grid, start, end) => {
     unVisitedNodes = unVisitedNodes.sort((nodeA, nodeB) => {
       if (nodeA.cost > nodeB.cost) return 1;
       if (nodeA.cost < nodeB.cost) return -1;
-      if (nodeA.heuristic > nodeB.heuristic) return 1;
-      if (nodeA.heuristic < nodeB.heuristic) return -1;
+      // if (nodeA.heuristic > nodeB.heuristic) return 1;
+      // if (nodeA.heuristic < nodeB.heuristic) return -1;
       // if (nodeA.distanceToStart > nodeB.distanceToStart) return 1;
       // if (nodeA.distanceToStart < nodeB.distanceToStart) return -1;
     });
@@ -39,7 +39,6 @@ export const astar = (grid, start, end) => {
     for (const neighbor of neighbors) {
 
       const heuristicToEnd = heuristic(neighbor, end);
-      console.log(heuristicToEnd)
 
       if (!neighbor.isVisited && !neighbor.isWall) {
 
@@ -67,6 +66,8 @@ export const astar = (grid, start, end) => {
           neighbor.previousNode = currentNode;
         }
       }
+      console.log('heuristic', heuristicToEnd);
+      console.log('cost', neighbor.cost)
     }     
     currentNode.isVisited = true;    
     visitedNodes.push(currentNode); 
