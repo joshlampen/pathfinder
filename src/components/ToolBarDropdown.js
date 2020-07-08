@@ -40,16 +40,17 @@ export default function ToolBarDropdown(props) {
 
   useEffect(() => {
     Promise.all([
-      axios.get("/walled_nodes/face").then((response) => {
-        return response.data;
+      axios.get("/saved_grids/face").then((response) => {
+        return response.data[0].rows;
       }),
-      axios.get("/walled_nodes/invaders").then((response) => {
-        return response.data;
+      axios.get("/saved_grids/invaders").then((response) => {
+        return response.data[0].rows;
       })
     ]).then(all => {
       setMaps(() => ({
         face: all[0],
-        invaders: all[1]
+        invaders: all[1],
+        test: all[2]
       }));
     })
   }, []);

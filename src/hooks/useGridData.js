@@ -232,8 +232,12 @@ export default function useGridData() {
   
     const grid = oldGrid.map(row => {
       return row.map(node => {
-        for (const wall of walls) {
-          if (wall.row === node.row && wall.col === node.col) {
+
+        for (const row of walls) {
+
+          for(const col of row.cols)
+
+          if (row.row_num === node.row && col === node.col) {
             const newNode = {
               ...node,
               isWall: true
@@ -253,6 +257,7 @@ export default function useGridData() {
 
     setState(prev => ({ ...prev, grid }))
   }
+
 
   const createInterNode = () => {
     if ((startNode.row === 7 && startNode.col === 22) || (finishNode.row === 7 && finishNode.col === 22)) {
