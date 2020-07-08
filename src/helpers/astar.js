@@ -15,6 +15,9 @@ const heuristic = (currentNode, endNode) => {
 
 export const astar = (grid, start, end) => {
 
+  start.cost = start.heuristic = start.distanceToStart = 0;
+  end.cost = end.heuristic = end.distanceToStart = 0;
+
   let unVisitedNodes = [start];
   let visitedNodes = [];
 
@@ -24,8 +27,9 @@ export const astar = (grid, start, end) => {
 
     const currentNode = unVisitedNodes.shift();
 
+    currentNode.isVisited = true;    
+
     visitedNodes.push(currentNode);
-    currentNode.isVisited = true;
 
     if (currentNode.col === end.col && currentNode.row === end.row) {
       return visitedNodes;
@@ -34,26 +38,14 @@ export const astar = (grid, start, end) => {
     const neighbors = getNeighborsBreadthFirst(currentNode, grid);
     for (const neighbor of neighbors) {
 
-      const heuristicToNode = heuristic(neighbor, currentNode);
       const heuristicToEnd = heuristic(neighbor, end);
 
-      // if (heuristic(neighbor, end) * 2 < rowColVector(neighbor, end)) {
-      //   console.log('here')
-      //   heuristicToEnd *= 2
-      // }
-
       if (!neighbor.isVisited && !neighbor.isWall) {
-        let currentDistance = currentNode.distanceToStart + heuristicToNode;
+        let currentDistance = currentNode.distanceToStart + 1 
         let hasDuplicate = false;
         let betterPath = true;
 
-        if (neighbor.isWeight) {
-          currentDistance += 3
-        }
-
-        if (currentNode.col === 39 && currentNode.row === 0) {
-          console.log(neighbor)
-        }
+        console.log(currentDistance)
 
         unVisitedNodes.forEach(node => {
           if (node.row === neighbor.row && node.col === neighbor.col) {
@@ -65,7 +57,7 @@ export const astar = (grid, start, end) => {
               betterPath = false;
             }
           } 
-        })    
+        })
 
         if (betterPath) {
           neighbor.heuristic = heuristicToEnd;
@@ -75,8 +67,13 @@ export const astar = (grid, start, end) => {
 
         if (!hasDuplicate) {
           neighbor.distanceToStart = currentDistance;
+          console.log(currentDistance);
           unVisitedNodes.push(neighbor);
-        }    
+        }
+
+        if (neighbor.isWeight) {
+          neighbor.cost += 2
+        }
       }
     }
   }

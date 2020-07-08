@@ -38,13 +38,13 @@ export default function useGridData() {
       distance: Infinity,
       isVisited: false,
       isWall: false,
-      isWeight: 0,
+      isWeight: false,
       previousNode: null,
       lastRow: row === 14,
       lastCol: col === 44,
       distanceToStart: 0,
       heuristic: 0,
-      cost: 0,
+      cost: Infinity,
     };
     
     return node;
