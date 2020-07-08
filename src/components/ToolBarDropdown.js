@@ -42,10 +42,14 @@ export default function ToolBarDropdown(props) {
     Promise.all([
       axios.get("/walled_nodes/face").then((response) => {
         return response.data;
+      }),
+      axios.get("/walled_nodes/invaders").then((response) => {
+        return response.data;
       })
     ]).then(all => {
       setMaps(() => ({
-        face: all[0]
+        face: all[0],
+        invaders: all[1]
       }));
     })
   }, []);
@@ -117,6 +121,9 @@ export default function ToolBarDropdown(props) {
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem className={classes.select} onClick={() => handleWallLoad(maps.face)}>
                       Face
+                    </MenuItem>
+                    <MenuItem className={classes.select} onClick={() => handleWallLoad(maps.invaders)}>
+                      Invaders
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
