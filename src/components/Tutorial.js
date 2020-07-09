@@ -10,7 +10,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import Typography from '@material-ui/core/Typography';
-import { blue } from '@material-ui/core/colors';
+import { blue } from '@material-ui/core/colors'
+import Steps from "./Steps"
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
 const useStyles = makeStyles({
@@ -45,12 +46,12 @@ export default function TutorialDialog(props) {
   return (
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={tutorialMode}>
       <DialogTitle id="simple-dialog-title">Tutorial</DialogTitle>
-      {state.stage === 1 && <h1>Step 1 of tutorial</h1>}
-      {state.stage === 2 && <h1>Step 2</h1>}
+      <Steps stage={state.stage}
+
+      />
       <Button onClick={changeStage} >
        Click! 
        </Button>
     </Dialog>
   );
 }
-
