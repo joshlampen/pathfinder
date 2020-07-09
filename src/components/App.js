@@ -12,7 +12,8 @@ export default function App() {
     algorithm: 'DIJKSTRA',
     incrementCounter: false,
     disableNav: false,
-    tutorialMode: false
+    tutorialMode: false,
+    open: false
   });
   
   const toggleAlgorithm = newAlgorithm => {
@@ -50,6 +51,7 @@ export default function App() {
       <Description algorithm={state.algorithm} />
       {state.tutorialMode && <TutorialDialog
         tutorialMode={state.tutorialMode}
+        handleClose={toggleTutorial}
       />}
       <Grid
         algorithm = { state.algorithm }

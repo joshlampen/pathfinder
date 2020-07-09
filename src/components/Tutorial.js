@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -22,73 +22,36 @@ const useStyles = makeStyles({
 
 
 export default function TutorialDialog(props) {
-  console.log(props)
+  
+  const [state, setState] = useState({
+    stage: 1
+  })
+
   const classes = useStyles();
-  const { open, tutorialMode } = props;
-  const { onClose, selectedValue } = Dialog;
+  const { tutorialMode, handleClose } = props;
 
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
+  const changeStage = () => {
+    const stage = state.stage + 1;
+    setState(prev => ({ ...prev, stage }))
+  }
 
-  const handleListItemClick = (value) => {
-    onClose(value);
-  };
+  // const handleClose = () => {
+  //   onClose(selectedValue);
+  // };
+
+  // const handleListItemClick = (value) => {
+  //   onClose(value);
+  // };
 
   return (
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={tutorialMode}>
-      <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
-      <List>
-        {emails.map((email) => (
-          <ListItem button onClick={() => handleListItemClick(email)} key={email}>
-            <ListItemAvatar>
-              <Avatar className={classes.avatar}>
-                {/* <PersonIcon /> */}
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={email} />
-          </ListItem>
-        ))}
-
-        <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
-          <ListItemAvatar>
-            <Avatar>
-              {/* <AddIcon /> */}
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Add account" />
-        </ListItem>
-      </List>
+      <DialogTitle id="simple-dialog-title">Tutorial</DialogTitle>
+      {state.stage === 1 && <h1>Step 1 of tutorial</h1>}
+      {state.stage === 2 && <h1>Step 2</h1>}
+      <Button onClick={changeStage} >
+       Click! 
+       </Button>
     </Dialog>
   );
 }
 
-// SimpleDialog.propTypes = {
-//   onClose: PropTypes.func.isRequired,
-//   open: PropTypes.bool.isRequired,
-//   selectedValue: PropTypes.string.isRequired,
-// };
-
-// export function SimpleDialogDemo() {
-//   const [open, setOpen] = React.useState(false);
-//   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
-
-//   const handleClickOpen = () => {
-//     setOpen(true);
-//   };
-
-//   const handleClose = (value) => {
-//     setOpen(false);
-//     setSelectedValue(value);
-//   };
-
-//   return (
-//     <div>
-//       <br />
-//       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-//         Open simple dialog
-//       </Button>
-//       <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
-//     </div>
-//   );
-// }
