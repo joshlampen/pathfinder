@@ -4,6 +4,7 @@ import Description from './Description';
 import Grid from './Grid';
 import Legend from './Legend';
 import Footer from './Footer';
+import TutorialDialog from './Tutorial';
 import '../styles/App.css';
 
 export default function App() {
@@ -31,17 +32,27 @@ export default function App() {
     setState(prev => ({ ...prev, disableNav }))
   }
 
+  const toggleTutorial = () => {
+    const tutorialMode = !state.tutorialMode;
+
+    setState(prev => ({ ...prev, tutorialMode }))
+  }
+
   return (
     <div className="App">
       <Nav
         toggleAlgorithm={toggleAlgorithm}
+        toggleTutorial={toggleTutorial}
         incrementCounter={state.incrementCounter}
         disableNav={state.disableNav}
         tutorialMode={state.tutorialMode}
       />
       <Description algorithm={state.algorithm} />
+      {state.tutorialMode && <TutorialDialog
+        tutorialMode={state.tutorialMode}
+      />}
       <Grid
-        algorithm={state.algorithm}
+        algorithm = { state.algorithm }
         toggleCounter={toggleCounter}
         toggleNavDisable={toggleNavDisable}
       />
