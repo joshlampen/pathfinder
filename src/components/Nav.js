@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Counter from './Counter'
 import NavDropdown from './NavDropdown';
 import Button from '@material-ui/core/Button';
 import '../styles/Nav.css';
 
 export default function Nav(props) {
-  const { toggleAlgorithm, incrementCounter, disableNav } = props;
+  const { toggleAlgorithm, incrementCounter, disableNav, toggleTutorial } = props;
 
   const style = {
     marginRight: '5px',
@@ -28,6 +28,7 @@ export default function Nav(props) {
           <Button
             style={style}
             disabled={disableNav}
+            onClick={toggleTutorial}
           >
             &nbsp;Tutorial&nbsp;
           </Button>
