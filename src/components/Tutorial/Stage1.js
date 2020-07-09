@@ -1,4 +1,5 @@
 import React from 'react'
+// import '../styles/Tutorials.css'
 
 // images:
 // Algorithm button
@@ -11,8 +12,8 @@ export default function Stage1() {
 
     <div>
       <h3>Choosing Algorithms</h3>
-
-      <p>In order to select an algorithm to render on the page, click the following toggle button on the upper right hand corner the screen</p>/
+      <div>This is a test</div>
+      <span>In order to select an algorithm to render on the page, click the following toggle button on the upper right hand corner the screen</span>
       <img></img>      
     </div>
 
