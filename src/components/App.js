@@ -10,7 +10,8 @@ export default function App() {
   const [state, setState] = useState({
     algorithm: 'DIJKSTRA',
     incrementCounter: false,
-    disableNav: false
+    disableNav: false,
+    tutorialMode: false
   });
   
   const toggleAlgorithm = newAlgorithm => {
@@ -36,6 +37,7 @@ export default function App() {
         toggleAlgorithm={toggleAlgorithm}
         incrementCounter={state.incrementCounter}
         disableNav={state.disableNav}
+        tutorialMode={state.tutorialMode}
       />
       <Description algorithm={state.algorithm} />
       <Grid

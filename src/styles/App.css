@@ -7,3 +7,7 @@
   height: 100%;
   background-color: rgb(253, 253, 253);
 }
+
+.grayscale {
+  filter: grayscale(100)
+}
