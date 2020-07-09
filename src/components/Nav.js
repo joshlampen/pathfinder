@@ -5,11 +5,18 @@ import Button from '@material-ui/core/Button';
 import '../styles/Nav.css';
 
 export default function Nav(props) {
-  const { toggleAlgorithm, incrementCounter, disableNav } = props;
+  const { toggleAlgorithm, incrementCounter, disableNav, tutorialMode } = props;
 
   const style = {
     marginRight: '5px',
     color: disableNav ? 'rgb(0, 71, 121, 0.75)' : 'white'
+  }
+
+  const renderTutorialMode = (tutorialState) => {
+    if (!tutorialState) {
+      //console.log(document.getElementsByClassName("App").innerHTML)
+      console.log('clicked')
+    }
   }
 
   return (
@@ -28,6 +35,7 @@ export default function Nav(props) {
           <Button
             style={style}
             disabled={disableNav}
+            onClick={() => { alert('clicked') }}
           >
             &nbsp;Tutorial&nbsp;
           </Button>
