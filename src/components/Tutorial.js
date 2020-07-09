@@ -20,7 +20,6 @@ const useStyles = makeStyles({
   },
 });
 
-
 export default function TutorialDialog(props) {
   
   const [state, setState] = useState({
