@@ -259,7 +259,6 @@ export default function useGridData() {
     setState(prev => ({ ...prev, grid }))
   }
 
-
   const createInterNode = () => {
     if ((startNode.row === 7 && startNode.col === 22) || (finishNode.row === 7 && finishNode.col === 22)) {
       if ((startNode.row === 6 && startNode.col === 22) || (finishNode.row === 6 && finishNode.col === 22)) {
@@ -272,5 +271,33 @@ export default function useGridData() {
     }
   }
 
-  return { state, interNode, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight, clearWeights, loadWalls, createInterNode }
+  const loadWalls2 = maze => {
+    const oldGrid = [...state.grid];
+
+    const walls = [];
+
+    for (const row of maze) {
+      for (const node of row) {
+        if (node.isWall) walls.push(node)
+      }
+    }
+
+    const grid = oldGrid.map(row => {
+      return row.map(node => {
+        const newNode = { ...node }
+
+        for (const wall of walls) {
+          if (wall.row === node.row && wall.col === node.col) {
+            newNode.isWall = true;
+          }
+        }
+
+        return newNode
+      })
+    })
+
+    setState(prev => ({ ...prev, grid }))
+  }
+
+  return { state, interNode, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight, clearWeights, loadWalls, createInterNode, loadWalls2 }
 }
