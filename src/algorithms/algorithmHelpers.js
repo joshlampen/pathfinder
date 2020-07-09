@@ -117,7 +117,7 @@ export default async function visualizeAlgorithm(algorithm, grid, startNode, fin
   const finishNodeObj = interNode ? secondGrid[finishNode.row][finishNode.col] : firstGrid[finishNode.row][finishNode.col];
 
   const firstVisitedNodesInOrder = interNode ? algorithm(firstGrid, startNodeObj, firstInterNodeObj) : algorithm(firstGrid, startNodeObj, finishNodeObj);
-  const secondVisitedNodesInOrder = interNode ? algorithm(secondGrid, secondInterNodeObj, finishNodeObj) : null
+  const secondVisitedNodesInOrder = interNode ? algorithm(secondGrid, secondInterNodeObj, finishNodeObj) : null;
 
   const firstShortestPathNodes = interNode ? getShortestPathNodes(startNodeObj, firstInterNodeObj) : getShortestPathNodes(startNodeObj, finishNodeObj);
   const secondShortestPathNodes = interNode ? getShortestPathNodes(secondInterNodeObj, finishNodeObj) : null;
