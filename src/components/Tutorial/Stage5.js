@@ -11,8 +11,7 @@ export default function Stage5() {
     <div>
       
       <h3>Visualize the Algorithm</h3>
-
-      <p></p>
+      <span>Once you've added your desired walls, weights and nodes, you can now visualize the algorithm!</span>
         <img></img>
       
     </div>

@@ -10,9 +10,10 @@ export default function Stage4() {
 
     <div>
       
-      <h3>Pre-made mazes</h3>
+      <h3>Mazes and Maps</h3>
 
-      <p></p>
+      <span>Click on 'Generate Maze' to generate a random maze</span>
+      <span>You can also click on 'Load Map' to choose from a selection of pre-defined maps</span>
         <img></img>
       
     </div>
