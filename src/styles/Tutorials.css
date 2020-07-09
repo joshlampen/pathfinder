@@ -3,15 +3,28 @@
   height: 1000px;
 }
 
-
 .tutorial div{
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: solid;
 }
 
+.tutorial .textBody{
+  margin-left: 25px;
+  margin-right: 25px;
+}
 
+#menu{
+  width: 200px;
+  height: 150px;
+  border: solid 2px black;
+}
+
+#desc{
+  width: 300px;
+  height: 150px;
+  border: solid 2px black;
+}
 
 .tutorial div div{
   padding-left: 5px;
