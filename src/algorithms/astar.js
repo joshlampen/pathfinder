@@ -2,9 +2,9 @@ import { getNeighborsBreadthFirst } from './breadthFirst'
 
 const heuristic = (currentNode, endNode) => {
 
-  const differenceInCol = Math.abs(currentNode.col - endNode.col);
-  const differenceInRow = Math.abs(currentNode.row - endNode.row);
-  return differenceInCol + differenceInRow;
+  const differenceInCol = Math.pow(currentNode.col - endNode.col, 2);
+  const differenceInRow = Math.pow(currentNode.row - endNode.row, 2);
+  return Math.sqrt(differenceInCol + differenceInRow);
 }
 
 export default function astar(grid, start, end) {
@@ -20,10 +20,16 @@ export default function astar(grid, start, end) {
     unVisitedNodes = unVisitedNodes.sort((nodeA, nodeB) => {
       if (nodeA.cost > nodeB.cost) return 1;
       if (nodeA.cost < nodeB.cost) return -1;
-      // if (nodeA.heuristic > nodeB.heuristic) return 1;
-      // if (nodeA.heuristic < nodeB.heuristic) return -1;
-      // if (nodeA.distanceToStart > nodeB.distanceToStart) return 1;
-      // if (nodeA.distanceToStart < nodeB.distanceToStart) return -1;
+      if (nodeA.cost === nodeB.cost) {
+
+        const p = 1 / (46 * 16);
+
+        nodeA.cost = nodeA.distanceToStart + nodeA.heuristic * (1.0 + p);
+        nodeB.cost = nodeB.distanceToStart + nodeB.heuristic * (1.0 + p);
+
+        if (nodeA.cost > nodeB.cost) return 1;
+        if (nodeA.cost < nodeB.cost) return -1;
+     }
     });
 
     const currentNode = unVisitedNodes.shift();    
@@ -65,10 +71,8 @@ export default function astar(grid, start, end) {
           neighbor.previousNode = currentNode;
         }
       }
-      console.log('heuristic', heuristicToEnd);
-      console.log('cost', neighbor.cost)
     }     
-    currentNode.isVisited = true;    
+    currentNode.isVisited = true;
     visitedNodes.push(currentNode); 
   }
   return visitedNodes
