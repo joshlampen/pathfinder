@@ -22,7 +22,6 @@ import '../styles/Tutorials.css'
 
 export default function TutorialDialog(props) {
   
-  
   const [state, setState] = useState({
     stage: 1
   })
@@ -31,8 +30,14 @@ export default function TutorialDialog(props) {
   const { tutorialMode, handleClose } = props;
 
   const changeStage = () => {
-    const stage = state.stage + 1;
-    setState(prev => ({ ...prev, stage }))
+    if (state.stage < 7) {
+      let stage = state.stage + 1;
+      setState(prev => ({ ...prev, stage }))      
+    } else {
+      let stage = 0
+      setState(prev => ({...prev, stage}))
+    }
+
   }
 
   // const handleClose = () => {
@@ -53,14 +58,17 @@ export default function TutorialDialog(props) {
         {state.stage === 3 && <Stage3 />}        
         {state.stage === 4 && <Stage4 />}        
         {state.stage === 5 && <Stage5 />}     
-        {state.stage === 6 && <Stage6 />}        
+        {state.stage === 6 && <Stage6 />}
       </div>
 
+      {state.stage < 6 && <Button onClick={changeStage} >
+        Click!
+       </Button>}
+      
+      {state.stage === 6 && <Button onClick={handleClose}>
+        Click to start!
+      </Button>}
 
-
-      <Button onClick={changeStage} >
-       Click! 
-       </Button>
     </Dialog>
   );
 }
