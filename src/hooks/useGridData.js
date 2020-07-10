@@ -3,7 +3,7 @@ import dijkstra from "../algorithms/dijkstra";
 import breadthFirst from "../algorithms/breadthFirst";
 import depthFirst from "../algorithms/depthFirst";
 import astar from "../algorithms/astar";
-import visualizeAlgorithm from "../algorithms/algorithmHelpers"
+import visualizeAlgorithm from "../algorithms/algorithmAnimations"
 import greedyBfs from "../algorithms/greedyBfs";
 
 export default function useGridData() {

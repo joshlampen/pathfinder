@@ -62,7 +62,7 @@ describe(" should return the visited nodes", () => {
     const finishNode = grid[1][2];
 
     const search = breadthFirst(grid, startNode, finishNode);
-    expect(search.length).toBe(6);
+    expect(search.length).toBe(4);
   })
 })
 
