@@ -39,15 +39,40 @@ export default function Node(props) {
   });
 
   const mountIcon = () => {
-    if (isStart) {
-      return <FontAwesomeIcon icon={faLocationArrow} />
-    } else if (isFinish) {
-      return <FontAwesomeIcon icon={faBullseye} />
-    } else if (isInter) {
-      return <FontAwesomeIcon icon={faMapMarkerAlt} />
-    } else if (isWeight) {
-      return <FontAwesomeIcon icon={faWeightHanging} />
+    if (isStart && isInter && isFinish) {
+      return (
+        <div className='icon'>
+          <FontAwesomeIcon icon={faLocationArrow} />
+          <FontAwesomeIcon icon={faMapMarkerAlt} />
+          <FontAwesomeIcon icon={faBullseye} />
+        </div>
+      )
+    } else if (isStart && isFinish) {
+      return (
+        <div className='icon'>
+          <FontAwesomeIcon icon={faLocationArrow} />
+          <FontAwesomeIcon icon={faBullseye} />
+        </div>
+      )
+    } else if (isStart && isInter) {
+      return (
+        <div className='icon'>
+          <FontAwesomeIcon icon={faLocationArrow} />
+          <FontAwesomeIcon icon={faMapMarkerAlt} />
+        </div>
+      )
+    } else if (isInter && isFinish) {
+      return (
+        <div className='icon'>
+          <FontAwesomeIcon icon={faMapMarkerAlt} />
+          <FontAwesomeIcon icon={faBullseye} />
+        </div>
+      )
     }
+    if (isStart) return <div className='icon'><FontAwesomeIcon icon={faLocationArrow} /></div>
+    if (isFinish) return <div className='icon'><FontAwesomeIcon icon={faBullseye} /></div>
+    if (isInter) return <div className='icon'><FontAwesomeIcon icon={faMapMarkerAlt} /></div>
+    if (isWeight) return <div className='icon'><FontAwesomeIcon icon={faWeightHanging} /></div>
   }
 
   return (

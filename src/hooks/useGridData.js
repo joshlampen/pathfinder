@@ -7,8 +7,8 @@ import visualizeAlgorithm from "../algorithms/algorithmHelpers"
 import greedyBfs from "../algorithms/greedyBfs";
 
 export default function useGridData() {
-  const [startNode, setStartNode] = useState({ row: 7, col: 4 });
-  const [finishNode, setFinishNode] = useState({ row: 7, col: 40 });
+  const [startNode, setStartNode] = useState({ row: 7, col: 9 });
+  const [finishNode, setFinishNode] = useState({ row: 7, col: 35 });
   const [interNode, setInterNode] = useState(null);
 
   const setInitialGrid = () => {   // create the initial array of node objects
@@ -156,8 +156,8 @@ export default function useGridData() {
   }, [startNode, finishNode, interNode])
 
   const resetGrid = () => {
-    setStartNode({ row: 7, col: 4 });
-    setFinishNode({ row: 7, col: 40 });
+    setStartNode({ row: 7, col: 9 });
+    setFinishNode({ row: 7, col: 35 });
     setInterNode(null)
 
     setState(prev => ({
@@ -203,6 +203,9 @@ export default function useGridData() {
       case 'A-STAR':
         visualizeAlgorithm(astar, state.grid, startNode, finishNode, interNode, setState);
         break;
+      default:
+        visualizeAlgorithm(dijkstra, state.grid, startNode, finishNode, interNode, setState);
+        break;
     }
 
     return setState(prev => ({ ...prev, inProgress: true }));
@@ -215,15 +218,18 @@ export default function useGridData() {
     }
   }
 
-  const clearWeights = () => {
+  const clearGrid = type => {
     const oldGrid = [...state.grid];
 
     const grid = oldGrid.map(row => {
       return row.map(node => {
-        const newNode = {
-          ...node,
-          isWeight: false
-        };
+        const newNode = { ...node };
+
+        if (type === 'WALLS') {
+          newNode.isWall = false;
+        } else { // only other option is to clear weights
+          newNode.isWeight = false
+        }
 
         return newNode;
       })
@@ -232,31 +238,42 @@ export default function useGridData() {
     setState(prev => ({ ...prev, grid, drawWall: true }))
   }
 
-  const loadWalls = walls => {
+  const loadWalls = (walls, type) => {
     const oldGrid = [...state.grid];
-  
-    const grid = oldGrid.map(row => {
+    let grid = [];
+    const mazeWalls = [];
+
+    if (type === 'MAZE') {
+      for (const row of walls) {
+        for (const node of row) {
+          if (node.isWall) mazeWalls.push(node)
+        }
+      }
+    }
+
+    grid = oldGrid.map(row => {
       return row.map(node => {
+        const newNode = {
+          ...node,
+          isWall: false,
+          isWeight: false
+        }
 
-        for (const row of walls) {
-
-          for(const col of row.cols)
-
-          if (row.row_num === node.row && col === node.col) {
-            const newNode = {
-              ...node,
-              isWall: true
+        if (type === 'MAZE') {
+          for (const wall of mazeWalls) {
+            if (wall.row === node.row && wall.col === node.col) {
+              newNode.isWall = true;
             }
-
-            if (newNode.isStart || newNode.isFinish || newNode.isInter) {
-              newNode.isWall = false;
+          }
+        } else { // only other option is a map
+          for (const row of walls) {
+            for (const col of row.cols) {
+              if (row.row_num === node.row && col === node.col && !node.isStart && !node.isFinish && !node.isInter) newNode.isWall = true;
             }
-    
-            return newNode;
           }
         }
-  
-        return node;
+
+        return newNode;
       })
     })
 
@@ -267,41 +284,17 @@ export default function useGridData() {
     if ((startNode.row === 7 && startNode.col === 22) || (finishNode.row === 7 && finishNode.col === 22)) {
       if ((startNode.row === 6 && startNode.col === 22) || (finishNode.row === 6 && finishNode.col === 22)) {
         setInterNode({ row: 8, col: 22 })
+        document.getElementById(`node-${8}-${22}`).className += ' node-inter';
       } else {
         setInterNode({ row: 6, col: 22 })
+        document.getElementById(`node-${6}-${22}`).className += ' node-inter';
       }
     } else {
       setInterNode({ row: 7, col: 22 })
-    }
-  }
-
-  const loadWalls2 = maze => {
-    const oldGrid = [...state.grid];
-
-    const walls = [];
-
-    for (const row of maze) {
-      for (const node of row) {
-        if (node.isWall) walls.push(node)
-      }
+      document.getElementById(`node-${7}-${22}`).className += ' node-inter';
     }
 
-    const grid = oldGrid.map(row => {
-      return row.map(node => {
-        const newNode = { ...node }
-
-        for (const wall of walls) {
-          if (wall.row === node.row && wall.col === node.col) {
-            newNode.isWall = true;
-          }
-        }
-
-        return newNode
-      })
-    })
-
-    setState(prev => ({ ...prev, grid }))
   }
 
-  return { state, interNode, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight, clearWeights, loadWalls, createInterNode, loadWalls2 }
+  return { state, interNode, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight, clearGrid, loadWalls, createInterNode }
 }

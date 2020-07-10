@@ -23,10 +23,9 @@ export default function Grid(props) {
     resetGrid,
     startVisualization,
     toggleWeight,
-    clearWeights,
+    clearGrid,
     loadWalls,
     createInterNode,
-    loadWalls2
   } = useGridData();
 
   const {
@@ -37,12 +36,12 @@ export default function Grid(props) {
 
   useEffect(() => {
     const maze = generateMaze(state.grid, mazeWalls)
-    loadWalls2(maze)
+    loadWalls(maze, 'MAZE')
   }, [mazeWalls])
 
   useEffect(() => {
-    if (algorithm !== 'DIJKSTRA') {
-      clearWeights();
+    if (!(algorithm === 'DIJKSTRA' || algorithm === 'A-STAR')) {
+      clearGrid('WEIGHTS');
     } 
   }, [algorithm])
 
@@ -81,7 +80,7 @@ export default function Grid(props) {
         <span className='toolbar-left-spacer'>&nbsp;</span>
         <section className='Tools'>
         <BasicButton
-            text='Add Node'
+            text='&nbsp;Add Node&nbsp;'
             size='small'
             color='secondary'
             onClick={createInterNode}
@@ -89,7 +88,7 @@ export default function Grid(props) {
             interNode={interNode}
           />
         <BasicButton
-            text='Generate Maze'
+            text='&nbsp;Generate Maze&nbsp;'
             size='small'
             color='secondary'
             onClick={() => generateMazeWalls(state.grid, 0, 14, 0, 44, 'horizontal', null)}
