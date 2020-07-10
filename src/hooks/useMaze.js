@@ -5,7 +5,7 @@ export default function useMaze() {
     walls: [],
   })
 
-  const generateMaze = (grid, rowStart, rowEnd, colStart, colEnd, orientation, surroundingWalls) => {
+  const generateMazeWalls = (grid, rowStart, rowEnd, colStart, colEnd, orientation, surroundingWalls) => {
     if (rowEnd < rowStart || colEnd < colStart) {
       return;
     }
@@ -46,15 +46,15 @@ export default function useMaze() {
       })
       
       if (currentRow - 2 - rowStart > colEnd - colStart) {
-        generateMaze(grid, rowStart, currentRow - 2, colStart, colEnd, orientation, surroundingWalls);
+        generateMazeWalls(grid, rowStart, currentRow - 2, colStart, colEnd, orientation, surroundingWalls);
       } else {
-        generateMaze(grid, rowStart, currentRow - 2, colStart, colEnd, 'vertical', surroundingWalls);
+        generateMazeWalls(grid, rowStart, currentRow - 2, colStart, colEnd, 'vertical', surroundingWalls);
       }
     
       if (rowEnd - (currentRow + 2) > colEnd - colStart) {
-        generateMaze(grid, currentRow + 2, rowEnd, colStart, colEnd, orientation, surroundingWalls);
+        generateMazeWalls(grid, currentRow + 2, rowEnd, colStart, colEnd, orientation, surroundingWalls);
       } else {
-        generateMaze(grid, currentRow + 2, rowEnd, colStart, colEnd, 'vertical', surroundingWalls);
+        generateMazeWalls(grid, currentRow + 2, rowEnd, colStart, colEnd, 'vertical', surroundingWalls);
       }
     } else {
       const possibleCols = [];
@@ -82,15 +82,15 @@ export default function useMaze() {
       })
   
       if (rowEnd - rowStart > currentCol - 2 - colStart) {
-        generateMaze(grid, rowStart, rowEnd, colStart, currentCol - 2, 'horizontal', surroundingWalls);
+        generateMazeWalls(grid, rowStart, rowEnd, colStart, currentCol - 2, 'horizontal', surroundingWalls);
       } else {
-        generateMaze(grid, rowStart, rowEnd, colStart, currentCol - 2, orientation, surroundingWalls);
+        generateMazeWalls(grid, rowStart, rowEnd, colStart, currentCol - 2, orientation, surroundingWalls);
       }
     
       if (rowEnd - rowStart > colEnd - (currentCol + 2)) {
-        generateMaze(grid, rowStart, rowEnd, currentCol + 2, colEnd, 'horizontal', surroundingWalls);
+        generateMazeWalls(grid, rowStart, rowEnd, currentCol + 2, colEnd, 'horizontal', surroundingWalls);
       } else {
-        generateMaze(grid, rowStart, rowEnd, currentCol + 2, colEnd, orientation, surroundingWalls);
+        generateMazeWalls(grid, rowStart, rowEnd, currentCol + 2, colEnd, orientation, surroundingWalls);
       }
     }
   }
@@ -127,5 +127,40 @@ export default function useMaze() {
     })
   }
 
-  return { mazeWalls: state.walls, generateMaze }
+  const generateMaze = (grid, mazeWalls) => {
+    const maze = grid.map(row => {
+      return row.map(node => {
+        const newNode = { ...node }
+
+        if (mazeWalls.includes(node)) newNode.isWall = true;
+
+        return newNode
+      })
+    })
+
+    for (let row = 1; row <= maze.length - 2; row++) { // guarantee four spaces in each row
+      const spaces = [Math.ceil(Math.random() * 11), Math.ceil(11 + (Math.random() * 11)), Math.ceil(22 + (Math.random() * 11)), Math.ceil(33 + (Math.random() * 10))];
+      // const spaces = [Math.ceil(Math.random() * 14), Math.ceil(14 + (Math.random() * 14)), Math.ceil(28 + (Math.random() * 15))];
+  
+      for (const space of spaces) {
+        maze[row][space].isWall = false;
+      }
+    }
+
+    for (let col = 1; col <= maze[0].length - 2; col++) { // guarantee two spaces in each column
+      const spaces = [Math.ceil(Math.random() * 7), Math.ceil(7 + (Math.random() * 6))];
+
+      for (const row of maze) {
+        for (const space of spaces) {
+          if (maze.indexOf(row) === space) {
+            maze[space][col].isWall = false;
+          }
+        }
+      }
+    }
+
+    return maze;
+  }
+
+  return { mazeWalls: state.walls, generateMazeWalls, generateMaze }
 }
