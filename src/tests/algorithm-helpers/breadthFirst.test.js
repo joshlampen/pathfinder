@@ -56,13 +56,13 @@ describe(" should return the visited nodes", () => {
     expect(search.length).toBe(2)
   })
 
-  test("algorithm should check the left, down, right up", () => {
+  test("algorithm should check the up, down, left, right", () => {
     const grid = setInitialGrid();
     const startNode = grid[1][1];
     const finishNode = grid[1][2];
 
     const search = breadthFirst(grid, startNode, finishNode);
-    expect(search.length).toBe(4)
+    expect(search.length).toBe(6);
   })
 })
 
@@ -74,7 +74,7 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const finishNode = grid[2][1];
     breadthFirst(grid, startNode, finishNode)
 
-    expect(getShortestPathNodes(finishNode).length).toBe(2)
+    expect(getShortestPathNodes(startNode, finishNode).length).toBe(2)
   })
 
   test("return distance between start and end node on y-plane", () => {
@@ -83,7 +83,7 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const finishNode = grid[1][2];
     breadthFirst(grid, startNode, finishNode)
 
-    expect(getShortestPathNodes(finishNode).length).toBe(2)
+    expect(getShortestPathNodes(startNode, finishNode).length).toBe(2)
   })
 
   test("return distance between start and end node when diagonal", () => {
@@ -92,7 +92,7 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const finishNode = grid[2][2];
     breadthFirst(grid, startNode, finishNode)
 
-    expect(getShortestPathNodes(finishNode).length).toBe(3)
+    expect(getShortestPathNodes(startNode, finishNode).length).toBe(3)
   })
   
 })

@@ -84,7 +84,6 @@ export const getShortestPathNodes = (startNode, finishNode) => {
   }
 
   path.unshift(currentNode);
-  console.log(path.length)
   
 	return path;
 }
