@@ -1,5 +1,4 @@
-import { heuristic } from './astar';
-import { getNeighborsBreadthFirst } from './breadthFirst';
+import { getNeighborsQueue, heuristic } from './algorithmHelpers';
 
 export default function greedyBfs(grid, startNode, endNode) {
 
@@ -23,11 +22,9 @@ export default function greedyBfs(grid, startNode, endNode) {
       return closedSet;
     }
 
-    const neighbors = getNeighborsBreadthFirst(currentNode, grid);
+    const neighbors = getNeighborsQueue(currentNode, grid);
     
     neighbors.forEach(neighbor => {
-
-      console.log(endNode)
 
       if (!neighbor.isVisited && !neighbor.isWall) {
         neighbor.heuristic = heuristic(neighbor, endNode);

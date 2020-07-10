@@ -1,11 +1,4 @@
-import { getNeighborsBreadthFirst } from './breadthFirst'
-
-export const heuristic = (currentNode, endNode) => {
-
-  const differenceInCol = Math.pow(currentNode.col - endNode.col, 2);
-  const differenceInRow = Math.pow(currentNode.row - endNode.row, 2);
-  return Math.sqrt(differenceInCol + differenceInRow);
-}
+import { getNeighborsQueue, heuristic } from './algorithmHelpers'
 
 export default function astar(grid, start, end) {
 
@@ -39,7 +32,7 @@ export default function astar(grid, start, end) {
       return visitedNodes;
     }
     
-    const neighbors = getNeighborsBreadthFirst(currentNode, grid);
+    const neighbors = getNeighborsQueue(currentNode, grid);
 
     for (const neighbor of neighbors) {
 

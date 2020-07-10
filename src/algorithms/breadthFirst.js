@@ -1,26 +1,4 @@
-export const getNeighborsBreadthFirst = (node, grid) => {
-  const neighbors = [];
-  
-  const { row, col } = node;
-
-  if (grid[row - 1] && !grid[row - 1][col].isWall) {
-    neighbors.push(grid[row - 1][col]);
-  }
-
-  if (grid[row + 1] && !grid[row + 1][col].isWall) {
-    neighbors.push(grid[row + 1][col]);
-  }
-
-  if (grid[row][col - 1] && !grid[row][col - 1].isWall) {
-    neighbors.push(grid[row][col - 1])
-  }
-
-  if (grid[row][col + 1] && !grid[row][col + 1].isWall) {
-    neighbors.push(grid[row][col + 1]);
-  }
-
-  return neighbors;
-}
+import { getNeighborsQueue } from './algorithmHelpers';
 
 export default function breadthFirst(grid, start, end) {
   let queue = [start];
@@ -35,7 +13,7 @@ export default function breadthFirst(grid, start, end) {
       return visitedNodes;
     }
     
-    const neighbors = getNeighborsBreadthFirst(currentNode, grid);
+    const neighbors = getNeighborsQueue(currentNode, grid);
     neighbors.forEach(neighbor => {
       if (!neighbor.isVisited) {
         neighbor.previousNode = currentNode;
