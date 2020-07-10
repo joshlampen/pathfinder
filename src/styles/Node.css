@@ -280,7 +280,7 @@
 
 @keyframes iconAnimation {
   0% {
-    transform: scale(0.1);
+    transform: scale(0.5);
   }
   
   50% {
