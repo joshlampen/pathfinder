@@ -46,6 +46,8 @@ export default function TutorialDialog(props) {
     >
       {/* {//<DialogTitle id="simple-dialog-title">Tutorial</DialogTitle>} */}
 
+      
+
       <div className="tutorial">
         {state.stage === 1 && <Stage1 />}
         {state.stage === 2 && <Stage2 />}
