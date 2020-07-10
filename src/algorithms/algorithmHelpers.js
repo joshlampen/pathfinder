@@ -1,106 +1,115 @@
-export const animateAlgorithm = (firstVisitedNodesInOrder, firstShortestPathNodes, secondVisitedNodesInOrder, secondShortestPathNodes, setState, count) => {
-  for (let i = 0; i <= firstVisitedNodesInOrder.length; i++) { // once all nodes are animated, animate the shortest path
-		const node = firstVisitedNodesInOrder[i];
+// establish the neighbors for the new node being analyzed by changing distance from infinity to 0
+export const updateUnvisitedNeighbors = (node, grid) => {
+  const unvisitedNeighbors = getNeighborsQueue(node, grid).filter(neighbor => !neighbor.isVisited)
 
-		if (i === firstVisitedNodesInOrder.length) {
-			setTimeout(() => {
-        if (secondVisitedNodesInOrder.length) {
-          animateAlgorithm(secondVisitedNodesInOrder, secondShortestPathNodes, [], firstShortestPathNodes, setState, 1);
-        } else {
-          animateShortestPath(firstShortestPathNodes, secondShortestPathNodes, setState, count);
-        }
-			}, 10 * i)
-		} else {
-			setTimeout(() => {
-        if (count > 0) {
-          if (node.lastRow) {
-            node.isWeight
-              ? document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-second-visited-last-row'
-              : document.getElementById(`node-${node.row}-${node.col}`).className += ' node-second-visited-last-row';
-          } 
-          
-          if (node.lastCol) {
-            node.isWeight
-              ? document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-second-visited-last-col'
-              : document.getElementById(`node-${node.row}-${node.col}`).className += ' node-second-visited-last-col';
-          }
-
-          node.isWeight
-            ? document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-second-visited'
-            : document.getElementById(`node-${node.row}-${node.col}`).className += ' node-second-visited';
-        } else {
-          if (node.lastRow) {
-            node.isWeight
-              ? document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-first-visited-last-row'
-              : document.getElementById(`node-${node.row}-${node.col}`).className += ' node-first-visited-last-row';
-          } 
-          
-          if (node.lastCol) {
-            node.isWeight
-              ? document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-first-visited-last-col'
-              : document.getElementById(`node-${node.row}-${node.col}`).className += ' node-first-visited-last-col';
-          }
-
-          node.isWeight
-            ? document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-first-visited'
-            : document.getElementById(`node-${node.row}-${node.col}`).className += ' node-first-visited';
-        }
-			}, 10 * i)
-		}
+  for (const neighbor of unvisitedNeighbors) {
+    if (node.isWeight) {
+      neighbor.distance = node.distance + 3;
+      neighbor.previousNode = node;
+    } else {
+      neighbor.distance = node.distance + 1;
+      neighbor.previousNode = node;
+    }
   }
+};
+
+// sort nodes by distance so that the neighboring nodes are at the beginning of the array
+export const sortNodesByDistance = unvisitedNodes => {
+	unvisitedNodes.sort((nodeA, nodeB) => nodeA.distance - nodeB.distance);
 }
 
-export const animateShortestPath = (firstShortestPathNodes, secondShortestPathNodes, setState, count) => {
-  let shortestPathNodes = [];
+export const sortNodesByCost = nodes => {
+  nodes = nodes.sort((nodeA, nodeB) => {
+    if (nodeA.cost > nodeB.cost) return 1;
+    if (nodeA.cost < nodeB.cost) return -1;
+    if (nodeA.cost === nodeB.cost) {
 
-  if (secondShortestPathNodes) {
-    for (const node of secondShortestPathNodes) {
-      shortestPathNodes.push(node);
+      const tiebreaker = 1 / (46 * 16);
+
+      nodeA.cost = nodeA.distanceToStart + nodeA.heuristic * (1.0 + tiebreaker);
+      nodeB.cost = nodeB.distanceToStart + nodeB.heuristic * (1.0 + tiebreaker);
+
+      if (nodeA.cost > nodeB.cost) return 1;
+      if (nodeA.cost < nodeB.cost) return -1;
+    }
+  })
+
+  return nodes;
+};
+
+// loops through the grid array and removes the nested layers of the nodes
+export const removeNestedNodes = grid => {
+  const nodes = [];
+
+  for (const row of grid) {
+    for (const node of row) {
+      nodes.push(node);
     }
   }
 
-  for (const node of firstShortestPathNodes) {
-    shortestPathNodes.push(node);
+  return nodes;
+};
+
+export const getNeighborsStack = (node, grid) => {
+  const neighbors = [];
+
+  const { row, col } = node;
+
+  if (grid[row - 1] && !grid[row - 1][col].isWall) {
+    neighbors.unshift(grid[row - 1][col]);
   }
 
-  if (!secondShortestPathNodes.length && count > 0) {
-    shortestPathNodes = [];
-    setState(prev => ({ ...prev, inProgress: 'DONE' }));
+  if (grid[row][col + 1] && !grid[row][col + 1].isWall) {
+    neighbors.unshift(grid[row][col + 1]);
   }
 
-  if (!shortestPathNodes.length) setState(prev => ({ ...prev, inProgress: 'DONE' }));
-
-  for (let i = 0; i < shortestPathNodes.length; i++) {
-    setTimeout(() => {
-      const node = shortestPathNodes[i];
-
-      if (!node) return;
-
-      if (node.lastRow) {
-        document.getElementById(`node-${node.row}-${node.col}`).className += ' node-shortest-path-last-row';
-      } 
-      
-      if (node.lastCol) {
-        document.getElementById(`node-${node.row}-${node.col}`).className += ' node-shortest-path-last-col';
-      }
-
-			document.getElementById(`node-${node.row}-${node.col}`).className += ' node-shortest-path';
-			
-    }, 50 * i);
-		if (i === shortestPathNodes.length - 1) {
-			setTimeout(() => {
-				setState(prev => ({ ...prev, inProgress: 'DONE' }));
-			}, 50 * i)
-		}
+  if (grid[row + 1] && !grid[row + 1][col].isWall) {
+    neighbors.unshift(grid[row + 1][col]);
   }
-}
+  
+  if (grid[row][col - 1] && !grid[row][col - 1].isWall) {
+    neighbors.unshift(grid[row][col - 1])
+  }
+  return neighbors;
+};
+
+export const getNeighborsQueue = (node, grid) => {
+  const neighbors = [];
+  
+  const { row, col } = node;
+
+  if (grid[row - 1] && !grid[row - 1][col].isWall) {
+    neighbors.push(grid[row - 1][col]);
+  }
+
+  if (grid[row][col + 1] && !grid[row][col + 1].isWall) {
+    neighbors.push(grid[row][col + 1]);
+  }
+
+  if (grid[row + 1] && !grid[row + 1][col].isWall) {
+    neighbors.push(grid[row + 1][col]);
+  }
+
+  if (grid[row][col - 1] && !grid[row][col - 1].isWall) {
+    neighbors.push(grid[row][col - 1])
+  }
+
+  return neighbors;
+};
+
+export const heuristic = (currentNode, endNode) => {
+  const differenceInCol = Math.pow(currentNode.col - endNode.col, 2);
+  const differenceInRow = Math.pow(currentNode.row - endNode.row, 2);
+  
+  return Math.sqrt(differenceInCol + differenceInRow);
+};
 
 export const getShortestPathNodes = (startNode, finishNode) => {
   const path = [];
 
   let currentNode = finishNode;
 
-	while (currentNode && !(startNode.row === currentNode.row && startNode.col === currentNode.col)) {
+  while (currentNode && !(startNode.row === currentNode.row && startNode.col === currentNode.col)) {
     path.unshift(currentNode);
     currentNode = currentNode.previousNode; // once we reach the start node, this becomes null and the loop breaks
   }
@@ -109,47 +118,18 @@ export const getShortestPathNodes = (startNode, finishNode) => {
 
   if (!path.includes(startNode)) return []; // if the path doesn't include the start node there is no shortest path
   
-	return path;
-}
+  return path;
+};
 
-export default async function visualizeAlgorithm(algorithm, grid, startNode, finishNode, interNode, setState) {
-  const firstGrid = grid.map(row => {
-    return row.map(node => {
-      const newNode = {
-        ...node,
-        isVisited: false,
+export const checkOpenList = (openList, newNode) => {
+  let comparison = true;
+  openList.forEach(node => {
+    if (node.row === newNode.row && node.col === newNode.col) {
+      if (newNode.cost >= node.cost) {
+        comparison = false;
+        return;
       }
-
-      return newNode
-    })
+    }
   })
-
-  const secondGrid = grid.map(row => {
-    return row.map(node => {
-      const newNode = {
-        ...node,
-        isVisited: false,
-      }
-
-      return newNode
-    })
-  })
-
-  const startNodeObj = firstGrid[startNode.row][startNode.col];
-  const firstInterNodeObj = interNode ? firstGrid[interNode.row][interNode.col] : null;
-  const secondInterNodeObj = interNode ? secondGrid[interNode.row][interNode.col] : null;
-  const finishNodeObj = interNode ? secondGrid[finishNode.row][finishNode.col] : firstGrid[finishNode.row][finishNode.col];
-
-  const firstVisitedNodesInOrder = interNode ? algorithm(firstGrid, startNodeObj, firstInterNodeObj) : algorithm(firstGrid, startNodeObj, finishNodeObj);
-  let secondVisitedNodesInOrder = interNode ? algorithm(secondGrid, secondInterNodeObj, finishNodeObj) : [];
-
-  const firstShortestPathNodes = interNode ? getShortestPathNodes(startNodeObj, firstInterNodeObj) : getShortestPathNodes(startNodeObj, finishNodeObj);
-  let secondShortestPathNodes = interNode ? getShortestPathNodes(secondInterNodeObj, finishNodeObj) : [];
-
-  if (secondVisitedNodesInOrder.length && !firstVisitedNodesInOrder.includes(firstInterNodeObj)) {
-    secondVisitedNodesInOrder = [];
-    secondShortestPathNodes = [];
-  }
-
-  animateAlgorithm(firstVisitedNodesInOrder, firstShortestPathNodes, secondVisitedNodesInOrder, secondShortestPathNodes, setState, 0);
-}
+  return comparison
+};

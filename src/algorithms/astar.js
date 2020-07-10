@@ -1,11 +1,4 @@
-import { getNeighborsBreadthFirst } from './breadthFirst'
-
-export const heuristic = (currentNode, endNode) => {
-
-  const differenceInCol = Math.pow(currentNode.col - endNode.col, 2);
-  const differenceInRow = Math.pow(currentNode.row - endNode.row, 2);
-  return Math.sqrt(differenceInCol + differenceInRow);
-}
+import { getNeighborsQueue, heuristic, sortNodesByCost, checkOpenList } from './algorithmHelpers'
 
 export default function astar(grid, start, end) {
 
@@ -17,20 +10,7 @@ export default function astar(grid, start, end) {
 
   while (unVisitedNodes.length) {
 
-    unVisitedNodes = unVisitedNodes.sort((nodeA, nodeB) => {
-      if (nodeA.cost > nodeB.cost) return 1;
-      if (nodeA.cost < nodeB.cost) return -1;
-      if (nodeA.cost === nodeB.cost) {
-
-        const p = 1 / (46 * 16);
-
-        nodeA.cost = nodeA.distanceToStart + nodeA.heuristic * (1.0 + p);
-        nodeB.cost = nodeB.distanceToStart + nodeB.heuristic * (1.0 + p);
-
-        if (nodeA.cost > nodeB.cost) return 1;
-        if (nodeA.cost < nodeB.cost) return -1;
-     }
-    });
+    unVisitedNodes = sortNodesByCost(unVisitedNodes);
 
     const currentNode = unVisitedNodes.shift();    
 
@@ -39,9 +19,9 @@ export default function astar(grid, start, end) {
       return visitedNodes;
     }
     
-    const neighbors = getNeighborsBreadthFirst(currentNode, grid);
+    const neighbors = getNeighborsQueue(currentNode, grid);
 
-    for (const neighbor of neighbors) {
+    neighbors.forEach(neighbor => {
 
       const heuristicToEnd = heuristic(neighbor, end);
 
@@ -55,26 +35,15 @@ export default function astar(grid, start, end) {
           neighbor.cost += 3;
         }
 
-        let better = true;
-        unVisitedNodes.forEach(node => {
-          if (node.row === neighbor.row && node.col === neighbor.col) {
-            if (neighbor.cost >= node.cost) {
-              better = false;
-            } else {
-              better = true
-            }
-          }
-        })
-
-        if (better) {
+        if (checkOpenList(unVisitedNodes, neighbor)) {
           unVisitedNodes.push(neighbor);
           neighbor.previousNode = currentNode;
         }
-      }
-    }     
+      }    
+    })
     currentNode.isVisited = true;
     visitedNodes.push(currentNode); 
   }
 
   return visitedNodes;
-}
+};

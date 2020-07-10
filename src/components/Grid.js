@@ -40,7 +40,7 @@ export default function Grid(props) {
   }, [mazeWalls])
 
   useEffect(() => {
-    if (!(algorithm === 'DIJKSTRA' || algorithm === 'A-STAR')) {
+    if (algorithm === 'BREADTH-FIRST' || algorithm === 'DEPTH-FIRST') {
       clearGrid('WEIGHTS');
     } 
   }, [algorithm])
