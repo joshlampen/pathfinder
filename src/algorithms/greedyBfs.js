@@ -7,6 +7,7 @@ export default function greedyBfs(grid, startNode, endNode) {
   let closedSet = [];
 
   startNode.heuristic = heuristic(startNode, endNode);
+  startNode.isVisited = true;
 
   while (openSet.length) {
 
@@ -17,7 +18,7 @@ export default function greedyBfs(grid, startNode, endNode) {
 
     const currentNode = openSet.shift();
 
-    if (currentNode.isFinish) {
+    if (currentNode.col === endNode.col && currentNode.row === endNode.row) {
       closedSet.push(currentNode);
       return closedSet;
     }
@@ -25,6 +26,8 @@ export default function greedyBfs(grid, startNode, endNode) {
     const neighbors = getNeighborsBreadthFirst(currentNode, grid);
     
     neighbors.forEach(neighbor => {
+
+      console.log(endNode)
 
       if (!neighbor.isVisited && !neighbor.isWall) {
         neighbor.heuristic = heuristic(neighbor, endNode);
