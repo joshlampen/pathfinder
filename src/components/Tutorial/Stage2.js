@@ -1,33 +1,31 @@
-import React from 'react'
-
-
-//Pictures
-//Start and end node 
-// Additional node green button and its node
+import React from "react";
 
 export default function Stage2() {
-
-
   return (
-
     <div>
       <h3>Nodes</h3>
 
-      <p></p>
-      <img></img>
+      <span className={"textBody"}>
+        You can also set the starting and ending nodes on the grid. They are
+        identified by the icons in the green (starting) and red (ending) marked
+        boxes in the picture below.
+        <br></br>
+        <br></br>
+        To move them, simply click on the node, and hold down your mouse button
+        while moving the mouse on the grid.{" "}
+      </span>
+      <br></br>
+      <img src="images/stage2TutorialNodes.png" className={"image"}></img>
+      <br></br>
+      <span className={"textBody"}>
+        You can even set a second ‘intermediary’ node by clicking on the green
+        ‘add node’ button which generates the node on the grid.{" "}
+      </span>
+      <br></br>
+      <img src="images/stage2TutorialAddNode.png" className={"image"}></img>
+      <br></br>
+      <br></br>
+      <img src="images/stage2Tutorial2ndNode.png" className={"image"}></img>
     </div>
-
-
-
-  )
+  );
 }
-
-
-
-
-// 1st step: choose algo
-// 2nd step: nodes & intermediate nodes
-// 3rd stage: walls and weights;
-// 4th stage: premade maze
-// 5th stage: visualize
-// 6th stage: reset

@@ -130,7 +130,7 @@ export default function ToolBarDropdown(props) {
                       Invaders
                     </MenuItem>
                     <MenuItem className={classes.select} onClick={() => handleWallLoad(maps.pokemon)}>
-                      Pokemon
+                      Sprites
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
