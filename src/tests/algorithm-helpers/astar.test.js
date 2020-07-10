@@ -1,5 +1,5 @@
-import { astar } from "../../helpers/astar"
-import { getShortestPathNodes } from "../../helpers/dijkstraHelpers";
+import astar from "../../algorithms/astar"
+import { getShortestPathNodes } from "../../algorithms/algorithmHelpers";
 
 const setInitialGrid = () => {   // create the initial array of node objects
   const grid = [];
@@ -56,7 +56,7 @@ describe("Astar hould return the visited nodes", () => {
 
     const visitedNodes = astar(grid, startNode, finishNode);
     expect(visitedNodes.length).toBe(1);
-    expect(getShortestPathNodes(finishNode).length).toBe(1);
+    expect(getShortestPathNodes(startNode, finishNode).length).toBe(2);
     
   })
 
@@ -67,7 +67,7 @@ describe("Astar hould return the visited nodes", () => {
 
     const search = astar(grid, startNode, endNode);
     expect(search.length).toBe(3)
-    expect(getShortestPathNodes(endNode).length).toBe(3);
+    expect(getShortestPathNodes(startNode, endNode).length).toBe(3);
   })
 
   test("Algorithm can easily go around a wall", () => {
@@ -78,8 +78,8 @@ describe("Astar hould return the visited nodes", () => {
     grid[1][2].isWall = true;
 
     const search = astar(grid, startNode, endNode);
-    expect(search.length).toBe(5);
-    expect(getShortestPathNodes(endNode).length).toBe(5);
+    expect(search.length).toBe(7);
+    expect(getShortestPathNodes(startNode, endNode).length).toBe(5);
   })
 
   test("When start node has no obstacles, it should go straight for the target", () => {
@@ -89,6 +89,6 @@ describe("Astar hould return the visited nodes", () => {
 
     const search = astar(grid, startNode, finishNode);
     expect(search.length).toBe(15);
-    expect(getShortestPathNodes(finishNode).length).toBe(15);
+    expect(getShortestPathNodes(startNode, finishNode).length).toBe(15);
   })
 });
