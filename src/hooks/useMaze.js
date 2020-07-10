@@ -130,7 +130,11 @@ export default function useMaze() {
   const generateMaze = (grid, mazeWalls) => {
     const maze = grid.map(row => {
       return row.map(node => {
-        const newNode = { ...node }
+        const newNode = {
+          ...node,
+          isWall: false, // ensures grid is refreshed is generateMaze is called multiple times
+          isWeight: false
+        }
 
         if (mazeWalls.includes(node)) newNode.isWall = true;
 

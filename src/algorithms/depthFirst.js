@@ -1,25 +1,4 @@
-const getNeighborsDfs = (node, grid) => {
-  const neighbors = [];
-
-  const { row, col } = node;
-
-  if (grid[row - 1] && !grid[row - 1][col].isWall) {
-    neighbors.unshift(grid[row - 1][col]);
-  }
-
-  if (grid[row][col + 1] && !grid[row][col + 1].isWall) {
-    neighbors.unshift(grid[row][col + 1]);
-  }
-
-  if (grid[row + 1] && !grid[row + 1][col].isWall) {
-    neighbors.unshift(grid[row + 1][col]);
-  }
-  
-  if (grid[row][col - 1] && !grid[row][col - 1].isWall) {
-    neighbors.unshift(grid[row][col - 1])
-  }
-  return neighbors;
-}
+import { getNeighborsStack } from './algorithmHelpers';
 
 export default function depthFirst(grid, start, end) {
   let stack = [start];
@@ -34,7 +13,7 @@ export default function depthFirst(grid, start, end) {
       return visitedNodes;
     }
 
-    const neighbors = getNeighborsDfs(currentNode, grid);
+    const neighbors = getNeighborsStack(currentNode, grid);
     neighbors.forEach(neighbor => {
       if (!neighbor.isVisited) {
         neighbor.previousNode = currentNode;

@@ -56,7 +56,7 @@ describe("Astar hould return the visited nodes", () => {
 
     const visitedNodes = astar(grid, startNode, finishNode);
     expect(visitedNodes.length).toBe(1);
-    expect(getShortestPathNodes(startNode, finishNode).length).toBe(2);
+    expect(getShortestPathNodes(startNode, finishNode).length).toBe(0);
     
   })
 

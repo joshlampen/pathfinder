@@ -14,6 +14,7 @@
 .legend-item {
   display: flex;
   align-items: center;
+  color: rgb(60, 60, 60);
 }
 
 .legend-item p {
@@ -49,6 +50,8 @@
 
 .legend-wall {
   border-radius: 5px;
+  border-right: 1px solid rgba(168, 168, 168, 0.5);
+  border-bottom: 1px solid rgba(168, 168, 168, 0.5);
 }
 
 @keyframes legendVisitedAnimation {
