@@ -14,24 +14,36 @@ export const animateAlgorithm = (firstVisitedNodesInOrder, firstShortestPathNode
 			setTimeout(() => {
         if (count > 0) {
           if (node.lastRow) {
-            document.getElementById(`node-${node.row}-${node.col}`).className += ' node-second-visited-last-row';
+            node.isWeight
+              ? document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-second-visited-last-row'
+              : document.getElementById(`node-${node.row}-${node.col}`).className += ' node-second-visited-last-row';
           } 
           
           if (node.lastCol) {
-            document.getElementById(`node-${node.row}-${node.col}`).className += ' node-second-visited-last-col';
+            node.isWeight
+              ? document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-second-visited-last-col'
+              : document.getElementById(`node-${node.row}-${node.col}`).className += ' node-second-visited-last-col';
           }
-  
-          document.getElementById(`node-${node.row}-${node.col}`).className += ' node-second-visited';
+
+          node.isWeight
+            ? document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-second-visited'
+            : document.getElementById(`node-${node.row}-${node.col}`).className += ' node-second-visited';
         } else {
           if (node.lastRow) {
-            document.getElementById(`node-${node.row}-${node.col}`).className += ' node-first-visited-last-row';
+            node.isWeight
+              ? document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-first-visited-last-row'
+              : document.getElementById(`node-${node.row}-${node.col}`).className += ' node-first-visited-last-row';
           } 
           
           if (node.lastCol) {
-            document.getElementById(`node-${node.row}-${node.col}`).className += ' node-first-visited-last-col';
+            node.isWeight
+              ? document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-first-visited-last-col'
+              : document.getElementById(`node-${node.row}-${node.col}`).className += ' node-first-visited-last-col';
           }
-  
-          document.getElementById(`node-${node.row}-${node.col}`).className += ' node-first-visited';
+
+          node.isWeight
+            ? document.getElementById(`node-${node.row}-${node.col}`).className += ' node-weight-first-visited'
+            : document.getElementById(`node-${node.row}-${node.col}`).className += ' node-first-visited';
         }
 			}, 10 * i)
 		}

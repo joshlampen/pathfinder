@@ -124,7 +124,7 @@ export default function ToolBarDropdown(props) {
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem className={classes.select} onClick={() => handleWallLoad(maps.face)}>
-                      Face
+                      Happy Face
                     </MenuItem>
                     <MenuItem className={classes.select} onClick={() => handleWallLoad(maps.invaders)}>
                       Invaders

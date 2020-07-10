@@ -75,5 +75,6 @@ export default function astar(grid, start, end) {
     currentNode.isVisited = true;
     visitedNodes.push(currentNode); 
   }
-  return visitedNodes
+
+  return visitedNodes;
 }

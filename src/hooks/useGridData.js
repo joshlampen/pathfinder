@@ -199,6 +199,9 @@ export default function useGridData() {
       case 'A-STAR':
         visualizeAlgorithm(astar, state.grid, startNode, finishNode, interNode, setState);
         break;
+      default:
+        visualizeAlgorithm(dijkstra, state.grid, startNode, finishNode, interNode, setState);
+        break;
     }
 
     return setState(prev => ({ ...prev, inProgress: true }));
@@ -277,12 +280,16 @@ export default function useGridData() {
     if ((startNode.row === 7 && startNode.col === 22) || (finishNode.row === 7 && finishNode.col === 22)) {
       if ((startNode.row === 6 && startNode.col === 22) || (finishNode.row === 6 && finishNode.col === 22)) {
         setInterNode({ row: 8, col: 22 })
+        document.getElementById(`node-${8}-${22}`).className += ' node-inter';
       } else {
         setInterNode({ row: 6, col: 22 })
+        document.getElementById(`node-${6}-${22}`).className += ' node-inter';
       }
     } else {
       setInterNode({ row: 7, col: 22 })
+      document.getElementById(`node-${7}-${22}`).className += ' node-inter';
     }
+
   }
 
   return { state, interNode, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight, clearGrid, loadWalls, createInterNode }

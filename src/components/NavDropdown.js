@@ -91,15 +91,10 @@ export default function NavDropdown(props) {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                  <MenuItem 
-                    className={classes.select}
-                    onClick={() => handleAlgToggle('DIJKSTRA')}
-                  >
-                    Dijkstra
-                  </MenuItem>
-                  <MenuItem className={classes.select} onClick={() => handleAlgToggle('DEPTH-FIRST')}>Depth-First</MenuItem>
-                  <MenuItem className={classes.select} onClick={() => handleAlgToggle('BREADTH-FIRST')}>Breadth-First</MenuItem>
+                  <MenuItem className={classes.select} onClick={() => handleAlgToggle('DIJKSTRA')}>Dijkstra</MenuItem>
                   <MenuItem className={classes.select} onClick={() => handleAlgToggle('A-STAR')}>A*</MenuItem>
+                  <MenuItem className={classes.select} onClick={() => handleAlgToggle('BREADTH-FIRST')}>Breadth-First</MenuItem>
+                  <MenuItem className={classes.select} onClick={() => handleAlgToggle('DEPTH-FIRST')}>Depth-First</MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>

@@ -39,11 +39,9 @@ export default function Node(props) {
   });
 
   const mountIcon = () => {
-    const style = { display: 'flex' }
-
     if (isStart && isInter && isFinish) {
       return (
-        <div style={style}>
+        <div className='icon'>
           <FontAwesomeIcon icon={faLocationArrow} />
           <FontAwesomeIcon icon={faMapMarkerAlt} />
           <FontAwesomeIcon icon={faBullseye} />
@@ -51,30 +49,30 @@ export default function Node(props) {
       )
     } else if (isStart && isFinish) {
       return (
-        <div style={style}>
+        <div className='icon'>
           <FontAwesomeIcon icon={faLocationArrow} />
           <FontAwesomeIcon icon={faBullseye} />
         </div>
       )
     } else if (isStart && isInter) {
       return (
-        <div style={style}>
+        <div className='icon'>
           <FontAwesomeIcon icon={faLocationArrow} />
           <FontAwesomeIcon icon={faMapMarkerAlt} />
         </div>
       )
     } else if (isInter && isFinish) {
       return (
-        <div style={style}>
+        <div className='icon'>
           <FontAwesomeIcon icon={faMapMarkerAlt} />
           <FontAwesomeIcon icon={faBullseye} />
         </div>
       )
     }
-    if (isStart) return <FontAwesomeIcon icon={faLocationArrow} />
-    if (isFinish) return <FontAwesomeIcon icon={faBullseye} />
-    if (isInter) return <FontAwesomeIcon icon={faMapMarkerAlt} />
-    if (isWeight) return <FontAwesomeIcon icon={faWeightHanging} />
+    if (isStart) return <div className='icon'><FontAwesomeIcon icon={faLocationArrow} /></div>
+    if (isFinish) return <div className='icon'><FontAwesomeIcon icon={faBullseye} /></div>
+    if (isInter) return <div className='icon'><FontAwesomeIcon icon={faMapMarkerAlt} /></div>
+    if (isWeight) return <div className='icon'><FontAwesomeIcon icon={faWeightHanging} /></div>
   }
 
   return (
