@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect }from "react";
+
 
 export default function Stage2() {
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+  
   return (
     <div>
+      
       <h3>Nodes</h3>
 
       <span className={"textBody"}>
