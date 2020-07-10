@@ -1,4 +1,4 @@
-import { depthFirst } from '../../algorithms/depthFirst';
+import depthFirst from '../../algorithms/depthFirst';
 import { getShortestPathNodes } from '../../algorithms/algorithmHelpers'
 
 const setInitialGrid = () => {   // create the initial array of node objects
@@ -25,8 +25,8 @@ const createNode = (row, col) => {
   const node = {
     row,
     col,
-    // isStart: row === startNode.row && col === startNode.col,
-    // isFinish: row === finishNode.row && col === finishNode.col,
+    isStart: false,
+    isFinish: false,
     // isStart and isFinish are not needed for these tests
     distance: Infinity,
     isVisited: false,
@@ -43,7 +43,7 @@ const createNode = (row, col) => {
 
 describe("should return the visited nodes", () => {
 
-  test("When start node is surrounded by walls, length of visited nodes should be 1", () => {
+  test("When start node is surrounded by walls, length of visited nodes should be 2", () => {
     const grid = setInitialGrid();
     const startNode = grid[1][1];
     const finishNode = grid[6][1];
@@ -73,17 +73,19 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const startNode = grid[0][0];
     const finishNode = grid[0][15];
     depthFirst(grid, startNode, finishNode)
-
-    expect(getShortestPathNodes(finishNode).length).toBe(16)
+    const path = getShortestPathNodes(startNode, finishNode);
+    expect(path.length).toBe(16)
   })
 
   test("return distance between start and end node on y-plane", () => {
     const grid = setInitialGrid();
     const startNode = grid[0][0];
+    startNode.isStart = true;
     const finishNode = grid[14][44];
-    depthFirst(grid, startNode, finishNode)
+    finishNode.isFinish = true;
+    depthFirst(grid, startNode, finishNode);
 
-    expect(getShortestPathNodes(finishNode).length).toBe(59)
+    expect(getShortestPathNodes(startNode, finishNode).length).toBe(59)
   })
   
 })
