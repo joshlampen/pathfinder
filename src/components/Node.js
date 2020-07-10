@@ -33,7 +33,6 @@ export default function Node(props) {
     'node-finish': isFinish,
     'node-inter': isInter,
     'node-wall': isWall,
-    'node-weight': isWeight,
     'node-last-row': lastRow,
     'node-last-col': lastCol,
   });
@@ -72,7 +71,7 @@ export default function Node(props) {
     if (isStart) return <div className='icon'><FontAwesomeIcon icon={faLocationArrow} /></div>
     if (isFinish) return <div className='icon'><FontAwesomeIcon icon={faBullseye} /></div>
     if (isInter) return <div className='icon'><FontAwesomeIcon icon={faMapMarkerAlt} /></div>
-    if (isWeight) return <div className='icon'><FontAwesomeIcon icon={faWeightHanging} /></div>
+    if (isWeight) return <div className='node-weight'><FontAwesomeIcon icon={faWeightHanging} /></div>
   }
 
   return (
