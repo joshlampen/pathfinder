@@ -1,5 +1,5 @@
-import { depthFirst } from '../../helpers/depthFirst';
-import { getShortestPathNodes } from '../../helpers/dijkstraHelpers'
+import { depthFirst } from '../../algorithms/depthFirst';
+import { getShortestPathNodes } from '../../algorithms/algorithmHelpers'
 
 const setInitialGrid = () => {   // create the initial array of node objects
   const grid = [];
