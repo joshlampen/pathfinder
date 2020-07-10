@@ -6,8 +6,8 @@ import astar from "../algorithms/astar";
 import visualizeAlgorithm from "../algorithms/algorithmHelpers"
 
 export default function useGridData() {
-  const [startNode, setStartNode] = useState({ row: 7, col: 4 });
-  const [finishNode, setFinishNode] = useState({ row: 7, col: 40 });
+  const [startNode, setStartNode] = useState({ row: 7, col: 9 });
+  const [finishNode, setFinishNode] = useState({ row: 7, col: 35 });
   const [interNode, setInterNode] = useState(null);
 
   const setInitialGrid = () => {   // create the initial array of node objects
@@ -155,8 +155,8 @@ export default function useGridData() {
   }, [startNode, finishNode, interNode])
 
   const resetGrid = () => {
-    setStartNode({ row: 7, col: 4 });
-    setFinishNode({ row: 7, col: 40 });
+    setStartNode({ row: 7, col: 9 });
+    setFinishNode({ row: 7, col: 35 });
     setInterNode(null)
 
     setState(prev => ({
@@ -211,15 +211,18 @@ export default function useGridData() {
     }
   }
 
-  const clearWeights = () => {
+  const clearGrid = type => {
     const oldGrid = [...state.grid];
 
     const grid = oldGrid.map(row => {
       return row.map(node => {
-        const newNode = {
-          ...node,
-          isWeight: false
-        };
+        const newNode = { ...node };
+
+        if (type === 'WALLS') {
+          newNode.isWall = false;
+        } else { // only other option is to clear weights
+          newNode.isWeight = false
+        }
 
         return newNode;
       })
@@ -228,31 +231,42 @@ export default function useGridData() {
     setState(prev => ({ ...prev, grid, drawWall: true }))
   }
 
-  const loadWalls = walls => {
+  const loadWalls = (walls, type) => {
     const oldGrid = [...state.grid];
-  
-    const grid = oldGrid.map(row => {
+    let grid = [];
+    const mazeWalls = [];
+
+    if (type === 'MAZE') {
+      for (const row of walls) {
+        for (const node of row) {
+          if (node.isWall) mazeWalls.push(node)
+        }
+      }
+    }
+
+    grid = oldGrid.map(row => {
       return row.map(node => {
+        const newNode = {
+          ...node,
+          isWall: false,
+          isWeight: false
+        }
 
-        for (const row of walls) {
-
-          for(const col of row.cols)
-
-          if (row.row_num === node.row && col === node.col) {
-            const newNode = {
-              ...node,
-              isWall: true
+        if (type === 'MAZE') {
+          for (const wall of mazeWalls) {
+            if (wall.row === node.row && wall.col === node.col) {
+              newNode.isWall = true;
             }
-
-            if (newNode.isStart || newNode.isFinish || newNode.isInter) {
-              newNode.isWall = false;
+          }
+        } else { // only other option is a map
+          for (const row of walls) {
+            for (const col of row.cols) {
+              if (row.row_num === node.row && col === node.col && !node.isStart && !node.isFinish && !node.isInter) newNode.isWall = true;
             }
-    
-            return newNode;
           }
         }
-  
-        return node;
+
+        return newNode;
       })
     })
 
@@ -271,33 +285,5 @@ export default function useGridData() {
     }
   }
 
-  const loadWalls2 = maze => {
-    const oldGrid = [...state.grid];
-
-    const walls = [];
-
-    for (const row of maze) {
-      for (const node of row) {
-        if (node.isWall) walls.push(node)
-      }
-    }
-
-    const grid = oldGrid.map(row => {
-      return row.map(node => {
-        const newNode = { ...node }
-
-        for (const wall of walls) {
-          if (wall.row === node.row && wall.col === node.col) {
-            newNode.isWall = true;
-          }
-        }
-
-        return newNode
-      })
-    })
-
-    setState(prev => ({ ...prev, grid }))
-  }
-
-  return { state, interNode, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight, clearWeights, loadWalls, createInterNode, loadWalls2 }
+  return { state, interNode, mouseDown, mouseUp, togglePickup, toggleWall, moveNode, resetGrid, startVisualization, toggleWeight, clearGrid, loadWalls, createInterNode }
 }

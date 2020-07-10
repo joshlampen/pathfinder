@@ -80,7 +80,7 @@ export default function ToolBarDropdown(props) {
   const handleWallLoad = walls => {
     setOpen(false);
 
-    loadWalls(walls);
+    loadWalls(walls, 'MAP');
   }
 
   const manageIconMount = () => {

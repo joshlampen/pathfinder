@@ -19,13 +19,13 @@
 .node-weight {
   animation-name: weightAnimation;
   animation-duration: 0.3s;
-  color: black;
+  color: rgb(60, 60, 60);
 }
 
 .node-wall {
   animation-name: wallAnimation;
   animation-duration: 0.3s;
-  background-color: black;
+  background-color: rgb(60, 60, 60);
 }
 
 .node-first-visited {
@@ -34,7 +34,7 @@
   background-color: #42C0FB;
   border-left: 1px solid #5acbffce;
   border-top: 1px solid #5acbffce;
-  color: black;
+  color: rgb(60, 60, 60);
 }
 
 .node-first-visited-last-row {
@@ -55,7 +55,7 @@
   background-color: #31B94D;
   border-left: 1px solid #34c450d2;
   border-top: 1px solid #34c450d2;
-  color: black;
+  color: rgb(60, 60, 60);
 }
 
 .node-second-visited-last-row {
@@ -206,24 +206,26 @@
 
 @keyframes wallAnimation {
   0% {
-    background-color: rgb(68, 68, 68);
+    background-color: rgb(70, 70, 70);
+    /* background-color: rgb(68, 68, 68); */
     transform: scale(0.5);
   }
 
   100% {
-    background-color: black;
+    background-color: rgb(60, 60, 60);
     transform: scale(1);
   }
 }
 
 @keyframes weightAnimation {
   0% {
-    color: rgb(68, 68, 68);
+    color: rgb(70, 70, 70);
+    /* color: rgb(68, 68, 68); */
     transform: scale(0.5);
   }
 
   100% {
-    color: black;
+    color: rgb(60, 60, 60);
     transform: scale(1);
   }
 }

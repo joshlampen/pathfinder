@@ -4,10 +4,10 @@ export const animateAlgorithm = (firstVisitedNodesInOrder, firstShortestPathNode
 
 		if (i === firstVisitedNodesInOrder.length) {
 			setTimeout(() => {
-        if (secondVisitedNodesInOrder) {
-          animateAlgorithm(secondVisitedNodesInOrder, secondShortestPathNodes, null, firstShortestPathNodes, setState, 1);
+        if (secondVisitedNodesInOrder.length) {
+          animateAlgorithm(secondVisitedNodesInOrder, secondShortestPathNodes, [], firstShortestPathNodes, setState, 1);
         } else {
-          animateShortestPath(firstShortestPathNodes, secondShortestPathNodes, setState);
+          animateShortestPath(firstShortestPathNodes, secondShortestPathNodes, setState, count);
         }
 			}, 10 * i)
 		} else {
@@ -38,8 +38,8 @@ export const animateAlgorithm = (firstVisitedNodesInOrder, firstShortestPathNode
   }
 }
 
-export const animateShortestPath = (firstShortestPathNodes, secondShortestPathNodes, setState) => {
-  const shortestPathNodes = [];
+export const animateShortestPath = (firstShortestPathNodes, secondShortestPathNodes, setState, count) => {
+  let shortestPathNodes = [];
 
   if (secondShortestPathNodes) {
     for (const node of secondShortestPathNodes) {
@@ -50,10 +50,20 @@ export const animateShortestPath = (firstShortestPathNodes, secondShortestPathNo
   for (const node of firstShortestPathNodes) {
     shortestPathNodes.push(node);
   }
-  
+
+  if (!secondShortestPathNodes.length && count > 0) {
+    shortestPathNodes = [];
+    setState(prev => ({ ...prev, inProgress: 'DONE' }));
+  }
+
+  if (!shortestPathNodes.length) setState(prev => ({ ...prev, inProgress: 'DONE' }));
+
   for (let i = 0; i < shortestPathNodes.length; i++) {
     setTimeout(() => {
       const node = shortestPathNodes[i];
+
+      if (!node) return;
+
       if (node.lastRow) {
         document.getElementById(`node-${node.row}-${node.col}`).className += ' node-shortest-path-last-row';
       } 
@@ -84,6 +94,8 @@ export const getShortestPathNodes = (startNode, finishNode) => {
   }
 
   path.unshift(currentNode);
+
+  if (!path.includes(startNode)) return []; // if the path doesn't include the start node there is no shortest path
   
 	return path;
 }
@@ -117,10 +129,15 @@ export default async function visualizeAlgorithm(algorithm, grid, startNode, fin
   const finishNodeObj = interNode ? secondGrid[finishNode.row][finishNode.col] : firstGrid[finishNode.row][finishNode.col];
 
   const firstVisitedNodesInOrder = interNode ? algorithm(firstGrid, startNodeObj, firstInterNodeObj) : algorithm(firstGrid, startNodeObj, finishNodeObj);
-  const secondVisitedNodesInOrder = interNode ? algorithm(secondGrid, secondInterNodeObj, finishNodeObj) : null;
+  let secondVisitedNodesInOrder = interNode ? algorithm(secondGrid, secondInterNodeObj, finishNodeObj) : [];
 
   const firstShortestPathNodes = interNode ? getShortestPathNodes(startNodeObj, firstInterNodeObj) : getShortestPathNodes(startNodeObj, finishNodeObj);
-  const secondShortestPathNodes = interNode ? getShortestPathNodes(secondInterNodeObj, finishNodeObj) : null;
+  let secondShortestPathNodes = interNode ? getShortestPathNodes(secondInterNodeObj, finishNodeObj) : [];
+
+  if (secondVisitedNodesInOrder.length && !firstVisitedNodesInOrder.includes(firstInterNodeObj)) {
+    secondVisitedNodesInOrder = [];
+    secondShortestPathNodes = [];
+  }
 
   animateAlgorithm(firstVisitedNodesInOrder, firstShortestPathNodes, secondVisitedNodesInOrder, secondShortestPathNodes, setState, 0);
 }
