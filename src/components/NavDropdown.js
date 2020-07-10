@@ -98,6 +98,7 @@ export default function NavDropdown(props) {
                     Dijkstra
                   </MenuItem>
                   <MenuItem className={classes.select} onClick={() => handleAlgToggle('DEPTH-FIRST')}>Depth-First</MenuItem>
+                  <MenuItem className={classes.select} onClick={() => handleAlgToggle('GREEDY')}>Greedy Best-First</MenuItem>
                   <MenuItem className={classes.select} onClick={() => handleAlgToggle('BREADTH-FIRST')}>Breadth-First</MenuItem>
                   <MenuItem className={classes.select} onClick={() => handleAlgToggle('A-STAR')}>A*</MenuItem>
                 </MenuList>

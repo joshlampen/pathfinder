@@ -4,6 +4,7 @@ import breadthFirst from "../algorithms/breadthFirst";
 import depthFirst from "../algorithms/depthFirst";
 import astar from "../algorithms/astar";
 import visualizeAlgorithm from "../algorithms/algorithmHelpers"
+import greedyBfs from "../algorithms/greedyBfs";
 
 export default function useGridData() {
   const [startNode, setStartNode] = useState({ row: 7, col: 4 });
@@ -192,6 +193,9 @@ export default function useGridData() {
         break;
       case 'DEPTH-FIRST':
         visualizeAlgorithm(depthFirst, state.grid, startNode, finishNode, interNode, setState);
+        break;
+      case 'GREEDY':
+        visualizeAlgorithm(greedyBfs, state.grid, startNode, finishNode, interNode, setState);
         break;
       case 'BREADTH-FIRST':
         visualizeAlgorithm(breadthFirst, state.grid, startNode, finishNode, interNode, setState);
