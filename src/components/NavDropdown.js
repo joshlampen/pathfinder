@@ -93,6 +93,7 @@ export default function NavDropdown(props) {
                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                   <MenuItem className={classes.select} onClick={() => handleAlgToggle('DIJKSTRA')}>Dijkstra</MenuItem>
                   <MenuItem className={classes.select} onClick={() => handleAlgToggle('A-STAR')}>A*</MenuItem>
+                  <MenuItem className={classes.select} onClick={() => handleAlgToggle('GREEDY')}>Greedy Best-First</MenuItem>
                   <MenuItem className={classes.select} onClick={() => handleAlgToggle('BREADTH-FIRST')}>Breadth-First</MenuItem>
                   <MenuItem className={classes.select} onClick={() => handleAlgToggle('DEPTH-FIRST')}>Depth-First</MenuItem>
                 </MenuList>

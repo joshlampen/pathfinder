@@ -1,4 +1,4 @@
-import dijkstra from "../../algorithms/dijkstra";
+import greedyBfs from "../../algorithms/greedyBfs";
 import { getShortestPathNodes } from "../../algorithms/algorithmHelpers";
 
 const setInitialGrid = () => {   // create the initial array of node objects
@@ -21,7 +21,6 @@ const setInitialGrid = () => {   // create the initial array of node objects
   return grid;
 }
 
-// creates the nodes that are pushed into the initial grid array
 const createNode = (row, col) => {
   const node = {
     row,
@@ -31,28 +30,30 @@ const createNode = (row, col) => {
     distance: Infinity,
     isVisited: false,
     isWall: false,
-    isWeighted: false,
+    isWeight: 0,
     previousNode: null,
     mousedown: false,
     onMouseEnter: false,
     onMouseUp: false,
+    heuristic: 0,
+    cost: 0,
   };
   
   return node;
 }
 
-describe("Dijkstra should return the visited nodes", () => {
-
+describe("Algorithm finds detectable end nodes", () => {
   test("When start node is surrounded by walls, length of visited nodes should be 1", () => {
     const grid = setInitialGrid();
     const startNode = grid[1][1];
     const finishNode = grid[6][6];
+    finishNode.isFinish = true;
     grid[0][1].isWall = true;
     grid[2][1].isWall = true;
     grid[1][2].isWall = true;
     grid[1][0].isWall = true;
 
-    const search = dijkstra(grid, startNode, finishNode);
+    const search = greedyBfs(grid, startNode, finishNode);
     expect(search.length).toBe(1);
   })
 
@@ -60,11 +61,12 @@ describe("Dijkstra should return the visited nodes", () => {
     const grid = setInitialGrid();
     const startNode = grid[1][1];
     const endNode = grid[2][1];
+    endNode.isFinish = true;
 
-    const search = dijkstra(grid, startNode, endNode);
-    expect(search.length).toBe(5)
+    const search = greedyBfs(grid, startNode, endNode);
+    expect(search.length).toBe(2)
   })
-});
+})
 
 describe("getShortestPath should return an array of nodes from origin to end", () => {
 
@@ -72,27 +74,29 @@ describe("getShortestPath should return an array of nodes from origin to end", (
     const grid = setInitialGrid();
     const startNode = grid[1][1];
     const finishNode = grid[2][1];
-    dijkstra(grid, startNode, finishNode)
-
+    finishNode.isFinish = true;
+    greedyBfs(grid, startNode, finishNode)
+  
     expect(getShortestPathNodes(startNode, finishNode).length).toBe(2)
   })
-
+  
   test("return distance between start and end node on y-plane", () => {
     const grid = setInitialGrid();
     const startNode = grid[1][1];
     const finishNode = grid[1][2];
-    dijkstra(grid, startNode, finishNode)
-
+    finishNode.isFinish = true;
+    greedyBfs(grid, startNode, finishNode)
+  
     expect(getShortestPathNodes(startNode, finishNode).length).toBe(2)
   })
-
+  
   test("return distance between start and end node when diagonal", () => {
     const grid = setInitialGrid();
     const startNode = grid[1][1];
     const finishNode = grid[2][2];
-    dijkstra(grid, startNode, finishNode)
-
+    finishNode.isFinish = true;
+    greedyBfs(grid, startNode, finishNode)
+  
     expect(getShortestPathNodes(startNode, finishNode).length).toBe(3)
   })
-  
 })

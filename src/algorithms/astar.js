@@ -1,6 +1,6 @@
 import { getNeighborsBreadthFirst } from './breadthFirst'
 
-const heuristic = (currentNode, endNode) => {
+export const heuristic = (currentNode, endNode) => {
 
   const differenceInCol = Math.pow(currentNode.col - endNode.col, 2);
   const differenceInRow = Math.pow(currentNode.row - endNode.row, 2);

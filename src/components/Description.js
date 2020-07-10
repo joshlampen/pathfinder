@@ -46,7 +46,15 @@ export default function Description(props) {
         setDesc({
           algName: response.data.algorithm_name,
           algDesc: response.data.desc
-          })
+        })
+      }) 
+    } else if (algorithm === 'GREEDY') {
+      Promise.resolve(axios.get("/descriptions/5"))
+      .then(response => {
+        setDesc({
+          algName: response.data.algorithm_name,
+          algDesc: response.data.desc
+        })
       }) 
     }
   }, [algorithm]);
