@@ -1,3 +1,36 @@
+// establish the neighbors for the new node being analyzed by changing distance from infinity to 0
+export const updateUnvisitedNeighbors = (node, grid) => {
+	const unvisitedNeighbors = getNeighborsQueue(node, grid).filter(neighbor => !neighbor.isVisited)
+
+	for (const neighbor of unvisitedNeighbors) {
+		if (node.isWeight) {
+			neighbor.distance = node.distance + 3;
+			neighbor.previousNode = node;
+		} else {
+			neighbor.distance = node.distance + 1;
+			neighbor.previousNode = node;			
+		}
+	}
+}
+
+// sort nodes by distance so that the neighboring nodes are at the beginning of the array
+export const sortNodesByDistance = unvisitedNodes => {
+	unvisitedNodes.sort((nodeA, nodeB) => nodeA.distance - nodeB.distance);
+}
+
+// loops through the grid array and removes the nested layers of the nodes
+export const removeNestedNodes = grid => {
+	const nodes = [];
+
+	for (const row of grid) {
+		for (const node of row) {
+			nodes.push(node);
+		}
+	}
+
+	return nodes;
+}
+
 export const getNeighborsStack = (node, grid) => {
   const neighbors = [];
 
