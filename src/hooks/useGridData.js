@@ -7,8 +7,15 @@ import visualizeAlgorithm from "../algorithms/algorithmAnimations"
 import greedyBfs from "../algorithms/greedyBfs";
 
 export default function useGridData() {
-  const [startNode, setStartNode] = useState({ row: 7, col: 9 });
-  const [finishNode, setFinishNode] = useState({ row: 7, col: 35 });
+  const START_NODE_ROW = 7;
+  const START_NODE_COL = 9;
+  const FINISH_NODE_ROW = 7;
+  const FINISH_NODE_COL = 35;
+  const INTER_NODE_ROW = 7;
+  const INTER_NODE_COL = 22;
+
+  const [startNode, setStartNode] = useState({ row: START_NODE_ROW, col: START_NODE_COL });
+  const [finishNode, setFinishNode] = useState({ row: FINISH_NODE_ROW, col: FINISH_NODE_COL });
   const [interNode, setInterNode] = useState(null);
 
   const setInitialGrid = () => {   // create the initial array of node objects
@@ -156,8 +163,8 @@ export default function useGridData() {
   }, [startNode, finishNode, interNode])
 
   const resetGrid = () => {
-    setStartNode({ row: 7, col: 9 });
-    setFinishNode({ row: 7, col: 35 });
+    setStartNode({ row: START_NODE_ROW, col: START_NODE_COL });
+    setFinishNode({ row: FINISH_NODE_ROW, col: FINISH_NODE_COL });
     setInterNode(null)
 
     setState(prev => ({
@@ -283,14 +290,14 @@ export default function useGridData() {
   const createInterNode = () => {
     if ((startNode.row === 7 && startNode.col === 22) || (finishNode.row === 7 && finishNode.col === 22)) {
       if ((startNode.row === 6 && startNode.col === 22) || (finishNode.row === 6 && finishNode.col === 22)) {
-        setInterNode({ row: 8, col: 22 })
+        setInterNode({ row: INTER_NODE_ROW + 1, col: INTER_NODE_COL })
         document.getElementById(`node-${8}-${22}`).className += ' node-inter';
       } else {
-        setInterNode({ row: 6, col: 22 })
+        setInterNode({ row: INTER_NODE_ROW - 1, col: INTER_NODE_COL })
         document.getElementById(`node-${6}-${22}`).className += ' node-inter';
       }
     } else {
-      setInterNode({ row: 7, col: 22 })
+      setInterNode({ row: INTER_NODE_ROW, col: INTER_NODE_COL })
       document.getElementById(`node-${7}-${22}`).className += ' node-inter';
     }
 

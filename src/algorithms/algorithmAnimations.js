@@ -78,6 +78,10 @@ export const animateShortestPath = (firstShortestPathNodes, secondShortestPathNo
 
       if (!node) return;
 
+      if (node.isWeight) {
+        document.getElementById(`node-${node.row}-${node.col}`).getElementsByTagName('div')[0].className += ' node-weight-shortest-path';
+      }
+
       if (node.lastRow) {
         document.getElementById(`node-${node.row}-${node.col}`).className += ' node-shortest-path-last-row';
       } 
