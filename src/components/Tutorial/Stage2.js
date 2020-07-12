@@ -31,8 +31,6 @@ export default function Stage2() {
       <br></br>
       <img src="images/stage2TutorialAddNode.png" className={"image"}></img>
       <br></br>
-      <br></br>
-      <img src="images/stage2Tutorial2ndNode.png" className={"image"}></img>
     </div>
   );
 }
