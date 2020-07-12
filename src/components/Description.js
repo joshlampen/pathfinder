@@ -9,8 +9,8 @@ import '../styles/Description.css';
 
 export default function Description(props) {
   const [ desc, setDesc ] = useState({
-    algName: "Dijkstra's",
-    algDesc: "Dijkstra’s algorithm finds the shortest path between two nodes on a graph. It has several real-world applications, including its implementation in Google Maps and Apple Maps.\nBeginning at the start node, the algorithm picks the unvisited node with the lowest distance (its neighbors), calculates the distance through that node to each of its unvisited neighbors, and so on, until the end node is reached.\nUnlike the bread-first search algorithm, Dijkstra’s algorithm can account for weighted nodes that require more ‘work’ to pass through (picture traffic spots on a map)."
+    algName: "Dijkstra's Algorithm",
+    algDesc: "Dijkstra’s algorithm is a path search algorithm that guarantees the shortest path. Beginning at the start node, the algorithm picks the unvisited node with the lowest distance (its neighbors), calculates the distance through that node to each of its unvisited neighbors, and so on, until the end node is reached. Dijkstra’s algorithm is weighted, meaning it can account for weighted nodes that require more ‘work’ to pass through (like traffic spots on a map)."
   })
 
   const { algorithm } = props;
@@ -60,10 +60,10 @@ export default function Description(props) {
   }, [algorithm]);
 
   const mountIcon = () => {
-    if (algorithm === 'DIJKSTRA' || algorithm === 'A-STAR') {
-      return <FontAwesomeIcon icon={faRoute} />
-    } else {
+    if (algorithm === 'BREADTH-FIRST' || algorithm === 'DEPTH-FIRST') {
       return <FontAwesomeIcon icon={faProjectDiagram} />
+    } else {
+      return <FontAwesomeIcon icon={faRoute} />
     }
   }
     
