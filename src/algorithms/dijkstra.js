@@ -20,6 +20,7 @@ export default function dijkstra(grid, startNode, finishNode) {
 		visitedNodesInOrder.push(closestNode);
 
 		if (closestNode.row === finishNode.row && closestNode.col === finishNode.col) return visitedNodesInOrder; // algorithm complete, finished node has been found
+		
 		updateUnvisitedNeighbors(closestNode, grid);
 	}
 }

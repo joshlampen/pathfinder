@@ -1,4 +1,4 @@
-import { getNeighborsQueue, getNeighborsStack } from "../../algorithms/algorithmHelpers";
+import { getNeighborsQueue, getNeighborsStack, updateUnvisitedNeighbors } from "../../algorithms/algorithmHelpers";
 
 const setInitialGrid = () => {
   const grid = [];
@@ -117,3 +117,63 @@ describe("getNeighborsStack should search the neighboring nodes and return a sta
     expect(left).toBe(grid[1][0]);
   })
 })
+
+describe("updateUnvisitedNeighbors should assign appropriate values to neighbors", () => {
+  it("Should update empty nodes with a new distance of 1", () => {
+    const grid = setInitialGrid();
+    const node = grid[1][1];
+    const neighbors = getNeighborsQueue(node, grid);
+
+    expect(neighbors[0].distance).toBe(Infinity);
+    expect(neighbors[1].distance).toBe(Infinity);
+    expect(neighbors[2].distance).toBe(Infinity);
+    expect(neighbors[3].distance).toBe(Infinity);
+
+    node.distance = 0;
+
+    updateUnvisitedNeighbors(node, grid);
+
+    expect(grid[0][1].distance).toBe(1);
+    expect(grid[1][0].distance).toBe(1);
+    expect(grid[2][1].distance).toBe(1);
+    expect(grid[1][2].distance).toBe(1);
+  })
+
+  it("Should update wall nodes with a new distance of 3", () => {
+    const grid = setInitialGrid();
+    const node = grid[1][1];
+
+    node.distance = 0;
+    node.isWeight = true;
+
+    updateUnvisitedNeighbors(node, grid);
+
+    expect(grid[0][1].distance).toBe(3);
+    expect(grid[1][0].distance).toBe(3);
+    expect(grid[2][1].distance).toBe(3);
+    expect(grid[1][2].distance).toBe(3);
+  })
+
+  it("Should not update wall nodes that have been visited", () => {
+    const grid = setInitialGrid();
+    const node = grid[1][1];
+    const neighbors = getNeighborsQueue(node, grid);
+
+    expect(neighbors[0].distance).toBe(Infinity);
+    expect(neighbors[1].distance).toBe(Infinity);
+    expect(neighbors[2].distance).toBe(Infinity);
+    expect(neighbors[3].distance).toBe(Infinity);
+
+    grid[0][1].isVisited = true;
+    grid[1][0].isVisited = true;
+
+    node.distance = 0;
+
+    updateUnvisitedNeighbors(node, grid);
+
+    expect(grid[0][1].distance).toBe(Infinity);
+    expect(grid[1][0].distance).toBe(Infinity);
+    expect(grid[2][1].distance).toBe(1);
+    expect(grid[1][2].distance).toBe(1);
+  })
+});
