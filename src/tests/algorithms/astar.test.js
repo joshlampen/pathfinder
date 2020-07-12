@@ -1,17 +1,12 @@
 import astar from "../../algorithms/astar"
 import { getShortestPathNodes } from "../../algorithms/algorithmHelpers";
 
-const setInitialGrid = () => {   // create the initial array of node objects
+const setInitialGrid = () => {
   const grid = [];
   
-  // for each row in the grid... 
   for (let row = 0; row < 15; row++) {
     const currentRow = [];
-
-    // for each column in the row...
     for (let col = 0; col < 45; col++) {
-
-      // create node and push
       currentRow.push(createNode(row, col));
     }
     
@@ -21,7 +16,6 @@ const setInitialGrid = () => {   // create the initial array of node objects
   return grid;
 }
 
-// creates the nodes that are pushed into the initial grid array
 const createNode = (row, col) => {
   const node = {
     row,

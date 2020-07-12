@@ -1,3 +1,50 @@
+export const getNeighborsQueue = (node, grid) => {
+  const neighbors = [];
+  
+  const { row, col } = node;
+
+  if (grid[row - 1] && !grid[row - 1][col].isWall) {
+    neighbors.push(grid[row - 1][col]);
+  }
+
+  if (grid[row][col + 1] && !grid[row][col + 1].isWall) {
+    neighbors.push(grid[row][col + 1]);
+  }
+
+  if (grid[row + 1] && !grid[row + 1][col].isWall) {
+    neighbors.push(grid[row + 1][col]);
+  }
+
+  if (grid[row][col - 1] && !grid[row][col - 1].isWall) {
+    neighbors.push(grid[row][col - 1])
+  }
+
+  return neighbors;
+};
+
+export const getNeighborsStack = (node, grid) => {
+  const neighbors = [];
+
+  const { row, col } = node;
+
+  if (grid[row - 1] && !grid[row - 1][col].isWall) {
+    neighbors.unshift(grid[row - 1][col]);
+  }
+
+  if (grid[row][col + 1] && !grid[row][col + 1].isWall) {
+    neighbors.unshift(grid[row][col + 1]);
+  }
+
+  if (grid[row + 1] && !grid[row + 1][col].isWall) {
+    neighbors.unshift(grid[row + 1][col]);
+  }
+  
+  if (grid[row][col - 1] && !grid[row][col - 1].isWall) {
+    neighbors.unshift(grid[row][col - 1])
+  }
+  return neighbors;
+};
+
 // establish the neighbors for the new node being analyzed by changing distance from infinity to 0
 export const updateUnvisitedNeighbors = (node, grid) => {
   const unvisitedNeighbors = getNeighborsQueue(node, grid).filter(neighbor => !neighbor.isVisited)
@@ -48,53 +95,6 @@ export const removeNestedNodes = grid => {
   }
 
   return nodes;
-};
-
-export const getNeighborsStack = (node, grid) => {
-  const neighbors = [];
-
-  const { row, col } = node;
-
-  if (grid[row - 1] && !grid[row - 1][col].isWall) {
-    neighbors.unshift(grid[row - 1][col]);
-  }
-
-  if (grid[row][col + 1] && !grid[row][col + 1].isWall) {
-    neighbors.unshift(grid[row][col + 1]);
-  }
-
-  if (grid[row + 1] && !grid[row + 1][col].isWall) {
-    neighbors.unshift(grid[row + 1][col]);
-  }
-  
-  if (grid[row][col - 1] && !grid[row][col - 1].isWall) {
-    neighbors.unshift(grid[row][col - 1])
-  }
-  return neighbors;
-};
-
-export const getNeighborsQueue = (node, grid) => {
-  const neighbors = [];
-  
-  const { row, col } = node;
-
-  if (grid[row - 1] && !grid[row - 1][col].isWall) {
-    neighbors.push(grid[row - 1][col]);
-  }
-
-  if (grid[row][col + 1] && !grid[row][col + 1].isWall) {
-    neighbors.push(grid[row][col + 1]);
-  }
-
-  if (grid[row + 1] && !grid[row + 1][col].isWall) {
-    neighbors.push(grid[row + 1][col]);
-  }
-
-  if (grid[row][col - 1] && !grid[row][col - 1].isWall) {
-    neighbors.push(grid[row][col - 1])
-  }
-
-  return neighbors;
 };
 
 export const heuristic = (currentNode, endNode) => {
