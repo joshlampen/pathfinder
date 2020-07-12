@@ -1,4 +1,4 @@
-import { getNeighborsQueue, getNeighborsStack, updateUnvisitedNeighbors, sortNodesByCost, sortNodesByDistance } from "../../algorithms/algorithmHelpers";
+import { getNeighborsQueue, getNeighborsStack, updateUnvisitedNeighbors, sortNodesByCost, sortNodesByDistance, removeNestedNodes, heuristic, getShortestPathNodes, checkOpenList } from "../../algorithms/algorithmHelpers";
 
 const setInitialGrid = () => {
   const grid = [];
@@ -37,9 +37,9 @@ const createNode = (row, col) => {
 }
 
 describe("getNeighborsQueue should search the neighboring nodes", () => {
-  
+  const grid = setInitialGrid()
+
   it("Returns an array with a length of 4 on the first search when all neighbors are valid nodes", () => {
-    const grid = setInitialGrid()
     const node = grid[1][1];
     const neighbors = getNeighborsQueue(node, grid);
 
@@ -47,7 +47,6 @@ describe("getNeighborsQueue should search the neighboring nodes", () => {
   })
 
   it("Returns an array with a length corresponding to the number of valid neighboring nodes", () => {
-    const grid = setInitialGrid()
     const node = grid[0][0];
     const node2 = grid[0][1];
     const node3 = grid[14][1];
@@ -61,7 +60,6 @@ describe("getNeighborsQueue should search the neighboring nodes", () => {
   })
 
   it("Returns an array with the right neighboring node coordinates in the order of bottom, right, up and left", () => {
-    const grid = setInitialGrid()
     const node = grid[1][1];
     const neighbors = getNeighborsQueue(node, grid);
 
@@ -78,8 +76,9 @@ describe("getNeighborsQueue should search the neighboring nodes", () => {
 });
 
 describe("getNeighborsStack should search the neighboring nodes and return a stack", () => {
+  const grid = setInitialGrid()
+
   it("Returns an array with a length of 4 on the first search when all neighbors are valid nodes", () => {
-    const grid = setInitialGrid()
     const node = grid[1][1];
     const neighbors = getNeighborsStack(node, grid);
 
@@ -87,7 +86,6 @@ describe("getNeighborsStack should search the neighboring nodes and return a sta
   })
 
   it("Returns an array with a length corresponding to the number of valid neighboring nodes", () => {
-    const grid = setInitialGrid()
     const node = grid[0][0];
     const node2 = grid[0][1];
     const node3 = grid[14][1];
@@ -102,7 +100,6 @@ describe("getNeighborsStack should search the neighboring nodes and return a sta
   })
 
   it("Searches the top, right, bottom and left node and returns them in reverse order", () => {
-    const grid = setInitialGrid()
     const node = grid[1][1];
     const neighbors = getNeighborsStack(node, grid);
 
@@ -119,9 +116,10 @@ describe("getNeighborsStack should search the neighboring nodes and return a sta
 })
 
 describe("updateUnvisitedNeighbors should assign appropriate values to neighbors", () => {
+  const grid = setInitialGrid();
+  const node = grid[1][1];
+
   it("Should update empty nodes with a new distance of 1", () => {
-    const grid = setInitialGrid();
-    const node = grid[1][1];
     const neighbors = getNeighborsQueue(node, grid);
 
     expect(neighbors[0].distance).toBe(Infinity);
@@ -140,9 +138,6 @@ describe("updateUnvisitedNeighbors should assign appropriate values to neighbors
   })
 
   it("Should update wall nodes with a new distance of 3", () => {
-    const grid = setInitialGrid();
-    const node = grid[1][1];
-
     node.distance = 0;
     node.isWeight = true;
 
@@ -201,11 +196,11 @@ describe("sortNodesByDistance should prioritize nodes according to distance", ()
 })
 
 describe("sortNodesByCost should prioritize nodes according to cost", () => {
-  it("Should put nodes with lowest cost at the front of the queue", () => {
-    const grid = setInitialGrid();
+  const grid = setInitialGrid();
+  const node1 = grid[0][0];
+  const node2 = grid[1][1];
 
-    const node1 = grid[0][0];
-    const node2 = grid[1][1];
+  it("Should put nodes with lowest cost at the front of the queue", () => {
     const node3 = grid[2][2];
 
     node1.cost = 0;
@@ -220,27 +215,106 @@ describe("sortNodesByCost should prioritize nodes according to cost", () => {
   })
 
   it("if costs are the same, it should break the tie using the heuristic", () => {
-    //Edge case, when the sort function has an odd number of elements
-    const grid = setInitialGrid();
-
-    const node1 = grid[0][0];
-    const node2 = grid[1][1];
-    const node3 = grid[2][2];
+    let nodes = [];
 
     node1.cost = 4;
     node2.cost = 4;
-    node3.cost = 4;
 
     node1.distanceToStart = 1;
     node2.distanceToStart = 3;
-    node3.distanceToStart = 0;
 
     node1.heuristic = 3;
     node2.heuristic = 1;
-    node3.heuristic = 4;
 
-    const nodes = sortNodesByCost([node1, node3, node2]);
+    nodes.push(node1);
+    nodes.push(node2);
+
+    nodes = sortNodesByCost(nodes);
     
-    expect(nodes).toBe(1)
+    expect(nodes[0]).toBe(node2);
+    expect(nodes[1]).toBe(node1);
+  })
+})
+
+describe("removeNestedNodes", () => {
+  it("Given a grid, return a length which represents the count of all the nodes", () => {
+    const nodes = removeNestedNodes(setInitialGrid());
+    expect(nodes.length).toBe(15 * 45);
+  })
+})
+
+describe("Get heuristic", () => {
+  const grid = setInitialGrid();
+
+  it("Should return the hypotenuse given two x,y vectors calculated from a start and end node", () => {
+    const h = heuristic(grid[0][0], grid[3][3]);
+    expect(h).toBe(Math.sqrt(18));
+  })
+})
+
+describe("getShortestPathNodes", () => {
+  const grid = setInitialGrid();
+  const node1 = grid[0][0];
+
+  it("Return the path of nodes used to get from start to end", () => {
+    const node2 = grid[1][0];
+    const node3 = grid[2][0];
+
+    node2.previousNode = node1;
+    node3.previousNode = node2;
+
+    const path = getShortestPathNodes(node1, node3);
+
+    expect(path.length).toBe(3);
+  })
+
+  it("Return a path with length of 0 if a path cannot be constructed", () => {
+    const node1 = grid[0][0];
+    const node2 = grid[6][6];
+
+    const path = getShortestPathNodes(node1, node2);
+
+    expect(path.length).toBe(0);
+  })
+})
+
+describe("checkOpenList", () => {
+  const grid = setInitialGrid();
+  const node1 = grid[0][0];
+  const node2 = grid[1][1];
+
+  it("should return true if the newNode is in the openList and has a better cost", () => {
+    const openList = [node1, node2];
+    const newNode = {...grid[0][0]};
+
+    node1.cost = 6;
+    newNode.cost = 5;
+
+    const result = checkOpenList(openList, newNode);
+
+    expect(result).toBe(true);
+  })
+
+  it("should return false if the newNode is in the openList and has a worse cost", () => {
+    const openList = [node1, node2];
+    const newNode = {...grid[0][0]};
+
+    node1.cost = 5;
+    newNode.cost = 6;
+
+    const result = checkOpenList(openList, newNode);
+
+    expect(result).toBe(false);
+  })
+
+  it("should return true if the newNode is not in the openList", () => {
+    const openList = [node1, node2];
+    const newNode = grid[6][0];
+
+    newNode.cost = 5;
+
+    const result = checkOpenList(openList, newNode);
+
+    expect(result).toBe(true);
   })
 })
