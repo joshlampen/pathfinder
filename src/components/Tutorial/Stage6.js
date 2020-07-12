@@ -5,13 +5,12 @@ export default function Stage6() {
     <div>
       <h3>Reset Grid</h3>
       <span className="textBody">
-        Once you've visualized your desired algorithm, you can set the grid back
-        to its original state by clicking 'Reset Grid'
+        Once the visualization is complete, click the 'Reset Grid' button on the toolbar
+        to set the grid back to its original state.
       </span>
       <br></br>
-      <img src="images/stage6TutorialFinished.png" className="image"></img>
       <br></br>
-      <img src="images/stage6TutorialRefreshed.png" className="image"></img>
+      <img src='gifs/reset.gif' className='gif'></img>
     </div>
   );
 }

@@ -28,7 +28,7 @@ export default function TutorialDialog(props) {
   // const classes = useStyles();
   const { tutorialMode, handleClose } = props;
 
-  const changeStage = () => {
+  const nextStage = () => {
     if (state.stage < 7) {
       let stage = state.stage + 1;
       setState((prev) => ({ ...prev, stage }));
@@ -37,6 +37,16 @@ export default function TutorialDialog(props) {
       setState((prev) => ({ ...prev, stage }));
     }
   };
+  
+  const prevStage = () => {
+    if (state.stage < 7) {
+      let stage = state.stage - 1;
+      setState((prev) => ({ ...prev, stage }));
+    } else {
+      let stage = 0;
+      setState((prev) => ({ ...prev, stage }));
+    }
+  }
 
   return (
     <Dialog
@@ -46,8 +56,6 @@ export default function TutorialDialog(props) {
     >
       {/* {//<DialogTitle id="simple-dialog-title">Tutorial</DialogTitle>} */}
 
-      
-
       <div className="tutorial">
         {state.stage === 1 && <Stage1 />}
         {state.stage === 2 && <Stage2 />}
@@ -56,39 +64,62 @@ export default function TutorialDialog(props) {
         {state.stage === 5 && <Stage5 />}
         {state.stage === 6 && <Stage6 />}
 
-        {state.stage < 6 && (
+        {state.stage === 1 && (
+          <div className='single-tutorial-button'>
+            <Button
+              size="small"
+              color="primary"
+              variant="contained"
+              onClick={nextStage}
+              disableElevation
+            >
+              Next
+            </Button>
+          </div>
+        )}
+
+        {state.stage < 6 && state.stage > 1 && (
           <div className="tutorial-buttons">
             <Button
               size="small"
               color="primary"
               variant="contained"
-              onClick={changeStage}
+              onClick={prevStage}
+              disableElevation
             >
-              Next
+              Prev
             </Button>
-
-            <br></br>
-
             <Button
               size="small"
               color="primary"
               variant="contained"
-              onClick={handleClose}
+              onClick={nextStage}
+              disableElevation
             >
-              Exit Tutorial
+              Next
             </Button>
           </div>
         )}
 
         {state.stage === 6 && (
-          <div className="tutorial-buttons">
+          <div className='tutorial-buttons'>
+            <Button
+              size="small"
+              color="primary"
+              variant="contained"
+              onClick={prevStage}
+              disableElevation
+            >
+              Prev
+            </Button>
             <Button
               size="small"
               color="primary"
               variant="contained"
               onClick={handleClose}
+              disableElevation
             >
-              Click to Start
+              Finish
             </Button>
           </div>
         )}
