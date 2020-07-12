@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ActionCableProvider } from 'react-actioncable-provider';
 import './styles/index.css';
 import App from './components/App';
 import axios from "axios";
@@ -10,9 +11,11 @@ if (process.env.REACT_APP_API_BASE_URL) {
 }
 
 ReactDOM.render(
+  <ActionCableProvider url={'ws://localhost:5000/cable'}> 
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
+  </ActionCableProvider>,
   document.getElementById('root')
 );
 

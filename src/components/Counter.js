@@ -11,6 +11,16 @@ export default function Counter(props) {
         setCounter(response.data.visited)
       })
   }, [incrementCounter]);
+
+
+
+  useEffect(() => { 
+    Promise.resolve(axios.get("ws://localhost:5000/cable"))
+      .then(response => {
+        console.log(response)
+      })
+  }, []);
+    
     
     
   return (
