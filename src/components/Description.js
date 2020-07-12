@@ -9,8 +9,8 @@ import '../styles/Description.css';
 
 export default function Description(props) {
   const [ desc, setDesc ] = useState({
-    algName: "Dijkstra's Algorithm",
-    algDesc: "Dijkstra’s algorithm is a path search algorithm that guarantees the shortest path. Beginning at the start node, the algorithm picks the unvisited node with the lowest distance (its neighbors), calculates the distance through that node to each of its unvisited neighbors, and so on, until the end node is reached. Dijkstra’s algorithm is weighted, meaning it can account for weighted nodes that require more ‘work’ to pass through (like traffic spots on a map)."
+    algName: "Dijkstra’s Algorithm",
+    algDesc: "Dijkstra's algorithm is a path search algorithm that guarantees the shortest path. Beginning at the start node, the algorithm picks the unvisited node with the lowest distance (its neighbors), calculates the distance through that node to each of its unvisited neighbors, and so on, until the end node is reached. Dijkstra’s algorithm is weighted, meaning it can account for weighted nodes that require more ‘work’ to pass through (like traffic spots on a map)."
   })
 
   const { algorithm } = props;
