@@ -1,25 +1,31 @@
 .tutorial {
-  width: 500px;
-  height: 1000px;
+  width: 550px;
+  /* height: 1000px; */
 }
 
-.tutorial div{
+.tutorial div {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.tutorial .textBody{
+.tutorial .textBody {
   margin-left: 25px;
   margin-right: 25px;
 }
 
-.image{
+.image {
   width: 320px;
   height: 120px; 
   border: solid 2px black;
 }
 
-.tutorial-buttons{
+.gif {
+  width: 500px;
+  border-radius: 5px;
+  border: 1px solid rgb(200, 200, 200)
+}
+
+.tutorial-buttons {
   margin-top: 20px;  
 }
