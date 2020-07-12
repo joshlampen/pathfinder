@@ -11,4 +11,8 @@ describe("Visualize", () => {
     cy.wait(5000)
     cy.get('#node-7-7').should('have.css', 'background-color', `rgb(66, 192, 251)`)
   })
+  it("should reset the grid by clicking reset", () => {
+    cy.contains('Reset Grid').click()
+    cy.get('#node-7-7').should('have.css', 'background-color', `rgba(0, 0, 0, 0)`)
+  })
 })

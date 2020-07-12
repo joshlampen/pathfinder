@@ -23,7 +23,6 @@ describe("Tutorials", () => {
       cy.contains('Tutorial').click()
     })
     cy.get('body').click(0,0)
-
   })
   })
 
