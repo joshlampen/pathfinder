@@ -1,4 +1,4 @@
-import { getNeighborsQueue, getNeighborsStack, updateUnvisitedNeighbors } from "../../algorithms/algorithmHelpers";
+import { getNeighborsQueue, getNeighborsStack, updateUnvisitedNeighbors, sortNodesByCost, sortNodesByDistance } from "../../algorithms/algorithmHelpers";
 
 const setInitialGrid = () => {
   const grid = [];
@@ -177,3 +177,70 @@ describe("updateUnvisitedNeighbors should assign appropriate values to neighbors
     expect(grid[1][2].distance).toBe(1);
   })
 });
+
+describe("sortNodesByDistance should prioritize nodes according to distance", () => {
+  it("Should put nodes with lowest distance at the front of the queue", () => {
+    const grid = setInitialGrid();
+
+    const node1 = grid[0][0];
+    const node2 = grid[1][1];
+    const node3 = grid[2][2];
+
+    node1.distance = 0;
+    node2.distance = 6;
+    node3.distance = 2;
+
+    const nodes = [node1, node2, node3]
+      
+    sortNodesByDistance(nodes);
+    
+    expect(nodes[0]).toBe(node1);
+    expect(nodes[1]).toBe(node3);
+    expect(nodes[2]).toBe(node2);
+  })
+})
+
+describe("sortNodesByCost should prioritize nodes according to cost", () => {
+  it("Should put nodes with lowest cost at the front of the queue", () => {
+    const grid = setInitialGrid();
+
+    const node1 = grid[0][0];
+    const node2 = grid[1][1];
+    const node3 = grid[2][2];
+
+    node1.cost = 0;
+    node2.cost = 6;
+    node3.cost = 2;
+
+    const nodes = sortNodesByCost([node1, node2, node3]);
+    
+    expect(nodes[0]).toBe(node1);
+    expect(nodes[1]).toBe(node3);
+    expect(nodes[2]).toBe(node2);
+  })
+
+  it("if costs are the same, it should break the tie using the heuristic", () => {
+    //Edge case, when the sort function has an odd number of elements
+    const grid = setInitialGrid();
+
+    const node1 = grid[0][0];
+    const node2 = grid[1][1];
+    const node3 = grid[2][2];
+
+    node1.cost = 4;
+    node2.cost = 4;
+    node3.cost = 4;
+
+    node1.distanceToStart = 1;
+    node2.distanceToStart = 3;
+    node3.distanceToStart = 0;
+
+    node1.heuristic = 3;
+    node2.heuristic = 1;
+    node3.heuristic = 4;
+
+    const nodes = sortNodesByCost([node1, node3, node2]);
+    
+    expect(nodes).toBe(1)
+  })
+})
