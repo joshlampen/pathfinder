@@ -51,7 +51,20 @@ export default function TutorialDialog(props) {
         {state.stage === 6 && <Stage6 />}
 
         {state.stage === 1 && (
-          <div className='single-tutorial-button'>
+          <div className='tutorial-buttons'>
+            <Button
+              size='small'
+              color='primary'
+              variant='contained'
+              onClick={prevStage}
+              disableElevation
+              disabled
+            >
+              Prev
+            </Button>
+            <section>
+              {state.stage} / 6
+            </section>
             <Button
               size="small"
               color="primary"
@@ -65,20 +78,23 @@ export default function TutorialDialog(props) {
         )}
 
         {state.stage < 6 && state.stage > 1 && (
-          <div className="tutorial-buttons">
+          <div className='tutorial-buttons'>
             <Button
-              size="small"
-              color="primary"
-              variant="contained"
+              size='small'
+              color='primary'
+              variant='contained'
               onClick={prevStage}
               disableElevation
             >
               Prev
             </Button>
+            <section>
+              {state.stage} / 6
+            </section>
             <Button
-              size="small"
-              color="primary"
-              variant="contained"
+              size='small'
+              color='primary'
+              variant='contained'
               onClick={nextStage}
               disableElevation
             >
@@ -90,18 +106,21 @@ export default function TutorialDialog(props) {
         {state.stage === 6 && (
           <div className='tutorial-buttons'>
             <Button
-              size="small"
-              color="primary"
-              variant="contained"
+              size='small'
+              color='primary'
+              variant='contained'
               onClick={prevStage}
               disableElevation
             >
               Prev
             </Button>
+            <section>
+              {state.stage} / 6
+            </section>
             <Button
-              size="small"
-              color="primary"
-              variant="contained"
+              size='small'
+              color='primary'
+              variant='contained'
               onClick={handleClose}
               disableElevation
             >

@@ -12,7 +12,6 @@ export default function Counter(props) {
       })
   }, [incrementCounter]);
     
-    
   return (
     <span className='viewcount'>
       {counter} paths visualized
