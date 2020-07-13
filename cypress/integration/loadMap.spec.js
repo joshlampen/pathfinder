@@ -12,7 +12,7 @@ describe("Load Happy Face", () => {
   })
   it('should click on Happy Face and see it appear on grid', () => {
     cy.contains('Happy Face').click()
-    cy.wait(500)
+    cy.wait(1000)
     cy.get('#node-7-30').should('have.css', 'background-color', 'rgb(60, 60, 60)')
     cy.get('#node-7-14').should('have.css', 'background-color', 'rgb(60, 60, 60)')
   })
