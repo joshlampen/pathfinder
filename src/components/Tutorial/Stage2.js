@@ -9,28 +9,18 @@ export default function Stage2() {
   
   return (
     <div>
-      
       <h3>Nodes</h3>
-
-      <span className={"textBody"}>
-        You can also set the starting and ending nodes on the grid. They are
-        identified by the icons in the green (starting) and red (ending) marked
-        boxes in the picture below.
-        <br></br>
-        <br></br>
-        To move them, simply click on the node, and hold down your mouse button
-        while moving the mouse on the grid.{" "}
+      <span className='textBody'>
+        Your algorithm of choice will attempt to find the shortest path from the start node (left) to the
+        end node (right). You can move these nodes by clicking and dragging them across the grid.
+      </span> 
+      <br></br>
+      <span className='textBody'>
+        To add an intermediate node to the grid, click the 'Add Node' button on the toolbar.
       </span>
       <br></br>
-      <img src="images/stage2TutorialNodes.png" className={"image"}></img>
       <br></br>
-      <span className={"textBody"}>
-        You can even set a second ‘intermediary’ node by clicking on the green
-        ‘add node’ button which generates the node on the grid.{" "}
-      </span>
-      <br></br>
-      <img src="images/stage2TutorialAddNode.png" className={"image"}></img>
-      <br></br>
+      <img src='gifs/move-nodes.gif' className='gif'></img>
     </div>
   );
 }

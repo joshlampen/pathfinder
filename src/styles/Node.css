@@ -40,7 +40,7 @@
   background-color: #42C0FB;
   border-left: 1px solid #5acbffce;
   border-top: 1px solid #5acbffce;
-  color: rgb(60, 60, 60);
+  color: black;
 }
 
 .node-first-visited-last-row {
@@ -61,7 +61,6 @@
   background-color: #42C0FB;
   border-left: 1px solid #5acbffce;
   border-top: 1px solid #5acbffce;
-  color: rgb(60, 60, 60);
 }
 
 .node-weight-first-visited-last-row {
@@ -85,7 +84,7 @@
   /* background-color: #31B94D; */
   /* border-left: 1px solid #34c450d2;
   border-top: 1px solid #34c450d2; */
-  color: rgb(60, 60, 60);
+  color: black;
 }
 
 .node-second-visited-last-row {
@@ -111,7 +110,6 @@
   /* background-color: #31B94D; */
   /* border-left: 1px solid #34c450d2;
   border-top: 1px solid #34c450d2; */
-  color: rgb(60, 60, 60);
 }
 
 .node-weight-second-last-row {
@@ -147,6 +145,10 @@
   animation-name: shortestPathAnimation;
   animation-duration: 1s;
   border-right: 1px solid #ebd301;
+}
+
+.node-weight-shortest-path {
+  color: black;
 }
 
 @keyframes firstVisitedAnimation {

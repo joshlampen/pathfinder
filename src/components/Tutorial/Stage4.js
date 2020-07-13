@@ -4,19 +4,17 @@ export default function Stage4() {
   return (
     <div>
       <h3>Mazes and Maps</h3>
-
       <span className="textBody">
-        Click on 'Generate Maze' to generate a random maze
+        You can also click the 'Generate Maze' button on the toolbar to generate a random maze of walls.
       </span>
       <br></br>
-      <img src="images/stage4TutorialMaze.png" className="image"></img>
-      <br></br>
       <span className="textBody">
-        You can also click on 'Load Map' to choose from a selection of
-        pre-defined maps
+        Or, you can click the 'Load Map' button on the toolbar to choose from a selection of pre-made
+        wall configurations.
       </span>
       <br></br>
-      <img src="images/stage4TutorialLoadMap.png" className="image"></img>
+      <br></br>
+      <img src='gifs/maze-maps.gif' className='gif'></img>
     </div>
   );
 }
