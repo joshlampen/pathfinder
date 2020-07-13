@@ -3,7 +3,7 @@
 React Pathfinder is an educational web application where users can visualize 5 pathfinding algorithms: Dijkstra's, A-star, Greedy Best-First, Breadth-First and Depth-first. 
 
 * Front End: JavaScript, React, CSS, Axios
-* Back End: PostgreSQL, Node, Rails
+* Back End: PostgreSQL, Node, Express, Rails
 
 ## Final Product
 [See here for website](https://react-pathfinder.herokuapp.com/)
