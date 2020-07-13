@@ -23,18 +23,15 @@
   border: 1px solid rgb(200, 200, 200)
 }
 
-.single-tutorial-button {
-  width: 90%;
-  margin: 20px 0px 20px 0px;
-  display: flex;
-  flex-direction: row !important;
-  justify-content: flex-end;
-}
-
 .tutorial-buttons {
   display: flex;
   flex-direction: row !important;
+  justify-content: space-between;
+  align-items: center;
   width: 90%;
   margin: 20px 0px 20px 0px;
-  justify-content: space-between;
+}
+
+.tutorial-buttons section {
+  font-size: 14px;
 }
