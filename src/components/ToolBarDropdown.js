@@ -48,7 +48,7 @@ export default function ToolBarDropdown(props) {
       }),
       axios.get("/saved_grids/pokemon").then((response) => {
         return response.data[0].rows;
-      })
+      }),
     ]).then(all => {
       setMaps(() => ({
         face: all[0],

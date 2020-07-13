@@ -123,6 +123,7 @@ export const getShortestPathNodes = (startNode, finishNode) => {
 
 export const checkOpenList = (openList, newNode) => {
   let comparison = true;
+  
   openList.forEach(node => {
     if (node.row === newNode.row && node.col === newNode.col) {
       if (newNode.cost >= node.cost) {
@@ -131,5 +132,6 @@ export const checkOpenList = (openList, newNode) => {
       }
     }
   })
-  return comparison
+
+  return comparison;
 };

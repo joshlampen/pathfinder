@@ -1,15 +1,13 @@
 import { updateUnvisitedNeighbors, sortNodesByDistance, removeNestedNodes } from "./algorithmHelpers";
 
-// core dijkstra algorithm
 export default function dijkstra(grid, startNode, finishNode) {
 	const visitedNodesInOrder = [];
 	startNode.distance = 0;
 	const unvisitedNodes = removeNestedNodes(grid);
-	// const unvisitedNodes = grid;
 
-	while (unvisitedNodes.length > 0) { // while there are still unvisited nodes...
+	while (unvisitedNodes.length > 0) {
 		sortNodesByDistance(unvisitedNodes);
-		const closestNode = unvisitedNodes.shift() // remove the first node in the array (i.e. one of the neighbors)
+		const closestNode = unvisitedNodes.shift()
 
 		if (closestNode.isWall) continue;
 

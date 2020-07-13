@@ -21,5 +21,6 @@ export default function depthFirst(grid, start, end) {
       }
     })
   }
+  
   return visitedNodes;
 }

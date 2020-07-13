@@ -1,6 +1,5 @@
 import React from 'react';
 import '../styles/Node.css';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
 import { faBullseye } from '@fortawesome/free-solid-svg-icons';

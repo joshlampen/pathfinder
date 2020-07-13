@@ -16,7 +16,7 @@ describe("Tutorials", () => {
     cy.contains('Next').click()
     cy.contains('Next').click()
     cy.contains('Next').click()
-    cy.contains('Click to Start').click()
+    cy.contains('Finish').click()
   })
   it('should exit by clicking away from the screen', () => {
     cy.get('.nav-buttons').within(() => {

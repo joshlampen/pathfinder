@@ -13,7 +13,7 @@ describe("Descriptions", () => {
   })
   it('should click on another algorithm to see another description appear', () => {
     cy.contains('A*').click()
-    cy.contains('A* Algorithm')
+    cy.contains('A* Search Algorithm')
   })
 
 })

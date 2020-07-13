@@ -1,7 +1,6 @@
 import { getNeighborsQueue, heuristic, sortNodesByCost, checkOpenList } from './algorithmHelpers'
 
 export default function astar(grid, start, end) {
-
   start.distanceToStart = 0;
   start.cost = heuristic(start, end);
 
@@ -9,7 +8,6 @@ export default function astar(grid, start, end) {
   let visitedNodes = [];
 
   while (unVisitedNodes.length) {
-
     unVisitedNodes = sortNodesByCost(unVisitedNodes);
 
     const currentNode = unVisitedNodes.shift();    
@@ -22,11 +20,9 @@ export default function astar(grid, start, end) {
     const neighbors = getNeighborsQueue(currentNode, grid);
 
     neighbors.forEach(neighbor => {
-
       const heuristicToEnd = heuristic(neighbor, end);
 
       if (!neighbor.isVisited && !neighbor.isWall) {
-
         neighbor.distanceToStart = currentNode.distanceToStart + 1;
         neighbor.heuristic = heuristicToEnd;
 
@@ -42,7 +38,9 @@ export default function astar(grid, start, end) {
         }
       }    
     })
+
     currentNode.isVisited = true;
+    
     visitedNodes.push(currentNode); 
   }
 

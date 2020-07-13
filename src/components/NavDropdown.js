@@ -53,7 +53,7 @@ export default function NavDropdown(props) {
   const handleAlgToggle = algorithm => {
     setOpen(false);
 
-    toggleAlgorithm(algorithm)
+    toggleAlgorithm(algorithm);
   }
 
   const manageIconMount = () => {

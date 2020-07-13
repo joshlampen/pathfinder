@@ -19,7 +19,7 @@ export default function BasicButton(props) {
         return false;
       }
     } else {
-      return inProgress
+      return inProgress;
     }
   }
 

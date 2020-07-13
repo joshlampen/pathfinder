@@ -109,7 +109,7 @@ export default async function visualizeAlgorithm(algorithm, grid, startNode, fin
         isVisited: false,
       }
 
-      return newNode
+      return newNode;
     })
   })
 
@@ -117,10 +117,10 @@ export default async function visualizeAlgorithm(algorithm, grid, startNode, fin
     return row.map(node => {
       const newNode = {
         ...node,
-        isVisited: false,
+        isVisited: false
       }
 
-      return newNode
+      return newNode;
     })
   })
 

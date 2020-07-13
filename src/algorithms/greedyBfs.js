@@ -9,7 +9,6 @@ export default function greedyBfs(grid, startNode, endNode) {
   startNode.isVisited = true;
 
   while (openSet.length) {
-
     openSet.sort((nodeA, nodeB) => {
       if (nodeA.heuristic > nodeB.heuristic) return 1;
       if (nodeA.heuristic < nodeB.heuristic) return -1;
@@ -25,7 +24,6 @@ export default function greedyBfs(grid, startNode, endNode) {
     const neighbors = getNeighborsQueue(currentNode, grid);
     
     neighbors.forEach(neighbor => {
-
       if (!neighbor.isVisited && !neighbor.isWall) {
         neighbor.heuristic = heuristic(neighbor, endNode);
 
@@ -36,10 +34,11 @@ export default function greedyBfs(grid, startNode, endNode) {
         neighbor.isVisited = true;
         neighbor.previousNode = currentNode;
         openSet.push(neighbor);
-
       }
     })
+
     closedSet.push(currentNode);
   }
+  
   return closedSet;
 }

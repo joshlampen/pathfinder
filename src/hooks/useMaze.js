@@ -40,7 +40,7 @@ export default function useMaze() {
       grid.forEach(row => {
         row.forEach(node => {
           if (!node.isStart && !node.isFinish && !node.isInter && node.row === currentRow && node.col !== randomCol && node.col >= colStart - 1 && node.col <= colEnd + 1) {
-            setState(prev => ({ walls: [...prev.walls, node] }))
+            setState(prev => ({ walls: [...prev.walls, node] }));
           }
         })
       })
@@ -76,7 +76,7 @@ export default function useMaze() {
       grid.forEach(row => {
         row.forEach(node => {
           if (!node.isStart && !node.isFinish && !node.isInter && node.col === currentCol && node.row !== randomRow && node.row >= rowStart - 1 && node.row <= rowEnd + 1) {
-            setState(prev => ({ walls: [...prev.walls, node] }))
+            setState(prev => ({ walls: [...prev.walls, node] }));
           }
         })
       })
@@ -121,7 +121,7 @@ export default function useMaze() {
     grid.forEach(row => {
       row.forEach(node => {
         if (!relevantNodes.includes(node) && (node.row === 0 || node.col === 0 || node.row === grid.length - 1 || node.col === grid[0].length - 1)) {
-          setState(prev => ({ walls: [...prev.walls, node] }))
+          setState(prev => ({ walls: [...prev.walls, node] }));
         }
       })
     })
@@ -138,7 +138,7 @@ export default function useMaze() {
 
         if (mazeWalls.includes(node)) newNode.isWall = true;
 
-        return newNode
+        return newNode;
       })
     })
 

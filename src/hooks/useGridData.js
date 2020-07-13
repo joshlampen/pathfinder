@@ -18,17 +18,13 @@ export default function useGridData() {
   const [finishNode, setFinishNode] = useState({ row: FINISH_NODE_ROW, col: FINISH_NODE_COL });
   const [interNode, setInterNode] = useState(null);
 
-  const setInitialGrid = () => {   // create the initial array of node objects
+  const setInitialGrid = () => {   
     const grid = [];
     
-    // for each row in the grid... 
     for (let row = 0; row < 15; row++) {
       const currentRow = [];
   
-      // for each column in the row...
       for (let col = 0; col < 45; col++) {
-  
-        // create node and push
         currentRow.push(createNode(row, col));
       }
       
@@ -38,7 +34,6 @@ export default function useGridData() {
     return grid;
   }
   
-  // creates the nodes that are pushed into the initial grid array
   const createNode = (row, col) => {
     const node = {
       row,
@@ -107,7 +102,7 @@ export default function useGridData() {
   }
 
   const toggleWall = (row, col, isWall, isWeight) => {
-    //if the user clicks on an empty square, create a wall
+    //if the user clicks on an empty square, draw a wall
     if (!state.inProgress && state.drawWall) {
       const newNode = {
         ...state.grid[row][col],
@@ -122,7 +117,7 @@ export default function useGridData() {
       grid[row] = newRow;
 
       setState(prev => ({ ...prev, grid }));
-    } else if (!state.inProgress && !state.drawWall) {
+    } else if (!state.inProgress && !state.drawWall) { // otherwise, draw a weight
       const newNode = {
         ...state.grid[row][col],
         isWeight,
@@ -165,7 +160,7 @@ export default function useGridData() {
   const resetGrid = () => {
     setStartNode({ row: START_NODE_ROW, col: START_NODE_COL });
     setFinishNode({ row: FINISH_NODE_ROW, col: FINISH_NODE_COL });
-    setInterNode(null)
+    setInterNode(null);
 
     setState(prev => ({
       ...prev,
@@ -220,7 +215,7 @@ export default function useGridData() {
 
   const toggleWeight = () => {
     if (!state.inProgress) {
-      const drawWall = !state.drawWall
+      const drawWall = !state.drawWall;
       setState(prev => ({ ...prev, drawWall }));
     }
   }
@@ -235,14 +230,14 @@ export default function useGridData() {
         if (type === 'WALLS') {
           newNode.isWall = false;
         } else { // only other option is to clear weights
-          newNode.isWeight = false
+          newNode.isWeight = false;
         }
 
         return newNode;
       })
     })
 
-    setState(prev => ({ ...prev, grid, drawWall: true }))
+    setState(prev => ({ ...prev, grid, drawWall: true }));
   }
 
   const loadWalls = (walls, type) => {
@@ -253,7 +248,7 @@ export default function useGridData() {
     if (type === 'MAZE') {
       for (const row of walls) {
         for (const node of row) {
-          if (node.isWall) mazeWalls.push(node)
+          if (node.isWall) mazeWalls.push(node);
         }
       }
     }
@@ -284,21 +279,21 @@ export default function useGridData() {
       })
     })
 
-    setState(prev => ({ ...prev, grid }))
+    setState(prev => ({ ...prev, grid }));
   }
 
   const createInterNode = () => {
     if ((startNode.row === 7 && startNode.col === 22) || (finishNode.row === 7 && finishNode.col === 22)) {
       if ((startNode.row === 6 && startNode.col === 22) || (finishNode.row === 6 && finishNode.col === 22)) {
         setInterNode({ row: INTER_NODE_ROW + 1, col: INTER_NODE_COL })
-        document.getElementById(`node-${8}-${22}`).className += ' node-inter';
+        document.getElementById(`node-${INTER_NODE_ROW + 1}-${INTER_NODE_COL}`).className += ' node-inter';
       } else {
         setInterNode({ row: INTER_NODE_ROW - 1, col: INTER_NODE_COL })
-        document.getElementById(`node-${6}-${22}`).className += ' node-inter';
+        document.getElementById(`node-${INTER_NODE_ROW - 1}-${INTER_NODE_COL}`).className += ' node-inter';
       }
     } else {
       setInterNode({ row: INTER_NODE_ROW, col: INTER_NODE_COL })
-      document.getElementById(`node-${7}-${22}`).className += ' node-inter';
+      document.getElementById(`node-${INTER_NODE_ROW}-${INTER_NODE_COL}`).className += ' node-inter';
     }
 
   }

@@ -14,6 +14,7 @@ export default function breadthFirst(grid, start, end) {
     }
     
     const neighbors = getNeighborsQueue(currentNode, grid);
+    
     neighbors.forEach(neighbor => {
       if (!neighbor.isVisited) {
         neighbor.previousNode = currentNode;

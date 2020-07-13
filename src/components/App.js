@@ -4,7 +4,7 @@ import Description from './Description';
 import Grid from './Grid';
 import Legend from './Legend';
 import Footer from './Footer';
-import TutorialDialog from './Tutorial';
+import TutorialDialog from './TutorialDialog';
 import '../styles/App.css';
 
 export default function App() {
@@ -18,25 +18,26 @@ export default function App() {
   
   const toggleAlgorithm = newAlgorithm => {
     const algorithm = newAlgorithm;
-    setState(prev => ({ ...prev, algorithm }))
+    
+    setState(prev => ({ ...prev, algorithm }));
   }
 
   const toggleCounter = () => {
     const incrementCounter = !state.incrementCounter;
 
-    setState(prev => ({ ...prev, incrementCounter }))
+    setState(prev => ({ ...prev, incrementCounter }));
   }
 
   const toggleNavDisable = disable => {
     const disableNav = disable;
 
-    setState(prev => ({ ...prev, disableNav }))
+    setState(prev => ({ ...prev, disableNav }));
   }
 
   const toggleTutorial = () => {
     const tutorialMode = !state.tutorialMode;
 
-    setState(prev => ({ ...prev, tutorialMode }))
+    setState(prev => ({ ...prev, tutorialMode }));
   }
 
   return (
