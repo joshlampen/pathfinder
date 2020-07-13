@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
 export default function Counter(props) {
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(2137);
   const { incrementCounter } = props;
 
   useEffect(() => { 
