@@ -129,6 +129,9 @@ export const checkOpenList = (openList, newNode) => {
       if (newNode.cost >= node.cost) {
         comparison = false;
         return;
+      } else {
+        node = newNode;
+        comparison = false
       }
     }
   })

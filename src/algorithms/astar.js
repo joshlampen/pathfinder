@@ -26,17 +26,15 @@ export default function astar(grid, start, end) {
         neighbor.distanceToStart = currentNode.distanceToStart + 1;
         neighbor.heuristic = heuristicToEnd;
 
-        neighbor.cost = neighbor.distanceToStart + neighbor.heuristic;
-
         if (neighbor.isWeight) {
-          neighbor.heuristic += 3;
-          neighbor.cost += 3;
+          neighbor.heuristic += 2;
         }
 
-        if (currentNode.isWeight) {
-          neighbor.heuristic += 2;
-          neighbor.cost += 2;
+        if (currentNode.isWeight && neighbor.isWeight) {
+          neighbor.heuristic *= 1.5;
         }
+
+        neighbor.cost = neighbor.distanceToStart + neighbor.heuristic;
 
         if (checkOpenList(unVisitedNodes, neighbor)) {
           unVisitedNodes.push(neighbor);
